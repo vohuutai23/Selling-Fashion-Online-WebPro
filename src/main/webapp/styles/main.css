@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+.navigation{
+    background-color: rgb(8, 97, 104);
+
+}
+
+#navbarNav .nav-text{
+    margin-left: 140px;
+}
+.nav-item .nav-link{
+    color: white;
+    margin: 0 20px;
+    flex: auto;
+    justify-content: center;
+}
+
+
+
+/* Footer */
+.footer{
+    background-color: rgb(8, 97, 104);
+    list-style: none;
+    color: white;
+}
+
+.footer ul li{
+    list-style: none;
+}
+
+
+/* Payment info details */
+/* .payment-content .payment-info-details{
+    border: 1px solid #255;
+    border-radius: 10px;
+} */
+.payment-content{
+    margin-top: 100px;
+}
