@@ -6,6 +6,14 @@
     font-family: 'Inter', sans-serif;
 }
 
+.product_name_details{
+    color: black;
+    font-size: 40px;
+}
+
+.margin-top-content{
+    margin-top: 50px;
+}
 .navigation{
     background-color: rgb(8, 97, 104);
 
