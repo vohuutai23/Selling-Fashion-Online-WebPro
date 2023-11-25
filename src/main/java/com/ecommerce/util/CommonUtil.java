@@ -17,7 +17,7 @@ public class CommonUtil {
         request.setAttribute("message", message);
         request.getRequestDispatcher(page).forward(request, response);
     }
-   /* public static void messageForShop(String message, HttpServletRequest request, HttpServletResponse response)
+    public static void messageForShop(String message, HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         forwardToPage("shop/message.jsp", message, request, response);
     }
@@ -25,7 +25,7 @@ public class CommonUtil {
     public static void messageForAdmin(String message, HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         forwardToPage("message.jsp", message, request, response);
-    }*/
+    }
    public static void generateCountryList(HttpServletRequest request) {
        String[] countryCodes = Locale.getISOCountries();
 

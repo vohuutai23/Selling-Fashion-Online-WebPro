@@ -177,7 +177,7 @@ public class CustomerService {
     public void showCustomerRegisterForm() throws ServletException, IOException {
         generateCountryList(request);
 
-        forwardToPage("shop/register_form.jsp", request, response);
+        forwardToPage("shop/login.jsp", request, response);
     }
 
     public void registerCustomer() throws ServletException, IOException {
@@ -185,8 +185,14 @@ public class CustomerService {
         Customer existCustomer = customerDAO.findByEmail(email);
 
         if (existCustomer != null) {
-            System.out.println("loi");
-
+            String message = "Could not register. The email is already registered by another customer.";
+            request.setAttribute("message", message);
+            //request.setAttribute("showRegisterForm", true);
+            request.setAttribute("action", "showRegisterForm");
+            request.setAttribute("registerFailed", true); // Flag để biết rằng đăng ký thất bại
+            forwardToPage("shop/login.jsp", request, response);
+            /*request.setAttribute("message", "Could not register. The email is already registered by another customer.");
+            showLogin();*/
             /*messageForShop(
                     String.format("Could not register. The email %s is already registered by another customer.", email),
                     request, response);*/
@@ -195,7 +201,8 @@ public class CustomerService {
             Customer newCustomer = new Customer();
             updateCustomerFields(newCustomer);
             customerDAO.create(newCustomer);
-            System.out.println("loi");
+            request.setAttribute("message", "You have registered successfully! Thank you.");
+            showLogin();
 
            /* messageForShop("You have registered successfully! Thank you.<br/><a href='login'>Click here</a> to login",
                     request, response);*/
@@ -228,7 +235,8 @@ public class CustomerService {
                 response.sendRedirect(redirectURL);
 
             } else {
-                showCustomerProfile();
+//                showCustomerProfile();
+                forwardToPage("shop/indexShop.jsp", request, response);
             }
         }
     }
