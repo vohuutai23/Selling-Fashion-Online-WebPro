@@ -164,7 +164,7 @@
         <div class="table-responsive">
             <div class="cardHeader">
                 <h2>List Customer</h2>
-                <a href="#" class="btn">Create Customer</a>
+                <a href="new_customer" class="btn">Create Customer</a>
             </div>
 
             <table id="customerTable" class="table table-striped table-bordered" style="width:100%">
