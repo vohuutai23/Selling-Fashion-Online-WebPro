@@ -9,7 +9,14 @@ import com.ecommerce.model.entity.Product;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 import java.io.IOException;
+import java.io.InputStream;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -27,21 +34,6 @@ public class ProductService {
         this.response = response;
         productDAO = new ProductDAO();
         categoryDAO = new CategoryDAO();
-    }
-    public void listProduct() throws ServletException, IOException {
-        listProduct(null);
-    }
-
-    public void listProduct(String message) throws ServletException, IOException {
-        List<Product> listProducts = productDAO.listAll();
-        System.out.println("Users: " + listProducts);
-        request.setAttribute("listProducts", listProducts);
-
-        if (message != null) {
-            request.setAttribute("message", message);
-        }
-
-        forwardToPage("shop/list_product.jsp", message, request, response);
     }
 
     public void listProductByCategory() throws ServletException, IOException {
@@ -86,13 +78,13 @@ public class ProductService {
         if (result.size() == 0) {
             request.setAttribute("message", "Found no matching product(s).");
         }
-        System.out.println("So luong ket qua tim kiem: " + result.size());
-        for (Product product : result) {
-            System.out.println("Product ID: " + product.getId());
-            System.out.println("Product Name: " + product.getNameProduct());
-            System.out.println("Product Price: " + product.getPrice());
-            // ... In thông tin khác của sản phẩm nếu cần
-        }
+//        System.out.println("So luong ket qua tim kiem: " + result.size());
+//        for (Product product : result) {
+//            System.out.println("Product ID: " + product.getId());
+//            System.out.println("Product Name: " + product.getNameProduct());
+//            System.out.println("Product Price: " + product.getPrice());
+//            // ... In thông tin khác của sản phẩm nếu cần
+//        }
 //        request.setAttribute("keyword", keyword);
         request.setAttribute("result", result);
 
@@ -101,5 +93,84 @@ public class ProductService {
 
 
 
+
+
+
+//    Admin
+
+
+    public void listProduct() throws ServletException, IOException {
+        listProduct(null);
+    }
+
+    public void listProduct(String message) throws ServletException, IOException {
+        List<Product> listProducts = productDAO.listAll();
+
+        request.setAttribute("listProducts", listProducts);
+
+        if (message != null) {
+            request.setAttribute("message", message);
+        }
+
+        forwardToPage("product_list.jsp", message, request, response);
+    }
+    public void showNewProductForm() throws ServletException, IOException {
+        List<Category> listCategories = categoryDAO.listAll();
+
+        request.setAttribute("listCategories", listCategories);
+
+        forwardToPage("product_form.jsp", request, response);
+    }
+    private void readProductFields(Product product) throws ServletException, IOException {
+        String nameProduct = request.getParameter("nameProduct");
+        Integer categoryId = Integer.parseInt(request.getParameter("category"));
+        Category category = categoryDAO.get(categoryId);
+        String description = request.getParameter("description");
+        String size = request.getParameter("size");
+        float price = Float.parseFloat(request.getParameter("price"));
+        Instant postDate = Instant.now(); // Lấy thời điểm hiện tại dưới dạng Instant
+
+
+        product.setNameProduct(nameProduct);
+        product.setDescription(description);
+        product.setCategory(category);
+        product.setPrice(price);
+        product.setPostDate(postDate);
+
+//        Part part = request.getPart("productImage");
+//
+//        if (part != null && part.getSize() > 0) {
+//            long size = part.getSize();
+//            byte[] imageByte = new byte[(int) size];
+//
+//            InputStream inputStream = part.getInputStream();
+//            inputStream.read(imageByte);
+//            inputStream.close();
+//
+//            product.setImage(imageByte);
+//        }
+//
+//        boolean active = Boolean.parseBoolean(request.getParameter("active"));
+//        product.setActive(active);
+    }
+    public void createProduct() throws ServletException, IOException {
+        String nameProduct = request.getParameter("nameProduct");
+
+        Product existProduct = productDAO.findByTitle(nameProduct);
+
+        if (existProduct != null) {
+            listProduct(String.format("Could not create new product because the title '%s' already exists.", nameProduct));
+            return;
+        }
+
+        Product newProduct = new Product();
+        readProductFields(newProduct);
+
+        Product createdProduct = productDAO.create(newProduct);
+
+        if (createdProduct.getId() > 0) {
+            listProduct("A new product has been created successfully.");
+        }
+    }
 }
 

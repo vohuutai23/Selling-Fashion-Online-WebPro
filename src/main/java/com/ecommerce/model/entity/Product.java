@@ -7,8 +7,10 @@ import java.time.Instant;
 @Entity
 @Table(name = "product")
 @NamedQueries({ @NamedQuery(name = "Product.findAll", query = "SELECT p FROM Product p"),
-        @NamedQuery(name = "Product.findByCategory", query = "SELECT p FROM Product p WHERE p.category.id = :categoryId")})
-        @NamedQuery(name = "Product.search", query = "SELECT p FROM Product p WHERE p.nameProduct LIKE '%' || :keyword || '%' OR p.description LIKE '%' || :keyword || '%'")
+        @NamedQuery(name = "Product.findByCategory", query = "SELECT p FROM Product p WHERE p.category.id = :categoryId"),
+        @NamedQuery(name = "Product.search", query = "SELECT p FROM Product p WHERE p.nameProduct LIKE '%' || :keyword || '%' OR p.description LIKE '%' || :keyword || '%'"),
+        @NamedQuery(name = "Product.findByTitle", query = "SELECT p FROM Product p WHERE p.nameProduct = :nameProduct"),
+        @NamedQuery(name = "Product.findNew", query = "SELECT p FROM Product p ORDER BY p.postDate DESC")})
 public class Product {
     @Id
     @Column(name = "id_product", nullable = false)
@@ -43,6 +45,13 @@ public class Product {
     @Column(name = "post_date")
     private Instant postDate;
 
+    public Product() {
+    }
+
+    public Product(Integer productId) {
+        super();
+        this.id = productId;
+    }
     public Integer getId() {
         return id;
     }

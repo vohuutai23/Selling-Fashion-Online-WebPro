@@ -18,7 +18,7 @@
 <div class="row">
     <!-- Sidebar Categories Component -->
     <div class="col-md-3 mt-5">
-       <p class="margin-top-content">Thông tin tìm kiếm ở đây</p>
+       <p class="margin-top-content">Kết quả</p>
     </div>
     <!-- Products -->
     <div class="col-md-9">

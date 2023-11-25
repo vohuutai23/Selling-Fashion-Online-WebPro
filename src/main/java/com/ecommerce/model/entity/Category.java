@@ -1,13 +1,13 @@
 package com.ecommerce.model.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "category")
+@NamedQueries({ @NamedQuery(name = "Category.findAll", query = "SELECT c FROM Category c ORDER BY c.nameCategory")})
+//        @NamedQuery(name = "Category.countAll", query = "SELECT COUNT(c) FROM Category c"),
+//        @NamedQuery(name = "Category.findByName", query = "SELECT c FROM Category c WHERE c.name = :categoryName") })
 public class Category {
     @Id
     @Column(name = "id_category", nullable = false)

@@ -1,44 +1,66 @@
 package com.ecommerce.model.entity;
 
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import com.ecommerce.model.entity.Product;
 
-@Entity
-@Table(name = "cart")
+import java.util.HashMap;
+import java.util.Map;
+
 public class Cart {
-    @EmbeddedId
-    private CartId id;
+    private final Map<Product, Integer> cart = new HashMap<>();
 
-    @Column(name = "quantity")
-    private Integer quantity;
-
-    @Column(name = "total_price")
-    private Float totalPrice;
-
-    public CartId getId() {
-        return id;
+    public void addItem(Product product) {
+        if (cart.containsKey(product)) {
+            Integer quantity = cart.get(product) + 1;
+            cart.put(product, quantity);
+        } else {
+            cart.put(product, 1);
+        }
     }
 
-    public void setId(CartId id) {
-        this.id = id;
+    public void removeItem(Product product) {
+        cart.remove(product);
     }
 
-    public Integer getQuantity() {
-        return quantity;
+    public int getTotalQuantity() {
+        int total = 0;
+
+        for (Product next : cart.keySet()) {
+            Integer quantity = cart.get(next);
+            total += quantity;
+        }
+
+        return total;
     }
 
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
+    public float getTotalAmount() {
+        float total = 0.0f;
+
+        for (Product product : cart.keySet()) {
+            Integer quantity = cart.get(product);
+            double subTotal = quantity * product.getPrice();
+            total += subTotal;
+        }
+
+        return total;
     }
 
-    public Float getTotalPrice() {
-        return totalPrice;
+    public void updateCart(int[] productIds, int[] quantities) {
+        for (int i = 0; i < productIds.length; i++) {
+            Product key = new Product(productIds[i]);
+            Integer value = quantities[i];
+            cart.put(key, value);
+        }
     }
 
-    public void setTotalPrice(Float totalPrice) {
-        this.totalPrice = totalPrice;
+    public void clear() {
+        cart.clear();
     }
 
+    public int getTotalItems() {
+        return cart.size();
+    }
+
+    public Map<Product, Integer> getItems() {
+        return this.cart;
+    }
 }

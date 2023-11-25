@@ -37,4 +37,19 @@ public class ProductDAO extends JpaDAO<Product> implements GenericDAO<Product> {
     public List<Product> search(String keyword) {
         return super.findWithNamedQuery("Product.search", "keyword", keyword);
     }
+
+    //Tìm kiếm theo tên (tìm các san phẩm có chứa kí tự giống kí tự tìm kiếm)
+    public Product findByTitle(String title) {
+        List<Product> result = super.findWithNamedQuery("Product.findByTitle", "title", title);
+
+        if (!result.isEmpty()) {
+            return result.get(0);
+        }
+        return null;
+    }
+
+    // List các sản phẩm có ngày đăng mới nhất
+    public List<Product> listNewProducts(){
+        return super.findWithNamedQuery("Product.findNew");
+    }
 }

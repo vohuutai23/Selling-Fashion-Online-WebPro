@@ -75,7 +75,11 @@
                                 Quantity
                             </div>
                             <div class="col-4">
-                                Add to cart
+<%--                                <form action="view_cart" method="post">--%>
+<%--                                    <input type="hidden" name="id" value="${product.id}">--%>
+<%--                                    <input type="submit" value="Add To Cart" class="btn btn-outline-info">--%>
+<%--                                </form>--%>
+                                    <a href="add_to_cart?product_id=${product.id}" type="button" id="buttonAddToCart" class="btn btn-full-width btn-lg btn-outline-primary">Add to cart</a></div>
                             </div>
                         </div>
 

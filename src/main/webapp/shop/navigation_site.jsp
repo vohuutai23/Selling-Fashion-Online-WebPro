@@ -11,7 +11,9 @@
     <title>Navigation_Site</title>
 </head>
 <body>
-    <a href="view_category?id=1">View Product by Category</a>
-    <a href="view_product">View Product Details</a>
+<%--    <a href="">Shop Home Page</a><br>--%>
+    <a href="view_category?id=1">View Product by Category</a><br>
+    <a href="view_product">View Product Details</a><br>
+    <a href="admin/new_product">Admin Product</a><br>
 </body>
 </html>
