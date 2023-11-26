@@ -38,7 +38,7 @@
         <li>
             <a href="list_product">
                         <span class="icon">
-                            <ion-icon name="review-outline"></ion-icon>
+                            <ion-icon name="bag-handle-outline"></ion-icon>
                         </span>
                 <span class="title">Product</span>
             </a>
@@ -46,7 +46,8 @@
         <li>
             <a href="#">
                         <span class="icon">
-                            <ion-icon name="lock-closed-outline"></ion-icon>
+
+                            <ion-icon name="cart-outline"></ion-icon>
                         </span>
                 <span class="title">Order</span>
             </a>
@@ -54,7 +55,7 @@
         <li>
             <a href="#">
                         <span class="icon">
-                            <ion-icon name="lock-closed-outline"></ion-icon>
+                            <ion-icon name="ellipsis-horizontal-outline"></ion-icon>
                         </span>
                 <span class="title">Review</span>
             </a>
@@ -89,7 +90,7 @@
         </li>
 
         <li>
-            <a href="#">
+            <a href="logout">
                         <span class="icon">
                             <ion-icon name="log-out-outline"></ion-icon>
                         </span>

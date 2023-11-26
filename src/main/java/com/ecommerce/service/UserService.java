@@ -95,7 +95,7 @@ public class UserService {
             user.setPassword(null);
             request.setAttribute("user", user);
 
-            forwardToPage("edit_user_form.jsp", request, response);
+            forwardToPage("user_form.jsp", request, response);
         }
     }
 
