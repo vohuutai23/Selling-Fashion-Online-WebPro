@@ -18,12 +18,8 @@
 
 <div class="video-container">
     <div class="slide-video">
-        <div class="content-video">
-            <h2>TOPS 2022 COLLECTION</h2>
-            <a href="view_category?id=1" class="btn-video">Discover the Collection</a>
-        </div>
-        <video class="video-dk" autoplay="autoplay" loop="loop" muted="muted">
-            <source src="https://lv-vod.fl.freecaster.net/vod/louisvuitton/dikq6kFFzG_HD.mp4" type="video/mp4">
+        <video height="100%" class="video-dk" autoplay="autoplay" loop="loop" muted="muted">
+            <source src="shop/images/video/video_banner.mp4" type="video/mp4">
         </video>
     </div>
 </div>

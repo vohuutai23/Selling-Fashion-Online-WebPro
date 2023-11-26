@@ -9,7 +9,7 @@
     <link rel="icon" type="image/x-icon" href="../shop/images/logo.png">
     <title>CoverYou</title>
 </head>
-<footer class="footer fixed-bottom">
+<footer class="footer">
     <div id="footer">
         <div class="row">
             <div class="col-md-3 text-center">

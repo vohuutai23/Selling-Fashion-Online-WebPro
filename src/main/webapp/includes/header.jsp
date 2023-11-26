@@ -12,7 +12,7 @@
 <body>
 <div id="header">
     <div id="nav">
-        <nav class="nav-full navbar navbar-expand-lg fixed-top">
+        <nav class="navbar navbar-expand-lg p-0">
             <div class="container-fluid navigation">
                 <a class="navbar-brand" href="#">
                     <img class="ms-5" src="shop/images/logo.png" alt="Logo" width="60" height="60" >
@@ -23,7 +23,7 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav nav-element text-uppercase nav-text">
                         <li class="nav-item text-white">
-                            <a class="nav-link" aria-current="page" href="#">Home</a>
+                            <a class="nav-link" aria-current="page" href="${pageContext.request.contextPath}/">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Products</a>
@@ -43,15 +43,15 @@
                         <li class="nav-item">
                             <a class="nav-link" href="#">Contact</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#"><i class="fa-solid fa-magnifying-glass fa-xl" style="color: #ffffff;"></i></a>
-                        </li>
+<%--                        <li class="nav-item">--%>
+<%--                            <a class="nav-link" href="#"><i class="fa-solid fa-magnifying-glass fa-xl" style="color: #ffffff;"></i></a>--%>
+<%--                        </li>--%>
                         <li class="nav-item">
                             <form action="search" method="post">
                                 <div class="flexbox">
                                     <div class="search">
                                         <div>
-                                            <input type="text" name="keyword" placeholder="Search">
+                                            <input class="rounded-4 border-primary-subtle pt-1" type="text" name="keyword" placeholder="Search">
                                         </div>
                                     </div>
                                 </div>
@@ -61,7 +61,7 @@
                             <a class="nav-link" href="#"><i class="fa-solid fa-cart-shopping fa-xl" style="color: #ffffff;"></i></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#"><i class="fa-solid fa-user fa-xl" style="color: #ffffff;"></i></a>
+                            <a class="nav-link" href="view_profile"><i class="fa-solid fa-user fa-xl" style="color: #ffffff;"></i></a>
                         </li>
                     </ul>
                 </div>
