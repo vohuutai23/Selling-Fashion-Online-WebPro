@@ -2,22 +2,35 @@ package com.ecommerce.model.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
-import java.time.Instant;
+import java.util.Date;
+
+import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name = "review")
+@NamedQueries({ @NamedQuery(name = "Review.listAll", query = "SELECT r FROM Review r ORDER BY r.timeReview DESC"),
+        @NamedQuery(name = "Review.countAll", query = "SELECT COUNT(r) FROM Review r"),
+        @NamedQuery(name = "Review.countByCustomer", query = "SELECT COUNT(r.id) FROM Review r WHERE r.customer.id = :customerId")})
+/*        @NamedQuery(name = "Review.countByCustomer", query = "SELECT COUNT(r.id) FROM Review r WHERE r.customer.customerId = :customerId"),
+        @NamedQuery(name = "Review.findByCustomerAndProduct", query = "SELECT r FROM Review r WHERE r.product.active = TRUE AND r.customer.customerId = :customerId AND r.product.productId = :productId"),
+        @NamedQuery(name = "Review.mostFavored", query = "SELECT r.product, COUNT(r.product.productId) AS ReviewCount, AVG(r.rating) as AvgRating FROM Review r WHERE r.product.active = TRUE GROUP BY r.product.productId HAVING AVG(r.rating) >= 4.0 ORDER BY ReviewCount DESC, AvgRating DESC"),
+        @NamedQuery(name = "Review.mostFavoredFindByCategory", query = "SELECT r.product, COUNT(r.product.productId) AS ReviewCount, AVG(r.rating) as AvgRating FROM Review r JOIN Category c ON r.product.category.categoryId = c.categoryId AND c.categoryId = :categoryId WHERE r.product.active = TRUE GROUP BY r.product.productId HAVING AVG(r.rating) >= 4.0 ORDER BY ReviewCount DESC, AvgRating DESC"),
+        @NamedQuery(name = "Review.listRated", query = "SELECT r.product, AVG(r.rating) as AvgRating FROM Review r WHERE r.product.active = TRUE GROUP BY r.product.productId HAVING AVG(r.rating) >= :ratingStars ORDER BY AvgRating DESC"),
+        @NamedQuery(name = "Review.listRatedFindByCategory", query = "SELECT r.product, AVG(r.rating) as AvgRating FROM Review r JOIN Category c ON r.product.category.categoryId = c.categoryId AND c.categoryId = :categoryId WHERE r.product.active = TRUE GROUP BY r.product.productId HAVING AVG(r.rating) >= :ratingStars ORDER BY AvgRating DESC") })*/
+
 public class Review {
     @Id
+    @GeneratedValue(strategy = IDENTITY)
     @Column(name = "id_review", nullable = false)
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_customer")
-    private Customer idCustomer;
+    private Customer customer;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_product")
-    private Product idProduct;
+    private Product product;
 
     @Column(name = "rating")
     private Float rating;
@@ -26,9 +39,21 @@ public class Review {
     @Column(name = "comment", length = 50)
     private String comment;
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "time_review")
-    private Instant timeReview;
+    private Date timeReview;
 
+
+    public Review() {
+    }
+
+    public Review(Customer customer, Product product, float rating, String comment, Date timeReview) {
+        this.customer = customer;
+        this.product = product;
+        this.rating = rating;
+        this.comment = comment;
+        this.timeReview = timeReview;
+    }
     public Integer getId() {
         return id;
     }
@@ -37,20 +62,20 @@ public class Review {
         this.id = id;
     }
 
-    public Customer getIdCustomer() {
-        return idCustomer;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setIdCustomer(Customer idCustomer) {
-        this.idCustomer = idCustomer;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
-    public Product getIdProduct() {
-        return idProduct;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setIdProduct(Product idProduct) {
-        this.idProduct = idProduct;
+    public void setProduct(Product idProduct) {
+        this.product = product;
     }
 
     public Float getRating() {
@@ -69,11 +94,11 @@ public class Review {
         this.comment = comment;
     }
 
-    public Instant getTimeReview() {
-        return timeReview;
+    public Date getTimeReview() {
+        return this.timeReview;
     }
 
-    public void setTimeReview(Instant timeReview) {
+    public void setTimeReview(Date timeReview) {
         this.timeReview = timeReview;
     }
 

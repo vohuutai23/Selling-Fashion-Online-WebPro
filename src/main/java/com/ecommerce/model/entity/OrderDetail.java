@@ -1,6 +1,9 @@
 package com.ecommerce.model.entity;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import java.time.Instant;
 
@@ -10,10 +13,6 @@ public class OrderDetail {
     @Id
     @Column(name = "id_orderDetail", nullable = false)
     private Integer id;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_customer")
-    private Customer idCustomer;
 
     @Size(max = 50)
     @Column(name = "shipping_address", length = 50)
@@ -34,14 +33,6 @@ public class OrderDetail {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Customer getIdCustomer() {
-        return idCustomer;
-    }
-
-    public void setIdCustomer(Customer idCustomer) {
-        this.idCustomer = idCustomer;
     }
 
     public String getShippingAddress() {
