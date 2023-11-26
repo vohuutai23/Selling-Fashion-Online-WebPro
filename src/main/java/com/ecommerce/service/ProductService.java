@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Objects;
 
 import static com.ecommerce.utility.CommonUtility.*;
-import static com.ecommerce.utility.CommonUtility.forwardToPage;
+
 
 public class ProductService {
     private final HttpServletRequest request;
@@ -123,18 +123,20 @@ public class ProductService {
     }
     private void readProductFields(Product product) throws ServletException, IOException {
         String nameProduct = request.getParameter("nameProduct");
-        Integer categoryId = Integer.parseInt(request.getParameter("category"));
-        Category category = categoryDAO.get(categoryId);
+//        Integer categoryId = Integer.parseInt(request.getParameter("category"));
+//        Category category = categoryDAO.get(categoryId);
+        System.out.println("Ten san pham input:" + nameProduct);
         String description = request.getParameter("description");
-        String size = request.getParameter("size");
-        float price = Float.parseFloat(request.getParameter("price"));
+        System.out.println("Mo ta input:" + description);
+//        String size = request.getParameter("size");
+//        Float price = Float.parseFloat(request.getParameter("price"));
         Instant postDate = Instant.now(); // Lấy thời điểm hiện tại dưới dạng Instant
 
 
         product.setNameProduct(nameProduct);
         product.setDescription(description);
-        product.setCategory(category);
-        product.setPrice(price);
+//        product.setCategory(category);
+//        product.setPrice(price);
         product.setPostDate(postDate);
 
 //        Part part = request.getPart("productImage");
@@ -157,7 +159,7 @@ public class ProductService {
         String nameProduct = request.getParameter("nameProduct");
 
         Product existProduct = productDAO.findByTitle(nameProduct);
-
+        System.out.println("San pham ton tai" + existProduct);
         if (existProduct != null) {
             listProduct(String.format("Could not create new product because the title '%s' already exists.", nameProduct));
             return;
@@ -165,12 +167,86 @@ public class ProductService {
 
         Product newProduct = new Product();
         readProductFields(newProduct);
-
+        newProduct.setId(12);
         Product createdProduct = productDAO.create(newProduct);
 
         if (createdProduct.getId() > 0) {
             listProduct("A new product has been created successfully.");
         }
+    }
+
+
+    public void editProduct() throws ServletException, IOException {
+        Integer productId = Integer.parseInt(request.getParameter("id"));
+        Product product = productDAO.get(productId);
+
+        if (product != null) {
+//            List<Category> listCategories = categoryDAO.listAll();
+
+            request.setAttribute("product", product);
+//            request.setAttribute("listCategories", listCategories);
+
+            forwardToPage("product_form.jsp", request, response);
+        }
+
+//        } else {
+//            messageForAdmin(
+//                    String.format("Could not find the product with ID %s or it might have been deleted.", productId),
+//                    request, response);
+//        }
+    }
+
+    public void updateProduct() throws ServletException, IOException {
+//        Integer productId = Integer.parseInt(request.getParameter("productId"));
+        Integer productId = 1;
+        String nameProduct = request.getParameter("nameProduct");
+
+        Product existProduct = productDAO.get(productId);
+        Product productByTitle = productDAO.findByTitle(nameProduct);
+
+        if (productByTitle != null && !existProduct.equals(productByTitle)) {
+            listProduct("Could not update product because there is another product having same title.");
+            return;
+        }
+
+        readProductFields(existProduct);
+
+        productDAO.update(existProduct);
+
+        listProduct("The product has been updated successfully.");
+    }
+
+    public void deleteProduct() throws ServletException, IOException {
+        Integer productId = Integer.parseInt(request.getParameter("id"));
+        Product product = productDAO.get(productId);
+        productDAO.delete(productId);
+        listProduct("The product has been deleted successfully.");
+
+//        if (product == null) {
+//            messageForAdmin(
+//                    String.format("Could not find the product with ID %s or it might have been deleted.", productId),
+//                    request, response);}
+//
+////        } else {
+////            if (!product.getReviews().isEmpty()) {
+////                messageForAdmin(
+////                        String.format("Could not delete the product with ID %s because it has reviews.", productId),
+////                        request, response);
+////
+////            } else {
+////                OrderDAO orderDAO = new OrderDAO();
+////                long countByOrder = orderDAO.countOrderDetailByProduct(productId);
+////
+////                if (countByOrder > 0) {
+////                    messageForAdmin(String.format(
+////                            "Could not delete the product with ID %s because there are orders associated with it.",
+////                            productId), request, response);
+////
+////                } else {
+//            else{
+//                    productDAO.delete(productId);
+//                    listProduct("The product has been deleted successfully.");
+//            }
     }
 }
 

@@ -13,6 +13,7 @@ import java.time.Instant;
         @NamedQuery(name = "Product.findNew", query = "SELECT p FROM Product p ORDER BY p.postDate DESC")})
 public class Product {
     @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_product", nullable = false)
     private Integer id;
 

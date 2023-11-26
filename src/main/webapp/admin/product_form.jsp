@@ -22,9 +22,9 @@
     <div class="card">
         <!-- Tab panes -->
         <div class="card-body">
-<%--            <c:if test="${product != null}">--%>
-<%--                <form action="update_product" method="post" enctype="multipart/form-data">--%>
-<%--                    <input type="hidden" name="productId" value="${product.Id}">--%>
+            <c:if test="${product != null}">
+                <form action="update_product" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="productId" value="${product.id}">
 <%--                    <div class="form-group">--%>
 <%--                        <label class="col-md-12">Category</label>--%>
 <%--                        <div class="col-md-12">--%>
@@ -42,13 +42,13 @@
 <%--                            </select>--%>
 <%--                        </div>--%>
 <%--                    </div>--%>
-<%--                    <div class="form-group">--%>
-<%--                        <label class="col-md-12">Title</label>--%>
-<%--                        <div class="col-md-12">--%>
-<%--                            <input class="form-control form-control-line" type="text" id="title"--%>
-<%--                                   name="title" value="${product.title}"/>--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
+                    <div class="form-group">
+                        <label class="col-md-12">Name Product</label>
+                        <div class="col-md-12">
+                            <input class="form-control form-control-line" type="text" id="title"
+                                   name="nameProduct" value="${product.nameProduct}"/>
+                        </div>
+                    </div>
 <%--                    <div class="form-group">--%>
 <%--                        <label for="publishDate" class="col-md-12">Publish Date:</label>--%>
 <%--                        <div class="col-md-12">--%>
@@ -72,20 +72,20 @@
 <%--                                 src="data:image/jpg;base64,${product.base64Image}"/>--%>
 <%--                        </div>--%>
 <%--                    </div>--%>
-<%--                    <div class="form-group">--%>
-<%--                        <label for="price" class="col-md-12">Price</label>--%>
-<%--                        <div class="col-md-12">--%>
-<%--                            <input class="form-control form-control-line" type="text" id="price"--%>
-<%--                                   name="price" size="20" value="${product.price}"/>--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
-<%--                    <div class="form-group">--%>
-<%--                        <label for="description" class="col-md-12">Description</label>--%>
-<%--                        <div class="col-md-12">--%>
-<%--                                        <textarea class="form-control form-control-line" rows="5" cols="50"--%>
-<%--                                                  name="description" id="description">${product.description}</textarea>--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
+                    <div class="form-group">
+                        <label for="price" class="col-md-12">Price</label>
+                        <div class="col-md-12">
+                            <input class="form-control form-control-line" type="text" id="price"
+                                   name="price" size="20" value="${product.price}"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="description" class="col-md-12">Description</label>
+                        <div class="col-md-12">
+                                        <textarea class="form-control form-control-line" rows="5" cols="50"
+                                                  name="description">${product.description}</textarea>
+                        </div>
+                    </div>
 <%--                    <div class="form-group">--%>
 <%--                        <label class="col-md-12">Active</label>--%>
 <%--                        <div class="col-md-12">--%>
@@ -101,14 +101,14 @@
 <%--                            </select>--%>
 <%--                        </div>--%>
 <%--                    </div>--%>
-<%--                    <div class="form-group">--%>
-<%--                        <div class="col-sm-12">--%>
-<%--                            <button type="submit" class="btn btn-success">Save</button>--%>
-<%--                            <button type="cancel" class="btn btn-success">Cancel</button>--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
-<%--                </form>--%>
-<%--            </c:if>--%>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <button type="submit" class="btn btn-success">Save</button>
+                            <button type="cancel" class="btn btn-success">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+            </c:if>
 
             <c:if test="${product == null}">
                 <form action="create_product" method="post" enctype="multipart/form-data">
@@ -130,13 +130,13 @@
 <%--                        </div>--%>
 <%--                    </div>--%>
 
-                    <div class="form-group">
-                        <label class="col-md-12">Category</label>
-                        <div class="col-md-12">
-                            <input class="form-control form-control-line" type="text"
-                                   name="category" value="1"/>
-                        </div>
-                    </div>
+<%--                    <div class="form-group">--%>
+<%--                        <label class="col-md-12">Category</label>--%>
+<%--                        <div class="col-md-12">--%>
+<%--                            <input class="form-control form-control-line" type="text"--%>
+<%--                                   name="category" value="1"/>--%>
+<%--                        </div>--%>
+<%--                    </div>--%>
 
                     <div class="form-group">
                         <label class="col-md-12">Product Name</label>
@@ -146,14 +146,14 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label for="publishDate" class="col-md-12">Publish Date:</label>
-                        <div class="col-md-12">
-                            <input class="form-control form-control-line" type="date" id="publishDate"
-                                   name="publishDate"
-                                   value="<fmt:formatDate pattern='MM/dd/yyyy' value='${product.publishDate}' />"/>
-                        </div>
-                    </div>
+<%--                    <div class="form-group">--%>
+<%--                        <label for="publishDate" class="col-md-12">Publish Date:</label>--%>
+<%--                        <div class="col-md-12">--%>
+<%--                            <input class="form-control form-control-line" type="date" id="publishDate"--%>
+<%--                                   name="publishDate"--%>
+<%--                                   value="<fmt:formatDate pattern='MM/dd/yyyy' value='${product.publishDate}' />"/>--%>
+<%--                        </div>--%>
+<%--                    </div>--%>
 <%--                    <div class="form-group">--%>
 <%--                        <label class="col-md-12">Product Image</label>--%>
 <%--                        <div class="col-md-12">--%>
@@ -169,13 +169,13 @@
 <%--                                 src="data:image/jpg;base64,${product.base64Image}"/>--%>
 <%--                        </div>--%>
 <%--                    </div>--%>
-                    <div class="form-group">
-                        <label for="price" class="col-md-12">Price</label>
-                        <div class="col-md-12">
-                            <input class="form-control form-control-line" type="text" id="price"
-                                   name="price" size="20" value="${product.price}"/>
-                        </div>
-                    </div>
+<%--                    <div class="form-group">--%>
+<%--                        <label for="price" class="col-md-12">Price</label>--%>
+<%--                        <div class="col-md-12">--%>
+<%--                            <input class="form-control form-control-line" type="text" id="price"--%>
+<%--                                   name="price" size="20" value="${product.price}"/>--%>
+<%--                        </div>--%>
+<%--                    </div>--%>
                     <div class="form-group">
                         <label for="description" class="col-md-12">Description</label>
                         <div class="col-md-12">
