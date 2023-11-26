@@ -59,21 +59,21 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="background-product">
-                        <img src="https://media.coolmate.me/cdn-cgi/image/quality=80,format=auto/uploads/October2023/denn3-(2)_copys_62.jpg" width="80%" height="80%" alt="">
+                        <img src="https://media.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85,format=auto/uploads/October2023/T-Shirt_Cotton_Compact.2_66.jpg" width="80%" height="80%" alt="">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="info-product mt-5">
-                        <div class="row m-4">${product.nameProduct}</div>
-                        <div class="row m-4">$ ${product.price}</div>
-                        <div class="row m-5">
+                        <div class="row m-4 fs-1 fw-medium">${product.nameProduct}</div>
+                        <div class="row m-4 fs-3 fw-medium">$ ${product.price}</div>
+                        <div class="row m-5 fs-5">
                             ${product.description}
 
                         </div>
                         <div class="row select-to-order m-4">
-                            <div class="col-4">
-                                Quantity
-                            </div>
+<%--                            <div class="col-4">--%>
+<%--                                Quantity--%>
+<%--                            </div>--%>
                             <div class="col-4">
 <%--                                <form action="view_cart" method="post">--%>
 <%--                                    <input type="hidden" name="id" value="${product.id}">--%>

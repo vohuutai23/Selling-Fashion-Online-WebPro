@@ -236,7 +236,7 @@ public class CustomerService {
 
             } else {
 //                showCustomerProfile();
-                forwardToPage("shop/indexShop.jsp", request, response);
+                forwardToPage("shop/index.jsp", request, response);
             }
         }
     }

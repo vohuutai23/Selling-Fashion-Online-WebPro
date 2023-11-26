@@ -241,7 +241,14 @@
     });
   });
 </script>
-
+<script>
+  function delete_product(id) {
+    let customerId = id;
+    if (confirm('Are you sure you want to delete the product with ID ' + customerId + '?')) {
+      window.location = 'delete_product?id=' + customerId;
+    }
+  }
+</script>
 <script src="${pageContext.request.contextPath}/admin/styles/assets/js/main.js"></script>
 <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
