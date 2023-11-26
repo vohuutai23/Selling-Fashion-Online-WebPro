@@ -1,5 +1,4 @@
 package com.ecommerce.DAO;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -8,15 +7,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-
-public class JpaDAO<E> {
+public class JPADao <E>{
     private static final EntityManagerFactory entityManagerFactory;
 
     static {
         entityManagerFactory = Persistence.createEntityManagerFactory("onlineShop");
     }
 
-    public JpaDAO() {
+    public JPADao() {
     }
 
     public E create(E entity) {
@@ -155,5 +153,4 @@ public class JpaDAO<E> {
             entityManagerFactory.close();
         }
     }
-
 }

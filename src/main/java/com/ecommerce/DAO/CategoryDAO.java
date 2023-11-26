@@ -4,7 +4,7 @@ import com.ecommerce.model.entity.Category;
 
 import java.util.List;
 
-public class CategoryDAO extends JpaDAO<Category> implements GenericDAO<Category> {
+public class CategoryDAO extends JPADao<Category> implements GenericDAO<Category> {
 
     @Override
     public Category create(Category category) {

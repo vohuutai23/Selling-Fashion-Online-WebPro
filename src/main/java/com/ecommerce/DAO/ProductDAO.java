@@ -4,7 +4,7 @@ import com.ecommerce.model.entity.Product;
 
 import java.util.List;
 
-public class ProductDAO extends JpaDAO<Product> implements GenericDAO<Product> {
+public class ProductDAO extends JPADao<Product> implements GenericDAO<Product> {
 
 
     @Override
