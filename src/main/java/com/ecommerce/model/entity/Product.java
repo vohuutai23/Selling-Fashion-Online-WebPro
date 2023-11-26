@@ -3,7 +3,7 @@ package com.ecommerce.model.entity;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.time.Instant;
-
+import java.util.*;
 @Entity
 @Table(name = "product")
 @NamedQueries({ @NamedQuery(name = "Product.findAll", query = "SELECT p FROM Product p"),
@@ -15,7 +15,7 @@ public class Product {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_category")
-    private Category idCategory;
+    private Category category;
 
     @Size(max = 100)
     @Column(name = "name_product", length = 100)
@@ -41,7 +41,7 @@ public class Product {
 
     @Column(name = "post_date")
     private Instant postDate;
-
+    private String base64Image;
     public Integer getId() {
         return id;
     }
@@ -50,12 +50,12 @@ public class Product {
         this.id = id;
     }
 
-    public Category getIdCategory() {
-        return idCategory;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setIdCategory(Category idCategory) {
-        this.idCategory = idCategory;
+    public void setCategory(Category idCategory) {
+        this.category = category;
     }
 
     public String getNameProduct() {
@@ -113,5 +113,52 @@ public class Product {
     public void setPostDate(Instant postDate) {
         this.postDate = postDate;
     }
+   /* @OneToMany(fetch = FetchType.EAGER, mappedBy = "product")
+    public Set<Review> getReviews() {
+        TreeSet<Review> sortedReviews = new TreeSet<>(
+                (review1, review2) -> review2.getReviewTime().compareTo(review1.getReviewTime()));
+        sortedReviews.addAll(reviews);
+        return sortedReviews;
+    }
 
+    public void setReviews(Set<Review> reviews) {
+        this.reviews = reviews;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
+    public Set<OrderDetail> getOrderDetails() {
+        return this.orderDetails;
+    }
+
+    public void setOrderDetails(Set<OrderDetail> orderDetails) {
+        this.orderDetails = orderDetails;
+    }*/
+
+    @Transient
+    public String getBase64Image() {
+        this.base64Image = Base64.getEncoder().encodeToString(this.imageProduct);
+        return this.base64Image;
+    }
+
+    @Transient
+    public void setBase64Image(String base64Image) {
+        this.base64Image = base64Image;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Product product = (Product) o;
+        return id.equals(product.id);
+    }
+
+    /*@Override
+    public int hashCode() {
+        return Objects.hash(productId);
+    }*/
 }

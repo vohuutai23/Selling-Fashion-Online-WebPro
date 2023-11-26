@@ -6,7 +6,7 @@
     <welcome-file-list>
 
         <welcome-file>shop/login.jsp</welcome-file>
-
+<!--        <welcome-file>admin/login.jsp</welcome-file>-->
 <!---->
 <!--                <welcome-file>admin/list_customer.jsp</welcome-file>-->
 <!--        <welcome-file>admin/index.jsp</welcome-file>-->

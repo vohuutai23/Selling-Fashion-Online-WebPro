@@ -163,7 +163,7 @@ public class UserService {
 
         } else {
             request.setAttribute("message", "Sai username hoac password!");
-            request.getRequestDispatcher("admin/login.jsp").forward(request, response);
+            request.getRequestDispatcher("login.jsp").forward(request, response);
             //forwardToPage("admin_login.jsp", "Login failed.", request, response);
         }
     }

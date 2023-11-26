@@ -9,7 +9,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 <%--    <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/assets/css/style_admin_login.css">--%>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/style_admin_login.css">
+<%--    <link rel="stylesheet" href="../admin/styles/assets/css/style_admin_login.css">--%>
+<%--    <link rel="stylesheet" href="${pageContext.request.contextPath}/admin/styles/assets/css/style_admin_login.css">--%>
+
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/login_admin.css">
 
     <title>Modern Login Page | AsmrProg</title>
 </head>

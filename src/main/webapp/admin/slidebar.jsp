@@ -36,7 +36,7 @@
             </a>
         </li>
         <li>
-            <a href="#">
+            <a href="list_product">
                         <span class="icon">
                             <ion-icon name="review-outline"></ion-icon>
                         </span>

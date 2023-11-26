@@ -1,16 +1,17 @@
-package com.ecommerce.controller.shop.product;
+package com.ecommerce.controller.admin.product;
 
-import com.ecommerce.service.ProductService;
+import java.io.IOException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
-@WebServlet(name = "ViewProductServlet", value = "/list_product")
-public class ViewAllProductServlet extends HttpServlet {
+import com.ecommerce.service.ProductService;
+
+@WebServlet(name = "ListProductServlet", value = "/admin/list_product")
+public class ListProductServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 

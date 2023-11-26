@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "ViewProductServlet", value = "/list_product")
-public class ViewAllProductServlet extends HttpServlet {
+@WebServlet(name = "ViewProductDetailsServlet", value = "/view_product")
+public class ViewProductDetailsServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
@@ -18,7 +18,7 @@ public class ViewAllProductServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         ProductService productService = new ProductService(request, response);
-        productService.listProduct();
+        productService.viewProductDetail();
     }
 
 }
