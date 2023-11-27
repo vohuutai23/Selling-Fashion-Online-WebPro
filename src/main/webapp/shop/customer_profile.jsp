@@ -7,7 +7,7 @@
             font-family: Arial, sans-serif;
             background-color: #f2f2f2;
             margin: 0;
-            padding: 20px;
+
         }
 
         .container {
@@ -56,6 +56,7 @@
     </style>
 </head>
 <body>
+<%@ include file="/includes/header.jsp" %>
 <div class="container">
     <h1>My Profile</h1>
 

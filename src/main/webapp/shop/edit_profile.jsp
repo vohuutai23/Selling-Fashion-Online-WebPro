@@ -17,6 +17,7 @@
 
 </head>
 <body>
+<%@ include file="/includes/header.jsp" %>
 <style>
     body {
         font-family: Arial, sans-serif;
