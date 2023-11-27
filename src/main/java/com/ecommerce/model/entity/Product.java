@@ -3,6 +3,8 @@ package com.ecommerce.model.entity;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.time.Instant;
+import java.util.Base64;
+
 
 @Entity
 @Table(name = "product")
@@ -132,5 +134,11 @@ public class Product {
     public void setPostDate(Instant postDate) {
         this.postDate = postDate;
     }
+
+
+    /*public String getBase64Image() {
+        // Kiểm tra nếu imageProduct không phải là null và chuyển đổi nó thành chuỗi Base64
+        return this.imageProduct != null ? Base64.getEncoder().encodeToString(this.imageProduct) : "";
+    }*/
 
 }

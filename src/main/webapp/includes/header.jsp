@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -61,7 +62,17 @@
                             <a class="nav-link" href="#"><i class="fa-solid fa-cart-shopping fa-xl" style="color: #ffffff;"></i></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="view_profile"><i class="fa-solid fa-user fa-xl" style="color: #ffffff;"></i></a>
+                            <a class="nav-link"><i class="fa-solid fa-user fa-xl" style="color: #ffffff;"></i></a>
+                            <c:if test="${loggedCustomer == null}">
+                                <a href="login" class="dropdown-item">Login</a>
+                            </c:if>
+
+                            <c:if test="${loggedCustomer != null}">
+                                <a href="view_profile" class="dropdown-item">Welcome,
+                                        ${loggedCustomer.nameCustomer}</a>
+
+                            </c:if>
+
                         </li>
                     </ul>
                 </div>

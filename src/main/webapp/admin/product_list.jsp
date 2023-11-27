@@ -175,6 +175,7 @@
           <th>Index</th>
           <th>ID</th>
           <th>Product Name</th>
+          <th>Image</th>
           <th>Description</th>
           <th>Price</th>
           <th>Post Date</th>
@@ -188,6 +189,9 @@
             <td>${status.index + 1}</td>
             <td>${product.id}</td>
             <td>${product.nameProduct}</td>
+            <td>
+              <img src="data:image/jpeg;base64,${product.base64Image}" alt="Product Image" height="100" width="100">
+            </td>
             <td>${product.description}</td>
             <td>${product.price}</td>
             <td>${product.postDate}</td>
