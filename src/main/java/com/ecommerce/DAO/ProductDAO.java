@@ -32,7 +32,7 @@ public class ProductDAO extends JPADao<Product> implements GenericDAO<Product> {
     }
 
     public List<Product> listByCategory(int categoryId) {
-        return super.findWithNamedQuery("Product.findByCategory", "categoryId", categoryId);
+        return super.findWithNamedQuery("Product.findByCategory", "idCategory", categoryId);
     }
     public List<Product> search(String keyword) {
         return super.findWithNamedQuery("Product.search", "keyword", keyword);
@@ -52,4 +52,9 @@ public class ProductDAO extends JPADao<Product> implements GenericDAO<Product> {
     public List<Product> listNewProducts(){
         return super.findWithNamedQuery("Product.findNew");
     }
+
+    public long countByCategory(int categoryId) {
+        return super.countWithNamedQuery("Product.countByCategory", "idCategory", categoryId);
+    }
+
 }

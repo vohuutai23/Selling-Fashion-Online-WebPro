@@ -31,8 +31,9 @@
             <c:forEach items="${listNewProducts}" var="product" begin="0" end="3">
                 <div class="col-sm-6 col-md-3 col-product">
                     <figure>
-                        <img class="rounded-corners img-fluid" src="https://media.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85,format=auto/uploads/October2023/T-Shirt_Cotton_Compact.2_66.jpg"
-                             width="240" height="240" alt="">
+                        <%--<img class="rounded-corners img-fluid" src="https://media.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85,format=auto/uploads/October2023/T-Shirt_Cotton_Compact.2_66.jpg"
+                             width="240" height="240" alt="">--%>
+                            <img class="rounded-corners img-fluid", src="data:image/jpeg;base64,${product.base64Image}" alt="Product Image" width="240" height="240">
                         <figcaption>
                             <div class="thumb-overlay"><a href="view_product?id=${product.id}" title="More Info">
                                 <i class="fas fa-search-plus"></i>

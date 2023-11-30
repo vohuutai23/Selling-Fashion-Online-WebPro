@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.time.Instant;
 import java.util.Base64;
+import java.util.Date;
 
 
 @Entity
@@ -12,10 +13,11 @@ import java.util.Base64;
         @NamedQuery(name = "Product.findByCategory", query = "SELECT p FROM Product p WHERE p.category.id = :categoryId"),
         @NamedQuery(name = "Product.search", query = "SELECT p FROM Product p WHERE p.nameProduct LIKE '%' || :keyword || '%' OR p.description LIKE '%' || :keyword || '%'"),
         @NamedQuery(name = "Product.findByTitle", query = "SELECT p FROM Product p WHERE p.nameProduct = :nameProduct"),
+        @NamedQuery(name = "Product.countByCategory", query = "SELECT COUNT(p) FROM Product p WHERE p.category.id = :idCategory"),
         @NamedQuery(name = "Product.findNew", query = "SELECT p FROM Product p ORDER BY p.postDate DESC")})
 public class Product {
     @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_product", nullable = false)
     private Integer id;
 
@@ -48,12 +50,22 @@ public class Product {
     @Column(name = "post_date")
     private Instant postDate;
 
+//    private String base64Image;
+
     public Product() {
     }
 
     public Product(Integer productId) {
         super();
         this.id = productId;
+    }
+
+    public  Product(String nameProduct, byte[] image, String description, float price)
+    {
+        this.nameProduct = nameProduct;
+        this.description = description;
+        this.imageProduct = image;
+        this.price = price;
     }
     public Integer getId() {
         return id;
@@ -136,9 +148,20 @@ public class Product {
     }
 
 
-    /*public String getBase64Image() {
+    public String getBase64Image() {
         // Kiểm tra nếu imageProduct không phải là null và chuyển đổi nó thành chuỗi Base64
         return this.imageProduct != null ? Base64.getEncoder().encodeToString(this.imageProduct) : "";
+    }
+
+    /*@Transient
+    public String getBase64Image() {
+        this.base64Image = Base64.getEncoder().encodeToString(this.imageProduct);
+        return this.base64Image;
+    }
+
+    @Transient
+    public void setBase64Image(String base64Image) {
+        this.base64Image = base64Image;
     }*/
 
 }

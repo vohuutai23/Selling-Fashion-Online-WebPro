@@ -64,7 +64,7 @@
                         <li class="nav-item">
                             <a class="nav-link"><i class="fa-solid fa-user fa-xl" style="color: #ffffff;"></i></a>
                             <c:if test="${loggedCustomer == null}">
-                                <a href="login" class="dropdown-item">Login</a>
+                                <a href="login" class="dropdown-item js-login">Login</a>
                             </c:if>
 
                             <c:if test="${loggedCustomer != null}">
@@ -72,6 +72,7 @@
                                         ${loggedCustomer.nameCustomer}</a>
 
                             </c:if>
+
 
                         </li>
                     </ul>

@@ -12,13 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.IOException;
 import java.io.InputStream;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 import static com.ecommerce.utility.CommonUtility.*;
 
@@ -125,35 +119,38 @@ public class ProductService {
         String nameProduct = request.getParameter("nameProduct");
 //        Integer categoryId = Integer.parseInt(request.getParameter("category"));
 //        Category category = categoryDAO.get(categoryId);
-        System.out.println("Ten san pham input:" + nameProduct);
         String description = request.getParameter("description");
-        System.out.println("Mo ta input:" + description);
 //        String size = request.getParameter("size");
-//        Float price = Float.parseFloat(request.getParameter("price"));
-        Instant postDate = Instant.now(); // Lấy thời điểm hiện tại dưới dạng Instant
-
-
+        Float price = Float.parseFloat(request.getParameter("price"));
+  //      Instant postDate = Instant.now(); // Lấy thời điểm hiện tại dưới dạng Instant
         product.setNameProduct(nameProduct);
         product.setDescription(description);
 //        product.setCategory(category);
-//        product.setPrice(price);
-        product.setPostDate(postDate);
+        product.setPrice(price);
+//        product.setPostDate(postDate);
+        Part part = request.getPart("imageProduct");
+        if (part != null && part.getSize() > 0) {
+            InputStream inputStream = part.getInputStream();
+            byte[] imageBytes = new byte[inputStream.available()];
+            inputStream.read(imageBytes);
+            product.setImageProduct(imageBytes);
+            inputStream.close();
+        }
+        System.out.println("checkanh3");
 
-//        Part part = request.getPart("productImage");
-//
-//        if (part != null && part.getSize() > 0) {
-//            long size = part.getSize();
-//            byte[] imageByte = new byte[(int) size];
-//
-//            InputStream inputStream = part.getInputStream();
-//            inputStream.read(imageByte);
-//            inputStream.close();
-//
-//            product.setImage(imageByte);
-//        }
-//
-//        boolean active = Boolean.parseBoolean(request.getParameter("active"));
-//        product.setActive(active);
+        /*Part part = request.getPart("imageProduct");
+
+        if (part != null && part.getSize() > 0) {
+            long size = part.getSize();
+            byte[] imageByte = new byte[(int) size];
+
+            InputStream inputStream = part.getInputStream();
+            inputStream.read(imageByte);
+            inputStream.close();
+
+            product.setImageProduct(imageByte);
+        }*/
+
     }
     public void createProduct() throws ServletException, IOException {
         String nameProduct = request.getParameter("nameProduct");
@@ -179,7 +176,7 @@ public class ProductService {
     public void editProduct() throws ServletException, IOException {
         Integer productId = Integer.parseInt(request.getParameter("id"));
         Product product = productDAO.get(productId);
-
+        System.out.println("id san pham input:" + productId);
         if (product != null) {
 //            List<Category> listCategories = categoryDAO.listAll();
 
@@ -197,22 +194,20 @@ public class ProductService {
     }
 
     public void updateProduct() throws ServletException, IOException {
-//        Integer productId = Integer.parseInt(request.getParameter("productId"));
-        Integer productId = 1;
+        System.out.println("id san pham update:" + request.getParameter("productId"));
+        Integer productId = Integer.parseInt(request.getParameter("productId"));
         String nameProduct = request.getParameter("nameProduct");
-
         Product existProduct = productDAO.get(productId);
         Product productByTitle = productDAO.findByTitle(nameProduct);
+        /*if (productByTitle != null && !existProduct.equals(productByTitle)) {
+            System.out.println("checkdkienif");
 
-        if (productByTitle != null && !existProduct.equals(productByTitle)) {
             listProduct("Could not update product because there is another product having same title.");
             return;
-        }
+        }*/
 
         readProductFields(existProduct);
-
         productDAO.update(existProduct);
-
         listProduct("The product has been updated successfully.");
     }
 
