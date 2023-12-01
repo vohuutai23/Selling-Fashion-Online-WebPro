@@ -60,162 +60,162 @@
 
     <div class="list_table">
         <div class="table-responsive">
-        <c:if test="${product != null}">
+            <c:if test="${product != null}">
 
-            <form action="update_product" method="post" enctype="multipart/form-data">
-                <div class="cardHeader">
-                    <h2>Edit Product</h2>
-                </div>
-                <input type="hidden" name="productId" value="${product.id}">
-                <div class="form-group">
-                    <label class="col-md-12">Name Product</label>
-                    <div class="col-md-12">
-                        <input class="form-control form-control-line" type="text" id="title"
-                               name="nameProduct" value="${product.nameProduct}"/>
+                <form action="update_product" method="post" enctype="multipart/form-data">
+                    <div class="cardHeader">
+                        <h2>Edit Product</h2>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-12">Group Category</label>
-                    <div class="col-md-12">
-                        <select id="groupCategory2" name="groupCategory" class="form-control form-control-line">
-                            <c:forEach items="${listGroupCategories}" var="groupCategory">
-                                <option value="${groupCategory}" ${groupCategory eq product.category.groupCategory ? 'selected' : ''}>
-                                        ${groupCategory}
-                                </option>
-                            </c:forEach>
-                        </select>
-
+                    <input type="hidden" name="productId" value="${product.id}">
+                    <div class="form-group">
+                        <label class="col-md-12">Name Product</label>
+                        <div class="col-md-12">
+                            <input class="form-control form-control-line" type="text" id="title"
+                                   name="nameProduct" value="${product.nameProduct}"/>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-12">Name Category</label>
-                    <div class="col-md-12">
-                        <select name="nameCategory" id="nameCategory2" class="form-control form-control-line">
-                            <c:forEach items="${listNameCategories}" var="nameCategory">
-                                <option value="${nameCategory}">${nameCategory}</option>
-                            </c:forEach>
-                        </select>
+                    <div class="form-group">
+                        <label class="col-md-12">Group Category</label>
+                        <div class="col-md-12">
+                            <select id="groupCategory2" name="groupCategory" class="form-control form-control-line">
+                                <c:forEach items="${listGroupCategories}" var="groupCategory">
+                                    <option value="${groupCategory}" ${groupCategory eq product.category.groupCategory ? 'selected' : ''}>
+                                            ${groupCategory}
+                                    </option>
+                                </c:forEach>
+                            </select>
 
-
+                        </div>
                     </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="col-md-12">Product Image</label>
-                    <div class="col-md-12">
-                        <c:if test="${product == null}">
-                            <input id="imageProduct" class="form-control form-control-line" type="file"
-                                   name="imageProduct" required="required"/><br/>
-                        </c:if>
-                        <c:if test="${product != null}">
-                            <input id="imageProduct" class="form-control form-control-line" type="file"
-                                   name="imageProduct"/><br/>
-                        </c:if>
-                        <img id="thumbnail" alt="Image Preview" style="width:20%; margin-top: 10px"
-                             src="data:image/jpg;base64,${product.base64Image}"/>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="price" class="col-md-12">Price</label>
-                    <div class="col-md-12">
-                        <input class="form-control form-control-line" type="text" id="priceUpdate"
-                               name="price" size="20" value="${product.price}"/>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="description" class="col-md-12">Description</label>
-                    <div class="col-md-12">
-                        <textarea class="form-control form-control-line" rows="5" cols="50"
-                                  name="description">${product.description}</textarea>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="col-sm-12">
-                        <button type="submit" class="btn btn-success">Save</button>
-                        <button type="button" onclick="history.go(-1);" class="btn btn-success">Cancel</button>
-                    </div>
-                </div>
-            </form>
-        </c:if>
-
-        <c:if test="${product == null}">
-            <form action="create_product" method="post" enctype="multipart/form-data">
-                <div class="cardHeader">
-                    <h2>Create Product</h2>
-                </div>
-
-                <div class="form-group">
-                    <label class="col-md-12">Product Name</label>
-                    <div class="col-md-12">
-                        <input class="form-control form-control-line" type="text"
-                               name="nameProduct" value="${product.nameProduct}"/>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-12">Group Category</label>
-                    <div class="col-md-12">
-                        <select id="groupCategory" name="groupCategory" class="form-control form-control-line">
-                            <c:forEach items="${listGroupCategories}" var="groupCategory">
-                                <option value="${groupCategory}" ${groupCategory eq product.category.groupCategory ? 'selected' : ''}>
-                                        ${groupCategory}
-                                </option>
-                            </c:forEach>
-                        </select>
-
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-12">Name Category</label>
-                    <div class="col-md-12">
-                        <select name="nameCategory" id="nameCategory" class="form-control form-control-line">
-                            <c:forEach items="${listNameCategories}" var="nameCategory">
-                                <option value="${nameCategory}">${nameCategory}</option>
-                            </c:forEach>
-                        </select>
+                    <div class="form-group">
+                        <label class="col-md-12">Name Category</label>
+                        <div class="col-md-12">
+                            <select name="nameCategory" id="nameCategory2" class="form-control form-control-line">
+                                <c:forEach items="${listNameCategories}" var="nameCategory">
+                                    <option value="${nameCategory}">${nameCategory}</option>
+                                </c:forEach>
+                            </select>
 
 
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-12">Product Image</label>
-                    <div class="col-md-12">
-                        <c:if test="${product == null}">
-                            <input id="imageProduct" class="form-control form-control-line" type="file"
-                                   name="imageProduct" required="required"/><br/>
-                        </c:if>
-                        <c:if test="${product != null}">
-                            <input id="imageProduct" class="form-control form-control-line" type="file"
-                                   name="imageProduct"/><br/>
-                        </c:if>
-                        <img id="thumbnail" alt="Image Preview" style="width:20%; margin-top: 10px"
-                             src="data:image/jpg;base64,${product.base64Image}"/>
+
+                    <div class="form-group">
+                        <label class="col-md-12">Product Image</label>
+                        <div class="col-md-12">
+                            <c:if test="${product == null}">
+                                <input id="imageProduct" class="form-control form-control-line" type="file"
+                                       name="imageProduct" required="required"/><br/>
+                            </c:if>
+                            <c:if test="${product != null}">
+                                <input id="imageProduct" class="form-control form-control-line" type="file"
+                                       name="imageProduct"/><br/>
+                            </c:if>
+                            <img id="thumbnail" alt="Image Preview" style="width:20%; margin-top: 10px"
+                                 src="data:image/jpg;base64,${product.base64Image}"/>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-12">Price</label>
-                    <div class="col-md-12">
-                        <input class="form-control form-control-line" type="text" id="price"
-                               name="price" size="20" value="${product.price}"/>
+
+                    <div class="form-group">
+                        <label for="price" class="col-md-12">Price</label>
+                        <div class="col-md-12">
+                            <input class="form-control form-control-line" type="text" id="priceUpdate"
+                                   name="price" size="20" value="${product.price}"/>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="description" class="col-md-12">Description</label>
-                    <div class="col-md-12">
-                        <textarea class="form-control form-control-line" rows="5" cols="50"
-                                  name="description" id="description">${product.description}</textarea>
+                    <div class="form-group">
+                        <label for="description" class="col-md-12">Description</label>
+                        <div class="col-md-12">
+                            <textarea class="form-control form-control-line" rows="5" cols="50"
+                                      name="description">${product.description}</textarea>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-12">
-                        <button type="submit" class="btn btn-success">Save</button>
-                        <button type="button" onclick="history.go(-1);" class="btn btn-success">Cancel
-                        </button>
+
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <button type="submit" class="btn btn-success">Save</button>
+                            <button type="button" onclick="history.go(-1);" class="btn btn-success">Cancel</button>
+                        </div>
                     </div>
-                </div>
-            </form>
-        </c:if>
+                </form>
+            </c:if>
+
+            <c:if test="${product == null}">
+                <form action="create_product" method="post" enctype="multipart/form-data">
+                    <div class="cardHeader">
+                        <h2>Create Product</h2>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-12">Product Name</label>
+                        <div class="col-md-12">
+                            <input class="form-control form-control-line" type="text"
+                                   name="nameProduct" value="${product.nameProduct}"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-12">Group Category</label>
+                        <div class="col-md-12">
+                            <select id="groupCategory" name="groupCategory" class="form-control form-control-line">
+                                <c:forEach items="${listGroupCategories}" var="groupCategory">
+                                    <option value="${groupCategory}" ${groupCategory eq product.category.groupCategory ? 'selected' : ''}>
+                                            ${groupCategory}
+                                    </option>
+                                </c:forEach>
+                            </select>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-12">Name Category</label>
+                        <div class="col-md-12">
+                            <select name="nameCategory" id="nameCategory" class="form-control form-control-line">
+                                <c:forEach items="${listNameCategories}" var="nameCategory">
+                                    <option value="${nameCategory}">${nameCategory}</option>
+                                </c:forEach>
+                            </select>
+
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-12">Product Image</label>
+                        <div class="col-md-12">
+                            <c:if test="${product == null}">
+                                <input id="imageProduct" class="form-control form-control-line" type="file"
+                                       name="imageProduct" required="required"/><br/>
+                            </c:if>
+                            <c:if test="${product != null}">
+                                <input id="imageProduct" class="form-control form-control-line" type="file"
+                                       name="imageProduct"/><br/>
+                            </c:if>
+                            <img id="thumbnail" alt="Image Preview" style="width:20%; margin-top: 10px"
+                                 src="data:image/jpg;base64,${product.base64Image}"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-12">Price</label>
+                        <div class="col-md-12">
+                            <input class="form-control form-control-line" type="text" id="price"
+                                   name="price" size="20" value="${product.price}"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-12">Description</label>
+                        <div class="col-md-12">
+                            <textarea class="form-control form-control-line" rows="5" cols="50"
+                                      name="description">${product.description}</textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <button type="submit" class="btn btn-success">Save</button>
+                            <button type="button" onclick="history.go(-1);" class="btn btn-success">Cancel
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </c:if>
 
         </div>
     </div>

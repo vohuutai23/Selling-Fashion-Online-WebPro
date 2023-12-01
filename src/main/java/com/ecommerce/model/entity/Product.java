@@ -76,6 +76,17 @@ public class Product {
         this.imageProduct = image;
         this.price = price;
     }
+    public Product(Category category, String nameProduct, String description, byte[] image, float price, Instant postDate,
+                   Instant updateDate) {
+        this.category = category;
+        this.nameProduct = nameProduct;
+        this.description = description;
+        this.imageProduct = image;
+        this.price = price;
+        this.postDate = postDate;
+        this.updateDate = updateDate;
+
+    }
     public Integer getId() {
         return id;
     }

@@ -156,11 +156,11 @@ public class ProductService {
     }
     private void readProductFields(Product product) throws ServletException, IOException {
         String nameProduct = request.getParameter("nameProduct");
-        System.out.println("name"+nameProduct);
+        System.out.println("name "+nameProduct);
         String description = request.getParameter("description");
-        System.out.println("mota"+description);
+        System.out.println("mota " +description);
         Float price = Float.parseFloat(request.getParameter("price"));
-        System.out.println("giá"+price);
+        System.out.println("giá "+price);
 
         Instant postDate = Instant.now(); // Lấy thời điểm hiện tại dưới dạng Instant
         System.out.println(postDate);
@@ -177,8 +177,8 @@ public class ProductService {
 
         String groupCategory = request.getParameter("groupCategory");
         String nameCategory = request.getParameter("nameCategory");
-
-
+        System.out.println(groupCategory);
+        System.out.println(nameCategory);
         Category category = categoryDAO.findByNameAndGroup(nameCategory, groupCategory);
         System.out.println(category);
         product.setCategory(category);
