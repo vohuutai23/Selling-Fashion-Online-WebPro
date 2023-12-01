@@ -1,54 +1,62 @@
 package com.ecommerce.model.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.validation.constraints.Size;
-import java.time.Instant;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "order_detail")
 public class OrderDetail {
-    @Id
-    @Column(name = "id_orderDetail", nullable = false)
-    private Integer id;
+    @EmbeddedId
+    private OrderDetailId id;
 
-    @Size(max = 50)
-    @Column(name = "shipping_address", length = 50)
-    private String shippingAddress;
+    @MapsId("idOrder")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "id_order", nullable = false)
+    private ProductOrder idOrder;
 
-    @Column(name = "fee")
-    private Float fee;
+    @MapsId("idProduct")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "id_product", nullable = false)
+    private Product idProduct;
 
-    @Column(name = "total_price")
+    @NotNull
+    @Column(name = "quantity", nullable = false)
+    private Integer quantity;
+
+    @NotNull
+    @Column(name = "total_price", nullable = false)
     private Float totalPrice;
 
-    @Column(name = "date_order")
-    private Instant dateOrder;
-
-    public Integer getId() {
+    public OrderDetailId getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(OrderDetailId id) {
         this.id = id;
     }
 
-    public String getShippingAddress() {
-        return shippingAddress;
+    public ProductOrder getIdOrder() {
+        return idOrder;
     }
 
-    public void setShippingAddress(String shippingAddress) {
-        this.shippingAddress = shippingAddress;
+    public void setIdOrder(ProductOrder idOrder) {
+        this.idOrder = idOrder;
     }
 
-    public Float getFee() {
-        return fee;
+    public Product getIdProduct() {
+        return idProduct;
     }
 
-    public void setFee(Float fee) {
-        this.fee = fee;
+    public void setIdProduct(Product idProduct) {
+        this.idProduct = idProduct;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 
     public Float getTotalPrice() {
@@ -57,14 +65,6 @@ public class OrderDetail {
 
     public void setTotalPrice(Float totalPrice) {
         this.totalPrice = totalPrice;
-    }
-
-    public Instant getDateOrder() {
-        return dateOrder;
-    }
-
-    public void setDateOrder(Instant dateOrder) {
-        this.dateOrder = dateOrder;
     }
 
 }

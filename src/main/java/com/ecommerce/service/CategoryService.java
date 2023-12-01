@@ -8,8 +8,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Objects;
+//import org.apache.commons.text.StringEscapeUtils;
+
 
 import static com.ecommerce.util.CommonUtil.*;
 public class CategoryService {
@@ -18,10 +21,13 @@ public class CategoryService {
 	private final HttpServletRequest request;
 	private final HttpServletResponse response;
 
-	public CategoryService(HttpServletRequest request, HttpServletResponse response) {
+	public CategoryService(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
 		this.request = request;
 		this.response = response;
 		categoryDAO = new CategoryDAO();
+		request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html; charset=UTF-8");
+		response.setCharacterEncoding("UTF-8");
 	}
 
 	public void listCategory() throws ServletException, IOException {
@@ -41,17 +47,20 @@ public class CategoryService {
 	}
 
 	public void createCategory() throws ServletException, IOException {
-		String detailCategory = request.getParameter("detailCategory");
-		String nameGroup = request.getParameter("nameCategory");
-		Category existCategory = categoryDAO.findByName(detailCategory);
+		String groupCategory = request.getParameter("groupCategory");
+		String nameCategory = request.getParameter("nameCategory");
+//		groupCategory = StringEscapeUtils.unescapeHtml4(groupCategory);
+//		nameCategory = StringEscapeUtils.unescapeHtml4(nameCategory);
+		Category existCategory = categoryDAO.findByName(nameCategory);
 
 		if (existCategory != null) {
 			messageForAdmin(
-					String.format("Could not create category. A category with name %s already exists.", detailCategory),
+					String.format("Could not create category. A category with name %s already exists.", nameCategory),
 					request, response);
 
 		} else {
-			Category newCategory = new Category(nameGroup, detailCategory);
+			System.out.println("nameCate" + nameCategory + "group" + groupCategory);
+			Category newCategory = new Category(nameCategory, groupCategory);
 			categoryDAO.create(newCategory);
 			listCategory("New category created successfully.");
 		}
@@ -74,20 +83,21 @@ public class CategoryService {
 
 	public void updateCategory() throws ServletException, IOException {
 		int categoryId = Integer.parseInt(request.getParameter("categoryId"));
-		String detailCategory = request.getParameter("detailCategory");
-		String nameGroup = request.getParameter("nameCategory");
-
+		String groupCategory = request.getParameter("groupCategory");
+		String nameCategory = request.getParameter("nameCategory");
+//		groupCategory = StringEscapeUtils.unescapeHtml4(groupCategory);
+//		nameCategory = StringEscapeUtils.unescapeHtml4(nameCategory);
 		Category categoryById = categoryDAO.get(categoryId);
-		Category categoryByName = categoryDAO.findByName(detailCategory);
+		Category categoryByName = categoryDAO.findByName(groupCategory);
 
 		if (categoryByName != null && !Objects.equals(categoryById.getId(), categoryByName.getId())) {
 			messageForAdmin(
-					String.format("Could not update category. A category with name %s already exists.", detailCategory),
+					String.format("Could not update category. A category with name %s already exists.", groupCategory),
 					request, response);
 
 		} else {
-			categoryById.setDetailCategory(detailCategory);
-			categoryById.setNameCategory(nameGroup);
+			categoryById.setGroupCategory(groupCategory);
+			categoryById.setNameCategory(nameCategory);
 			categoryDAO.update(categoryById);
 			listCategory("Category has been updated successfully.");
 		}

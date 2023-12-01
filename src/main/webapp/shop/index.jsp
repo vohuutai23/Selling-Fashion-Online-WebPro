@@ -11,6 +11,12 @@
 
 <html>
 <head>
+    <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+    <style>
+        h4 {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
     <title>HomePage</title>
 </head>
 <body>
@@ -41,7 +47,9 @@
                         </figcaption>
                     </figure>
                     <h4><a href="view_product?id=${product.id}">${product.nameProduct}</a></h4>
-<%--                    <p><span class="emphasis"><%@include file="product_rating.jsp" %></span></p>--%>
+<%--                    <h4><a href="view_product?id=${product.id}" style="font-family: 'Inter', sans-serif;">${product.nameProduct}</a></h4>--%>
+                    <h4>Tài ngu</h4>
+                <%--                    <p><span class="emphasis"><%@include file="product_rating.jsp" %></span></p>--%>
                     <p><span class="emphasis">$${product.price}</span></p>
                 </div>
             </c:forEach>

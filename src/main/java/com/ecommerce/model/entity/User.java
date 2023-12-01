@@ -1,5 +1,8 @@
 package com.ecommerce.model.entity;
 
+import org.apache.commons.text.StringEscapeUtils;
+
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;

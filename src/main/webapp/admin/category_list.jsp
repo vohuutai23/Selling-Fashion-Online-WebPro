@@ -1,4 +1,6 @@
-<%@ page contentType="text/html;charset=ISO-8859-1" language="java" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html>
@@ -17,7 +19,7 @@
     <!-- DataTables JS -->
     <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
 
-    <!-- Custom CSS và JS c?a b?n -->
+    <!-- Custom CSS vÃ  JS c?a b?n -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/admin/styles/assets/css/list_customer_style.css">
 
 
@@ -74,8 +76,9 @@
                         <tr>
                             <td>${status.index + 1}</td>
                             <td>${category.id}</td>
-                            <td>${category.detailCategory}</td>
                             <td>${category.nameCategory}</td>
+                            <td>${category.groupCategory}</td>
+
                             <td>
                                 <a class="btn waves-effect waves-light btn btn-info hidden-sm-down text-white"
                                    href="edit_category?id=${category.id}">Edit</a> &nbsp;

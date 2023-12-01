@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Objects;
 
@@ -19,10 +20,13 @@ public class CustomerService {
     private final HttpServletResponse response;
     private final CustomerDAO customerDAO;
 
-    public CustomerService(HttpServletRequest request, HttpServletResponse response) {
+    public CustomerService(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
         this.request = request;
         this.response = response;
         customerDAO = new CustomerDAO();
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html; charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
     }
 
     public void listCustomer() throws ServletException, IOException {
@@ -52,18 +56,21 @@ public class CustomerService {
         if (email != null && !"".equals(email)) {
             customer.setEmail(email);
         }
-
+        System.out.println("pass" + password);
         customer.setNameCustomer(fullName);
 
         if (password != null && !"".equals(password)) {
             // String encryptedPassword = HashUtility.generateMD5(password);
             customer.setPassword(password);
+            System.out.println("check pass");
         }
-
+        System.out.println("check pass 1");
         customer.setPhone(phone);
         customer.setAddress(address);
 
         customer.setCountry(country);
+        boolean active = Boolean.parseBoolean(request.getParameter("active"));
+        customer.setActive(active);
     }
 
     public void showCustomerNewForm() throws ServletException, IOException {

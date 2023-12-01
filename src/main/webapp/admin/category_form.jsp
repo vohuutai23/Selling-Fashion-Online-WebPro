@@ -1,10 +1,10 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-         pageEncoding="ISO-8859-1" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
+  <meta charset="UTF-8">
   <title>
     <c:if test="${category != null}">Edit Category - Administration</c:if>
     <c:if test="${category == null}">Create Category - Administration</c:if>
@@ -20,7 +20,7 @@
   <!-- DataTables JS -->
   <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
 
-  <!-- Custom CSS và JS c?a b?n -->
+  <!-- Custom CSS vÃ  JS c?a b?n -->
   <link rel="stylesheet" href="${pageContext.request.contextPath}/admin/styles/assets/css/list_customer_style.css">
 
 
@@ -56,14 +56,31 @@
           </div>
           <input type="hidden" name="categoryId" value="${category.id}">
           <div class="form-group">
-            <label class="col-md-12">Name</label>
+            <label class="col-md-12">Group</label>
             <div class="col-md-12">
-              <input class="form-control form-control-line" type="text" name="detailCategory" size="20"
-                     value="${category.detailCategory}" required="required" maxlength="64">
+              <input class="form-control form-control-line" type="text" name="groupCategory" size="20"
+                     value="${category.groupCategory}" required="required" maxlength="64">
             </div>
           </div>
-          <div class="form-group">
+          <%--<div class="form-group">
             <label class="col-md-12">Group</label>
+            <div class="col-md-12">
+              <select name="groupCategory" class="form-control form-control-line">
+                <c:forEach items="${listCategories}" var="groupCategory">
+                  <c:if test="${category.id eq category.id}">
+                    <option value="${category.id}" selected>
+                  </c:if>
+                  <c:if test="${category.id ne category.id}">
+                    <option value="${category.id}">
+                  </c:if>
+                  ${category.groupCategory}
+                  </option>
+                </c:forEach>
+              </select>
+            </div>
+          </div>--%>
+          <div class="form-group">
+            <label class="col-md-12">Name</label>
             <div class="col-md-12">
               <input class="form-control form-control-line" type="text" name="nameCategory" size="20"
                      value="${category.nameCategory}" required="required" maxlength="64">
@@ -85,14 +102,14 @@
           </div>
           <input type="hidden" name="categoryId" value="${category.id}">
           <div class="form-group">
-            <label class="col-md-12">Name</label>
+            <label class="col-md-12">Group</label>
             <div class="col-md-12">
-              <input class="form-control form-control-line" type="text" name="detailCategory" size="20"
-                     value="${category.detailCategory}" required="required" maxlength="64">
+              <input class="form-control form-control-line" type="text" name="groupCategory" size="20"
+                     value="${category.groupCategory}" required="required" maxlength="64">
             </div>
           </div>
           <div class="form-group">
-            <label class="col-md-12">Group</label>
+            <label class="col-md-12">Name</label>
             <div class="col-md-12">
               <input class="form-control form-control-line" type="text" name="nameCategory" size="20"
                      value="${category.nameCategory}" required="required" maxlength="64">

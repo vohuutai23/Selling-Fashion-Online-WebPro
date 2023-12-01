@@ -3,6 +3,7 @@ package com.ecommerce.model.entity;
 import com.ecommerce.model.entity.Review;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.Instant;
 import java.util.Date;
@@ -50,6 +51,10 @@ public class Customer {
     @Size(max = 50)
     @Column(name = "password", length = 50)
     private String password;
+
+    @NotNull
+    @Column(name = "active", nullable = false)
+    private boolean active;
 
     public Integer getId() {
         return id;
@@ -118,6 +123,14 @@ public class Customer {
     //private Set<Review> reviews;// = new HashSet<>(0);
     //private Set<Review> Reviews = new HashSet<>(0);
     private Set<Review> reviews = new LinkedHashSet<>();
+
+    public boolean getActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 
     public Set<Review> getReviews() {
         return this.reviews;

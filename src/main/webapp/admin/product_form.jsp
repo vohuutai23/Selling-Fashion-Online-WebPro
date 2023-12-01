@@ -7,7 +7,8 @@
 --%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
 
 <html>
 <head>
@@ -59,124 +60,163 @@
 
     <div class="list_table">
         <div class="table-responsive">
-<%--            <div class="col-lg-8 col-xlg-9 col-md-7">--%>
-<%--                <div class="card">--%>
-<%--                    <!-- Tab panes -->--%>
-<%--                    <div class="card-body">--%>
-                        <c:if test="${product != null}">
+        <c:if test="${product != null}">
 
-                            <form action="update_product" method="post" enctype="multipart/form-data">
-                                <div class="cardHeader">
-                                    <h2>Edit Product</h2>
-                                </div>
-                                <input type="hidden" name="productId" value="${product.id}">
-<%--                                                        <div class="form-group">--%>
-<%--                                                            <label class="col-md-12">Category</label>--%>
-<%--                                                            <div class="col-md-12">--%>
-<%--                                                                <select name="category" class="form-control form-control-line">--%>
-<%--                                                                    <c:forEach items="${listCategories}" var="category">--%>
-<%--                                                                        <c:if test="${category.categoryId eq product.category.categoryId}">--%>
-<%--                                                                            <option value="${category.categoryId}" selected>--%>
-<%--                                                                        </c:if>--%>
-<%--                                                                        <c:if test="${category.categoryId ne product.category.categoryId}">--%>
-<%--                                                                            <option value="${category.categoryId}">--%>
-<%--                                                                        </c:if>--%>
-<%--                                                                        ${category.name}--%>
-<%--                                                                        </option>--%>
-<%--                                                                    </c:forEach>--%>
-<%--                                                                </select>--%>
-<%--                                                            </div>--%>
-<%--                                                        </div>--%>
-                                <div class="form-group">
-                                    <label class="col-md-12">Name Product</label>
-                                    <div class="col-md-12">
-                                        <input class="form-control form-control-line" type="text" id="title"
-                                               name="nameProduct" value="${product.nameProduct}"/>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-12">Product Image</label>
-                                    <div class="col-md-12">
-                                        <c:if test="${product == null}">
-                                            <input id="imageProduct" class="form-control form-control-line" type="file"
-                                                   name="imageProduct" required="required"/><br/>
-                                        </c:if>
-                                        <c:if test="${product != null}">
-                                            <input id="imageProduct" class="form-control form-control-line" type="file"
-                                                   name="imageProduct"/><br/>
-                                        </c:if>
-                                        <img id="thumbnail" alt="Image Preview" style="width:20%; margin-top: 10px"
-                                             src="data:image/jpg;base64,${product.base64Image}"/>
-                                    </div>
-                                </div>
-                                <%--<div class="form-group">
-                                    <label class="col-md-12">Product Image</label>
-                                    <div class="col-md-12">
-                                        <!-- Hiển thị hình ảnh hiện tại -->
-                                        <c:if test="${not empty product.imageProduct}">
-                                            <img src="data:image/jpeg;base64,${product.base64Image}" alt="Product Image" style="max-width: 200px; max-height: 200px;"/>
-                                        </c:if>
-                                        <!-- Trường tải lên hình ảnh mới -->
-                                        <input type="file" id="thumbnail" name="imageProduct" class="form-control form-control-line" onchange="previewImage(event)"/>
-                                    </div>
-                                </div>--%>
-                                <div class="form-group">
-                                    <label for="price" class="col-md-12">Price</label>
-                                    <div class="col-md-12">
-                                        <input class="form-control form-control-line" type="text" id="price"
-                                               name="price" size="20" value="${product.price}"/>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="description" class="col-md-12">Description</label>
-                                    <div class="col-md-12">
-                                        <textarea class="form-control form-control-line" rows="5" cols="50"
-                                                  name="description">${product.description}</textarea>
-                                    </div>
-                                </div>
+            <form action="update_product" method="post" enctype="multipart/form-data">
+                <div class="cardHeader">
+                    <h2>Edit Product</h2>
+                </div>
+                <input type="hidden" name="productId" value="${product.id}">
+                <div class="form-group">
+                    <label class="col-md-12">Name Product</label>
+                    <div class="col-md-12">
+                        <input class="form-control form-control-line" type="text" id="title"
+                               name="nameProduct" value="${product.nameProduct}"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-12">Group Category</label>
+                    <div class="col-md-12">
+                        <select id="groupCategory2" name="groupCategory" class="form-control form-control-line">
+                            <c:forEach items="${listGroupCategories}" var="groupCategory">
+                                <option value="${groupCategory}" ${groupCategory eq product.category.groupCategory ? 'selected' : ''}>
+                                        ${groupCategory}
+                                </option>
+                            </c:forEach>
+                        </select>
 
-                                <div class="form-group">
-                                    <div class="col-sm-12">
-                                        <button type="submit" class="btn btn-success">Save</button>
-                                        <button type="button" onclick="history.go(-1);" class="btn btn-success">Cancel</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </c:if>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-12">Name Category</label>
+                    <div class="col-md-12">
+                        <select name="nameCategory" id="nameCategory2" class="form-control form-control-line">
+                            <c:forEach items="${listNameCategories}" var="nameCategory">
+                                <option value="${nameCategory}">${nameCategory}</option>
+                            </c:forEach>
+                        </select>
 
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-12">Product Image</label>
+                    <div class="col-md-12">
                         <c:if test="${product == null}">
-                            <form action="create_product" method="post" enctype="multipart/form-data">
-                                <div class="cardHeader">
-                                    <h2>Create Product</h2>
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="col-md-12">Product Name</label>
-                                    <div class="col-md-12">
-                                        <input class="form-control form-control-line" type="text"
-                                               name="nameProduct" value="${product.nameProduct}"/>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="description" class="col-md-12">Description</label>
-                                    <div class="col-md-12">
-                                        <textarea class="form-control form-control-line" rows="5" cols="50"
-                                                  name="description" id="description">${product.description}</textarea>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-sm-12">
-                                        <button type="submit" class="btn btn-success">Save</button>
-                                        <button type="button" onclick="history.go(-1);" class="btn btn-success">Cancel
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
+                            <input id="imageProduct" class="form-control form-control-line" type="file"
+                                   name="imageProduct" required="required"/><br/>
                         </c:if>
-<%--                    </div>--%>
-<%--                </div>--%>
-<%--            </div>--%>
+                        <c:if test="${product != null}">
+                            <input id="imageProduct" class="form-control form-control-line" type="file"
+                                   name="imageProduct"/><br/>
+                        </c:if>
+                        <img id="thumbnail" alt="Image Preview" style="width:20%; margin-top: 10px"
+                             src="data:image/jpg;base64,${product.base64Image}"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="price" class="col-md-12">Price</label>
+                    <div class="col-md-12">
+                        <input class="form-control form-control-line" type="text" id="priceUpdate"
+                               name="price" size="20" value="${product.price}"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="description" class="col-md-12">Description</label>
+                    <div class="col-md-12">
+                        <textarea class="form-control form-control-line" rows="5" cols="50"
+                                  name="description">${product.description}</textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <button type="submit" class="btn btn-success">Save</button>
+                        <button type="button" onclick="history.go(-1);" class="btn btn-success">Cancel</button>
+                    </div>
+                </div>
+            </form>
+        </c:if>
+
+        <c:if test="${product == null}">
+            <form action="create_product" method="post" enctype="multipart/form-data">
+                <div class="cardHeader">
+                    <h2>Create Product</h2>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-12">Product Name</label>
+                    <div class="col-md-12">
+                        <input class="form-control form-control-line" type="text"
+                               name="nameProduct" value="${product.nameProduct}"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-12">Group Category</label>
+                    <div class="col-md-12">
+                        <select id="groupCategory" name="groupCategory" class="form-control form-control-line">
+                            <c:forEach items="${listGroupCategories}" var="groupCategory">
+                                <option value="${groupCategory}" ${groupCategory eq product.category.groupCategory ? 'selected' : ''}>
+                                        ${groupCategory}
+                                </option>
+                            </c:forEach>
+                        </select>
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-12">Name Category</label>
+                    <div class="col-md-12">
+                        <select name="nameCategory" id="nameCategory" class="form-control form-control-line">
+                            <c:forEach items="${listNameCategories}" var="nameCategory">
+                                <option value="${nameCategory}">${nameCategory}</option>
+                            </c:forEach>
+                        </select>
+
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-12">Product Image</label>
+                    <div class="col-md-12">
+                        <c:if test="${product == null}">
+                            <input id="imageProduct" class="form-control form-control-line" type="file"
+                                   name="imageProduct" required="required"/><br/>
+                        </c:if>
+                        <c:if test="${product != null}">
+                            <input id="imageProduct" class="form-control form-control-line" type="file"
+                                   name="imageProduct"/><br/>
+                        </c:if>
+                        <img id="thumbnail" alt="Image Preview" style="width:20%; margin-top: 10px"
+                             src="data:image/jpg;base64,${product.base64Image}"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-12">Price</label>
+                    <div class="col-md-12">
+                        <input class="form-control form-control-line" type="text" id="price"
+                               name="price" size="20" value="${product.price}"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="description" class="col-md-12">Description</label>
+                    <div class="col-md-12">
+                        <textarea class="form-control form-control-line" rows="5" cols="50"
+                                  name="description" id="description">${product.description}</textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <button type="submit" class="btn btn-success">Save</button>
+                        <button type="button" onclick="history.go(-1);" class="btn btn-success">Cancel
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </c:if>
+
         </div>
     </div>
     <!-- ================= New Customers ================ -->
@@ -214,6 +254,115 @@
         reader.readAsDataURL(file);
     }
 </script>
+<script type="text/javascript">
+    function htmlDecode(input) {
+        var doc = new DOMParser().parseFromString(input, "text/html");
+        return doc.documentElement.textContent;
+    }
+    $(document).ready(function() {
+        $('#groupCategory').change(function() {
+            var selectedGroup = $(this).val();
+            console.log("Group Category changed to: " + selectedGroup);
+            $.ajax({
+                url: 'get-name-categories', // Bỏ dấu '/' để tránh lỗi tương đối đường dẫn
+                type: 'GET',
+                data: { groupCategory: selectedGroup },
+
+                /*success: function(response) {
+                    console.log("Response:", response); // Kiểm tra dữ liệu trả về
+                    var nameCategorySelect = $('#nameCategory');
+                    nameCategorySelect.empty();
+                    response.forEach(function(categoryName) {
+                        console.log("Adding category:", categoryName); // Kiểm tra từng category
+                        nameCategorySelect.append(new Option(categoryName, categoryName));
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error('AJAX Error:', status, error);
+                    console.error('Response:', xhr.responseText);
+                }
+*/
+                success: function(response) {
+                    console.log("Response:", response);
+                    var nameCategorySelect = $('#nameCategory');
+                    nameCategorySelect.empty();
+                    response.forEach(function(categoryName) {
+                        var decodedName = htmlDecode(categoryName); // Giải mã các ký tự HTML
+                        console.log("Adding category:", decodedName);
+                        nameCategorySelect.append(new Option(decodedName, decodedName));
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error('AJAX Error:', status, error);
+                    console.error('Response:', xhr.responseText);
+                }
+            });
+        });
+    });
+</script>
+<script type="text/javascript">
+    function htmlDecode(input) {
+        var doc = new DOMParser().parseFromString(input, "text/html");
+        return doc.documentElement.textContent;
+    }
+    $(document).ready(function() {
+        $('#groupCategory2').change(function() {
+            var selectedGroup = $(this).val();
+            console.log("Group Category changed to: " + selectedGroup);
+            $.ajax({
+                url: 'get-name-categories', // Bỏ dấu '/' để tránh lỗi tương đối đường dẫn
+                type: 'GET',
+                data: { groupCategory: selectedGroup },
+
+                success: function(response) {
+                    console.log("Response:", response);
+                    var nameCategorySelect = $('#nameCategory2');
+                    nameCategorySelect.empty();
+                    response.forEach(function(categoryName) {
+                        var decodedName = htmlDecode(categoryName); // Giải mã các ký tự HTML
+                        console.log("Adding category:", decodedName);
+                        nameCategorySelect.append(new Option(decodedName, decodedName));
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error('AJAX Error:', status, error);
+                    console.error('Response:', xhr.responseText);
+                }
+            });
+        });
+    });
+</script>
+<%--<script>
+    $(document).ready(function() {
+        $('#groupCategory').change(function() {
+            var selectedGroup = $(this).val();
+            console.log("Group Category changed to: " + selectedGroup);
+            $.ajax({
+                url: '/get-name-categories',
+                type: 'GET',
+                data: { groupCategory: selectedGroup },
+                success: function(response) {
+                    var nameCategorySelect = $('#nameCategory');
+                    nameCategorySelect.empty();
+                    $.each(response, function(index, category) {
+                        nameCategorySelect.append($('<option>', {
+                            value: category.id,
+                            text: category.name
+                        }));
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error('AJAX Error:', status, error);
+                    console.error('Response:', xhr.responseText);
+                }
+
+            });
+        });
+    });
+
+
+</script>--%>
+
 </body>
 
 </html>

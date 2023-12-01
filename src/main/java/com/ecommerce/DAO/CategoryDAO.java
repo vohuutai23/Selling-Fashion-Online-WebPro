@@ -2,7 +2,9 @@ package com.ecommerce.DAO;
 
 import com.ecommerce.model.entity.Category;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CategoryDAO extends JPADao<Category> implements GenericDAO<Category> {
 
@@ -36,12 +38,41 @@ public class CategoryDAO extends JPADao<Category> implements GenericDAO<Category
         return super.countWithNamedQuery("Category.countAll");
     }
 
-    public Category findByName(String detailCategory) {
-        List<Category> result = super.findWithNamedQuery("Category.findByName", "detailCategory", detailCategory);
+
+    public List<Category> listGroupCategory() {
+        return super.findWithNamedQuery("Category.findDistinctGroupCategories");
+    }
+
+    public List<Category> listNameCategoryByGroup(String nameGroup) {
+        return super.findWithNamedQuery("Category.listNameCategoryByGroup", "groupCategory", nameGroup);
+    }
+
+    public Category findByName(String nameCategory) {
+        List<Category> result = super.findWithNamedQuery("Category.findByName", "nameCategory", nameCategory);
 
         if (result != null && result.size() > 0) {
             return result.get(0);
         }
         return null;
     }
+    /*public List<Category> findByNameAndGroup(String nameCategory, String groupCategory) {
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("nameCategory", nameCategory);
+        parameters.put("groupCategory", groupCategory);
+
+        return super.findWithNamedQuery("Category.findByNameAndGroup", parameters);
+    }*/
+    public Category findByNameAndGroup(String nameCategory, String groupCategory) {
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("nameCategory", nameCategory);
+        parameters.put("groupCategory", groupCategory);
+
+        List<Category> result = super.findWithNamedQuery("Category.findByNameAndGroup", parameters);
+
+        if (!result.isEmpty()) {
+            return result.get(0);
+        }
+        return null;
+    }
+
 }

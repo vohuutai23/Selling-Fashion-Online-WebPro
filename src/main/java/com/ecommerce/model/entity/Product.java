@@ -1,6 +1,7 @@
 package com.ecommerce.model.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.Instant;
 import java.util.Base64;
@@ -21,7 +22,7 @@ public class Product {
     @Column(name = "id_product", nullable = false)
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_category")
     private Category category;
 
@@ -29,9 +30,7 @@ public class Product {
     @Column(name = "name_product", length = 100)
     private String nameProduct;
 
-    @Size(max = 100)
-    @Column(name = "type", length = 100)
-    private String type;
+
 
     @Lob
     @Column(name = "description")
@@ -40,15 +39,25 @@ public class Product {
     @Column(name = "image_product")
     private byte[] imageProduct;
 
-    @Size(max = 20)
-    @Column(name = "size", length = 20)
-    private String size;
+
 
     @Column(name = "price")
     private Float price;
 
     @Column(name = "post_date")
     private Instant postDate;
+
+    @NotNull
+    @Column(name = "update_date", nullable = false)
+    private Instant updateDate;
+
+    public Instant getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(Instant updateDate) {
+        this.updateDate = updateDate;
+    }
 
 //    private String base64Image;
 
@@ -99,13 +108,7 @@ public class Product {
         this.nameProduct = nameProduct;
     }
 
-    public String getType() {
-        return type;
-    }
 
-    public void setType(String type) {
-        this.type = type;
-    }
 
     public String getDescription() {
         return description;
@@ -123,13 +126,7 @@ public class Product {
         this.imageProduct = imageProduct;
     }
 
-    public String getSize() {
-        return size;
-    }
 
-    public void setSize(String size) {
-        this.size = size;
-    }
 
     public Float getPrice() {
         return price;

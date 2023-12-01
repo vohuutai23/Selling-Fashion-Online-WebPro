@@ -1,4 +1,5 @@
-<%@ page contentType="text/html;charset=ISO-8859-1" language="java" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
@@ -7,7 +8,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Danh S·ch Kh·ch H‡ng</title>
+    <title>Danh S√°ch Kh√°ch H√†ng</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
     <!-- jQuery -->
@@ -19,7 +20,7 @@
     <!-- DataTables JS -->
     <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
 
-    <!-- Custom CSS v‡ JS c?a b?n -->
+    <!-- Custom CSS v√† JS c?a b?n -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/admin/styles/assets/css/list_customer_style.css">
 
 
@@ -73,6 +74,7 @@
                     <th>Email</th>
                     <th>Country</th>
                     <th>Register Date</th>
+                    <th>Active</th>
                     <th>Action</th>
                 </tr>
                 </thead>
@@ -90,6 +92,10 @@
 
                         <td>${customer.country}</td>
                         <td>${customer.registerDate}</td>
+                        <td class="active">
+                            <c:if test="${customer.active == true}">Enable</c:if>
+                            <c:if test="${customer.active == false}">Disable</c:if>
+                        </td>
                         <td>
                             <a class="btn waves-effect waves-light btn btn-info hidden-sm-down text-white"
                                href="edit_customer?id=${customer.id}">Edit</a> &nbsp;

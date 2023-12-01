@@ -1,6 +1,7 @@
 package com.ecommerce.model.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -8,8 +9,16 @@ import java.util.Set;
 @Entity
 @Table(name = "category")
 @NamedQueries({ @NamedQuery(name = "Category.findAll", query = "SELECT c FROM Category c"),
+        @NamedQuery(name = "Category.listNameCategoryByGroup", query = "SELECT c.nameCategory FROM Category c WHERE c.groupCategory = :groupCategory"),
+        @NamedQuery(name = "Category.findDistinctGroupCategories",
+                query = "SELECT DISTINCT c.groupCategory FROM Category c"),
+        @NamedQuery(
+                name = "Category.findByNameAndGroup",
+                query = "SELECT c FROM Category c WHERE c.nameCategory = :nameCategory AND c.groupCategory = :groupCategory"
+        ),
+        @NamedQuery(name = "Category.findNameCategory", query = "SELECT c FROM Category c WHERE c.nameCategory = :nameCategory"),
         @NamedQuery(name = "Category.countAll", query = "SELECT COUNT(c) FROM Category c"),
-        @NamedQuery(name = "Category.findByName", query = "SELECT c FROM Category c WHERE c.detailCategory = :detailCategory") })
+        @NamedQuery(name = "Category.findByName", query = "SELECT c FROM Category c WHERE c.nameCategory = :nameCategory") })
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,26 +32,30 @@ public class Category {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "category")
     private Set<Product> products = new LinkedHashSet<>();
 
-    @Size(max = 50)
-    @Column(name = "detail_category", length = 50)
-    private String detailCategory;
 
-    public String getDetailCategory() {
-        return detailCategory;
+
+    @Size(max = 30)
+    @NotNull
+    @Column(name = "group_category", nullable = false, length = 30)
+    private String groupCategory;
+
+    public String getGroupCategory() {
+        return groupCategory;
     }
 
-    public void setDetailCategory(String detailCategory) {
-        this.detailCategory = detailCategory;
+    public void setGroupCategory(String groupCategory) {
+        this.groupCategory = groupCategory;
     }
+
 
 
     public Category()
     {
 
     }
-    public Category(String nameCategory, String detailCategory) {
+    public Category(String nameCategory, String groupCategory) {
         this.nameCategory = nameCategory;
-        this.detailCategory = detailCategory;
+        this.groupCategory = groupCategory;
     }
 
     public Category(String nameCategory, Set<Product> products) {
