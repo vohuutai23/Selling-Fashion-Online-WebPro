@@ -22,10 +22,10 @@
                         Phân loại
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="sort=${'newest'}">Mới nhất</a></li>
-                        <li><a class="dropdown-item" href="sort=${'best_selling'}">Bán chạy</a></li>
-                        <li><a class="dropdown-item" href="sort=${'price_inc'}">Giá từ thấp đến cao</a></li>
-                        <li><a class="dropdown-item" href="sort=${'price_dec'}">Giá từ cao đến thấp</a></li>
+                        <li><a class="dropdown-item" href="list_product?sort=${'newest'}">Mới nhất</a></li>
+<%--                        <li><a class="dropdown-item" href="list_product?sort=${'best_selling'}">Bán chạy</a></li>--%>
+                        <li><a class="dropdown-item" href="list_product?sort=${'price_inc'}">Giá từ thấp đến cao</a></li>
+                        <li><a class="dropdown-item" href="list_product?sort=${'price_dec'}">Giá từ cao đến thấp</a></li>
                         <%--                        <li><a class="dropdown-item" href="#">Another action</a></li>--%>
                         <%--                        <li><a class="dropdown-item" href="#">Something else here</a></li>--%>
                         <%--                        <li><hr class="dropdown-divider"></li>--%>
@@ -37,7 +37,7 @@
         <div class="row">
             <!-- Sidebar Categories Component -->
             <div class="col-md-3 mt-5">
-                <h1>Thanh các selection cho category dưới này:</h1>
+                <h1>Thanh các selection cho category dưới này hehe:</h1>
 
             </div>
             <!-- Products -->

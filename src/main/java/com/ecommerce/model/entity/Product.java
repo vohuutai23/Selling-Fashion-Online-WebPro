@@ -13,10 +13,11 @@ import java.util.Base64;
         @NamedQuery(name = "Product.search", query = "SELECT p FROM Product p WHERE p.nameProduct LIKE '%' || :keyword || '%' OR p.description LIKE '%' || :keyword || '%'"),
         @NamedQuery(name = "Product.findByTitle", query = "SELECT p FROM Product p WHERE p.nameProduct = :nameProduct"),
         @NamedQuery(name = "Product.findNew", query = "SELECT p FROM Product p ORDER BY p.postDate DESC"),
+
         @NamedQuery(name = "Product.findByProductAndNewest", query = "SELECT p FROM Product p ORDER BY p.postDate DESC "),
         @NamedQuery(name = "Product.findByProductAndPriceDec", query = "SELECT p FROM Product p ORDER BY p.price DESC"),
         @NamedQuery(name = "Product.findByProductAndPriceInc", query = "SELECT p FROM Product p ORDER BY p.price ASC"),
-        @NamedQuery(name = "Product.findByCategoryAndPriceInc", query = "SELECT p FROM Product p JOIN Category c ON p.idCategory = c.id AND c.id = :categoryId ORDER BY p.postDate DESC "),
+        @NamedQuery(name = "Product.findByCategoryAndNewest", query = "SELECT p FROM Product p JOIN Category c ON p.idCategory = c.id AND c.id = :categoryId ORDER BY p.postDate DESC "),
         @NamedQuery(name = "Product.findByCategoryAndPriceDec", query = "SELECT p FROM Product p JOIN Category c ON p.idCategory = c.id AND c.id = :categoryId ORDER BY p.price DESC"),
         @NamedQuery(name = "Product.findByCategoryAndPriceInc", query = "SELECT p FROM Product p JOIN Category c ON p.idCategory = c.id AND c.id = :categoryId ORDER BY p.price ASC")})
 public class Product {
