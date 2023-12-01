@@ -1,9 +1,11 @@
 package com.ecommerce.model.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.Instant;
 import java.util.Base64;
+import java.util.Date;
 
 
 @Entity
@@ -12,14 +14,15 @@ import java.util.Base64;
         @NamedQuery(name = "Product.findByCategory", query = "SELECT p FROM Product p WHERE p.category.id = :categoryId"),
         @NamedQuery(name = "Product.search", query = "SELECT p FROM Product p WHERE p.nameProduct LIKE '%' || :keyword || '%' OR p.description LIKE '%' || :keyword || '%'"),
         @NamedQuery(name = "Product.findByTitle", query = "SELECT p FROM Product p WHERE p.nameProduct = :nameProduct"),
+        @NamedQuery(name = "Product.countByCategory", query = "SELECT COUNT(p) FROM Product p WHERE p.category.id = :idCategory"),
         @NamedQuery(name = "Product.findNew", query = "SELECT p FROM Product p ORDER BY p.postDate DESC")})
 public class Product {
     @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_product", nullable = false)
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_category")
     private Category category;
 
@@ -27,9 +30,7 @@ public class Product {
     @Column(name = "name_product", length = 100)
     private String nameProduct;
 
-    @Size(max = 100)
-    @Column(name = "type", length = 100)
-    private String type;
+
 
     @Lob
     @Column(name = "description")
@@ -38,9 +39,7 @@ public class Product {
     @Column(name = "image_product")
     private byte[] imageProduct;
 
-    @Size(max = 20)
-    @Column(name = "size", length = 20)
-    private String size;
+
 
     @Column(name = "price")
     private Float price;
@@ -48,12 +47,45 @@ public class Product {
     @Column(name = "post_date")
     private Instant postDate;
 
+    @NotNull
+    @Column(name = "update_date", nullable = false)
+    private Instant updateDate;
+
+    public Instant getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(Instant updateDate) {
+        this.updateDate = updateDate;
+    }
+
+//    private String base64Image;
+
     public Product() {
     }
 
     public Product(Integer productId) {
         super();
         this.id = productId;
+    }
+
+    public  Product(String nameProduct, byte[] image, String description, float price)
+    {
+        this.nameProduct = nameProduct;
+        this.description = description;
+        this.imageProduct = image;
+        this.price = price;
+    }
+    public Product(Category category, String nameProduct, String description, byte[] image, float price, Instant postDate,
+                   Instant updateDate) {
+        this.category = category;
+        this.nameProduct = nameProduct;
+        this.description = description;
+        this.imageProduct = image;
+        this.price = price;
+        this.postDate = postDate;
+        this.updateDate = updateDate;
+
     }
     public Integer getId() {
         return id;
@@ -87,13 +119,7 @@ public class Product {
         this.nameProduct = nameProduct;
     }
 
-    public String getType() {
-        return type;
-    }
 
-    public void setType(String type) {
-        this.type = type;
-    }
 
     public String getDescription() {
         return description;
@@ -111,13 +137,7 @@ public class Product {
         this.imageProduct = imageProduct;
     }
 
-    public String getSize() {
-        return size;
-    }
 
-    public void setSize(String size) {
-        this.size = size;
-    }
 
     public Float getPrice() {
         return price;
@@ -136,9 +156,20 @@ public class Product {
     }
 
 
-    /*public String getBase64Image() {
+    public String getBase64Image() {
         // Kiểm tra nếu imageProduct không phải là null và chuyển đổi nó thành chuỗi Base64
         return this.imageProduct != null ? Base64.getEncoder().encodeToString(this.imageProduct) : "";
+    }
+
+    /*@Transient
+    public String getBase64Image() {
+        this.base64Image = Base64.getEncoder().encodeToString(this.imageProduct);
+        return this.base64Image;
+    }
+
+    @Transient
+    public void setBase64Image(String base64Image) {
+        this.base64Image = base64Image;
     }*/
 
 }

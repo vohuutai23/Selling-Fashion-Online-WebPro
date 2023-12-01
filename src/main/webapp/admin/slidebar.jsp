@@ -36,6 +36,14 @@
             </a>
         </li>
         <li>
+            <a href="list_category">
+                        <span class="icon">
+                            <ion-icon name="lock-closed-outline"></ion-icon>
+                        </span>
+                <span class="title">Category</span>
+            </a>
+        </li>
+        <li>
             <a href="list_product">
                         <span class="icon">
                             <ion-icon name="bag-handle-outline"></ion-icon>

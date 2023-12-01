@@ -1,10 +1,11 @@
 
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-         pageEncoding="ISO-8859-1" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
+    <meta charset="UTF-8">
     <title>
         <c:if test="${customer != null}">Edit Customer - Administration</c:if>
         <c:if test="${customer == null}">Create Customer - Administration</c:if>
@@ -20,7 +21,7 @@
     <!-- DataTables JS -->
     <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
 
-    <!-- Custom CSS và JS c?a b?n -->
+    <!-- Custom CSS vÃ  JS c?a b?n -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/admin/styles/assets/css/list_customer_style.css">
 
 </head>
@@ -107,6 +108,21 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="col-md-12">Active</label>
+                        <div class="col-md-12">
+                            <select class="form-control form-control-line" name="active">
+                                <option value="true"
+                                        <c:if test="${customer.active eq true}">selected='selected'</c:if> >
+                                    Enable
+                                </option>
+                                <option value="false"
+                                        <c:if test="${customer.active eq false}">selected='selected'</c:if>>
+                                    Disable
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <div class="col-sm-12">
                             <button type="submit" class="btn btn-success">Save</button>&nbsp;&nbsp;&nbsp;
                             <button type="button" onclick="history.go(-1);" class="btn btn-success">Cancel
@@ -156,7 +172,7 @@
                         <label class="col-md-12">Password</label>
                         <div class="col-md-12">
                             <input class="form-control form-control-line" type="password"
-                                   name="checkPassword" size="45" value="password"
+                                   name="password" size="45" value="password"
                                    required="required" maxlength="32"/>
                         </div>
                     </div>
@@ -173,7 +189,21 @@
                             </select>
                         </div>
                     </div>
-
+                    <div class="form-group">
+                        <label class="col-md-12">Active</label>
+                        <div class="col-md-12">
+                            <select class="form-control form-control-line" name="active">
+                                <option value="true"
+                                        <c:if test="${customer.active eq true}">selected='selected'</c:if> >
+                                    Enable
+                                </option>
+                                <option value="false"
+                                        <c:if test="${customer.active eq false}">selected='selected'</c:if>>
+                                    Disable
+                                </option>
+                            </select>
+                        </div>
+                    </div>
                     <div class="form-group">
                         <div class="col-sm-12">
                             <button type="submit" class="btn btn-success">Save</button>&nbsp;&nbsp;&nbsp;

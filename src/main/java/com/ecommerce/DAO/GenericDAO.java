@@ -3,9 +3,9 @@ package com.ecommerce.DAO;
 import java.util.List;
 
 public interface GenericDAO<E> {
-//    E create(E e);
+    E create(E e);
 
-//    E update(E e);
+    E update(E e);
 
     E get(Object id);
 

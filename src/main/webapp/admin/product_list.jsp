@@ -1,4 +1,5 @@
-<%@ page contentType="text/html;charset=ISO-8859-1" language="java" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
@@ -37,111 +38,6 @@
 
 
 
-
-<%--
-
-<div class="navigation">
-  <ul>
-    <li>
-      <a href="#">
-                    <span class="icon">
-                        <ion-icon name="logo-apple"></ion-icon>
-                    </span>
-        <span class="title">Brand Name</span>
-      </a>
-    </li>
-
-    <li>
-      <a href="#">
-                    <span class="icon">
-                        <ion-icon name="home-outline"></ion-icon>
-                    </span>
-        <span class="title">Dashboard</span>
-      </a>
-    </li>
-    <li>
-      <a href="list_user">
-                    <span class="icon">
-                        <ion-icon name="person-outline"></ion-icon>
-                    </span>
-        <span class="title">User</span>
-      </a>
-    </li>
-    <li>
-      <a href="list_customer">
-                    <span class="icon">
-                        <ion-icon name="people-outline"></ion-icon>
-                    </span>
-        <span class="title">Customers</span>
-      </a>
-    </li>
-    <li>
-      <a href="#">
-                    <span class="icon">
-                        <ion-icon name="review-outline"></ion-icon>
-                    </span>
-        <span class="title">Product</span>
-      </a>
-    </li>
-    <li>
-      <a href="#">
-                    <span class="icon">
-                        <ion-icon name="lock-closed-outline"></ion-icon>
-                    </span>
-        <span class="title">Order</span>
-      </a>
-    </li>
-    <li>
-      <a href="#">
-                    <span class="icon">
-                        <ion-icon name="lock-closed-outline"></ion-icon>
-                    </span>
-        <span class="title">Review</span>
-      </a>
-    </li>
-    <li>
-      <a href="#">
-                    <span class="icon">
-                        <ion-icon name="chatbubble-outline"></ion-icon>
-                    </span>
-        <span class="title">Messages</span>
-      </a>
-    </li>
-
-
-
-    <li>
-      <a href="#">
-                    <span class="icon">
-                        <ion-icon name="settings-outline"></ion-icon>
-                    </span>
-        <span class="title">Statistical</span>
-      </a>
-    </li>
-
-    <li>
-      <a href="#">
-                    <span class="icon">
-                        <ion-icon name="lock-closed-outline"></ion-icon>
-                    </span>
-        <span class="title">Password</span>
-      </a>
-    </li>
-
-    <li>
-      <a href="#">
-                    <span class="icon">
-                        <ion-icon name="log-out-outline"></ion-icon>
-                    </span>
-        <span class="title">Sign Out</span>
-      </a>
-    </li>
-  </ul>
-</div>
---%>
-
-
-
 <div class="main">
   <div class="topbar">
     <div class="toggle">
@@ -175,10 +71,12 @@
           <th>Index</th>
           <th>ID</th>
           <th>Product Name</th>
+          <td>Category</td>
           <th>Image</th>
           <th>Description</th>
           <th>Price</th>
           <th>Post Date</th>
+          <th>Update Date</th>
             <th>Action</th>
         </tr>
         </thead>
@@ -189,12 +87,14 @@
             <td>${status.index + 1}</td>
             <td>${product.id}</td>
             <td>${product.nameProduct}</td>
+            <td>${product.category.nameCategory}</td>
             <td>
               <img src="data:image/jpeg;base64,${product.base64Image}" alt="Product Image" height="100" width="100">
             </td>
             <td>${product.description}</td>
             <td>${product.price}</td>
             <td>${product.postDate}</td>
+            <td>${product.updateDate}</td>
             <td>
               <a class="btn waves-effect waves-light btn btn-info hidden-sm-down text-white"
                  href="edit_product?id=${product.id}">Edit</a> &nbsp;

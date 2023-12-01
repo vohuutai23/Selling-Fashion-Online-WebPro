@@ -8,8 +8,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Objects;
+//import org.apache.commons.text.StringEscapeUtils;
 
 import static com.ecommerce.util.CommonUtil.forwardToPage;
 //import static com.ecommerce.utility.CommonUtility.messageForAdmin;
@@ -20,11 +22,13 @@ public class UserService {
     private final HttpServletRequest request;
     private final HttpServletResponse response;
 
-    public UserService(HttpServletRequest request, HttpServletResponse response) {
+    public UserService(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
         this.request = request;
         this.response = response;
         userDAO = new UserDAO();
-
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html; charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
     }
 
     public void listUser() throws ServletException, IOException {
@@ -66,7 +70,7 @@ public class UserService {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         String fullName = request.getParameter("fullName");
-
+//        fullName = StringEscapeUtils.unescapeHtml4(fullName);
         User existUser = userDAO.findByEmail(email);
 
         if (existUser != null) {
@@ -105,6 +109,7 @@ public class UserService {
         String checkPassword = request.getParameter("checkPassword");
         String password = request.getParameter("password");
         String fullName = request.getParameter("fullName");
+//        fullName = StringEscapeUtils.unescapeHtml4(fullName);
 
         User userById = userDAO.get(userId);
         User userByEmail = userDAO.findByEmail(email);

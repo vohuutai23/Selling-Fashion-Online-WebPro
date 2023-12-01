@@ -12,7 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 import com.ecommerce.service.ProductService;
 
 @WebServlet(name = "UpdateProductServlet", value = "/admin/update_product")
-
+@MultipartConfig(fileSizeThreshold = 1024 * 10, // 10 KB
+        maxFileSize = 1024 * 300, // 300 KB
+        maxRequestSize = 1024 * 1024 // 1 MB
+)
 public class UpdateProductServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
