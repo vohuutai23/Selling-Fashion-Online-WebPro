@@ -2,14 +2,14 @@ package com.ecommerce.service;
 import com.ecommerce.DAO.CustomerDAO;
 import com.ecommerce.DAO.OrderDAO;
 import com.ecommerce.DAO.ReviewDAO;
-import com.ecommerce.model.entity.Customer;
 //import com.ecommerce.utility.HashUtility;
-
+import com.ecommerce.model.entity.Customer;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Objects;
 
@@ -19,10 +19,13 @@ public class CustomerService {
     private final HttpServletResponse response;
     private final CustomerDAO customerDAO;
 
-    public CustomerService(HttpServletRequest request, HttpServletResponse response) {
+    public CustomerService(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
         this.request = request;
         this.response = response;
         customerDAO = new CustomerDAO();
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html; charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
     }
 
     public void listCustomer() throws ServletException, IOException {

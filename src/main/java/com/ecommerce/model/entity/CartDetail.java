@@ -7,10 +7,10 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "order_detail")
-public class OrderDetail {
+@Table(name = "cart_detail")
+public class CartDetail {
     @EmbeddedId
-    private OrderDetailId id;
+    private CartDetailId id;
 
     @NotNull
     @Column(name = "quantity", nullable = false)
@@ -20,11 +20,11 @@ public class OrderDetail {
     @Column(name = "total_price", nullable = false)
     private Float totalPrice;
 
-    public OrderDetailId getId() {
+    public CartDetailId getId() {
         return id;
     }
 
-    public void setId(OrderDetailId id) {
+    public void setId(CartDetailId id) {
         this.id = id;
     }
 

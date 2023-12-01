@@ -5,20 +5,17 @@ import com.ecommerce.DAO.CategoryDAO;
 import com.ecommerce.DAO.ProductDAO;
 import com.ecommerce.model.entity.Category;
 import com.ecommerce.model.entity.Product;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.IOException;
-import java.io.InputStream;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.io.UnsupportedEncodingException;
 import java.time.Instant;
-import java.util.Date;
 import java.util.List;
+import java.io.InputStream;
 import java.util.Objects;
+
 
 import static com.ecommerce.utility.CommonUtility.*;
 
@@ -29,19 +26,23 @@ public class ProductService {
     private final ProductDAO productDAO;
     private final CategoryDAO categoryDAO;
 
-    public ProductService(HttpServletRequest request, HttpServletResponse response) {
+    public ProductService(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
         this.request = request;
         this.response = response;
         productDAO = new ProductDAO();
         categoryDAO = new CategoryDAO();
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html; charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
     }
 
     public void listProductByCategory() throws ServletException, IOException {
         int categoryId = Integer.parseInt(request.getParameter("id"));
 //        int categoryId = 1;
-//        Category category = categoryDAO.get(categoryId);
+        Category category = categoryDAO.get(categoryId);
         List<Product> listProducts = productDAO.listByCategory(categoryId);
-
+        String sort = request.getParameter("sort");
+//        List<Category> listCategories = categoryDAO.listAll();
 //        System.out.println("Number of products: " + listProducts.size()); // In số lượng sản phẩm để kiểm tra
 //        for (Product product : listProducts) {
 //            System.out.println("Product ID: " + product.getId());
@@ -49,12 +50,49 @@ public class ProductService {
 //            System.out.println("Product Price: " + product.getPrice());
 //            // ... In thông tin khác của sản phẩm nếu cần
 //        }
+        if (Objects.equals(sort, "newest")) {
+            listProducts = productDAO.listByNewest(categoryId);
+        }
+        if (Objects.equals(sort, "price_dec")) {
+            listProducts = productDAO.listByPriceDec(categoryId);
+        }
+        if (Objects.equals(sort, "price_inc")) {
+            listProducts = productDAO.listByPriceInc(categoryId);
+        }
 
         request.setAttribute("listProducts", listProducts);
-//        request.setAttribute("listCategories", listCategories);
+        request.setAttribute("category", category);
 //        request.setAttribute("category", category);
 
         forwardToPage("shop/product_by_category.jsp", request, response);
+    }
+
+    public void listAllProduct() throws ServletException, IOException {
+        List<Product> listProducts = productDAO.listAll();
+        List<Category> listCategories = categoryDAO.listAll();
+
+        String sort = request.getParameter("sort");
+
+
+        if (Objects.equals(sort, "newest")) {
+            listProducts = productDAO.listByNewestProducts();
+        }
+        if (Objects.equals(sort, "price_inc")) {
+            listProducts = productDAO.listByPriceIncProducts();
+        }
+
+        if (Objects.equals(sort, "price_dec")) {
+            listProducts = productDAO.listByPriceDecProducts();
+        }
+
+
+
+        request.setAttribute("listProducts", listProducts);
+        request.setAttribute("listCategories", listCategories);
+
+        request.setAttribute("sort", sort);
+
+        forwardToPage("shop/product_list.jsp", request, response);
     }
     public void viewProductDetail() throws ServletException, IOException {
         Integer productId = Integer.parseInt(request.getParameter("id"));
@@ -125,9 +163,9 @@ public class ProductService {
         String nameProduct = request.getParameter("nameProduct");
 //        Integer categoryId = Integer.parseInt(request.getParameter("category"));
 //        Category category = categoryDAO.get(categoryId);
-        System.out.println("Ten san pham input:" + nameProduct);
+//        System.out.println("Ten san pham input:" + nameProduct);
         String description = request.getParameter("description");
-        System.out.println("Mo ta input:" + description);
+//        System.out.println("Mo ta input:" + description);
 //        String size = request.getParameter("size");
 //        Float price = Float.parseFloat(request.getParameter("price"));
         Instant postDate = Instant.now(); // Lấy thời điểm hiện tại dưới dạng Instant
@@ -138,7 +176,14 @@ public class ProductService {
 //        product.setCategory(category);
 //        product.setPrice(price);
         product.setPostDate(postDate);
-
+        Part part = request.getPart("imageProduct");
+        if (part != null && part.getSize() > 0) {
+            InputStream inputStream = part.getInputStream();
+            byte[] imageBytes = new byte[inputStream.available()];
+            inputStream.read(imageBytes);
+            product.setImageProduct(imageBytes);
+            inputStream.close();
+        }
 //        Part part = request.getPart("productImage");
 //
 //        if (part != null && part.getSize() > 0) {

@@ -12,15 +12,22 @@ public class ProductDAO extends JPADao<Product> implements GenericDAO<Product> {
         return super.find(Product.class, productId);
     }
 
-    public List<Product> listActive() {
-        return super.findWithNamedQuery("Product.findActive");
-    }
+
     @Override
 
     public List<Product> listAll() {
         return super.findWithNamedQuery("Product.findAll");
     }
 
+    public List<Product> listByNewestProducts() {
+        return super.findWithNamedQuery("Product.findByProductAndNewest");
+    }
+    public List<Product> listByPriceDecProducts() {
+        return super.findWithNamedQuery("Product.findByProductAndPriceDec");
+    }
+    public List<Product> listByPriceIncProducts() {
+        return super.findWithNamedQuery("Product.findByProductAndPriceInc");
+    }
     @Override
     public void delete(Object productId) {
         super.delete(Product.class, productId);
@@ -33,6 +40,16 @@ public class ProductDAO extends JPADao<Product> implements GenericDAO<Product> {
 
     public List<Product> listByCategory(int categoryId) {
         return super.findWithNamedQuery("Product.findByCategory", "categoryId", categoryId);
+    }
+
+    public List<Product> listByNewest(int categoryId) {
+        return super.findWithNamedQuery("Product.findByCategoryAndNewest", "categoryId", categoryId);
+    }
+    public List<Product> listByPriceInc(int categoryId) {
+        return super.findWithNamedQuery("Product.findByCategoryAndPriceInc", "categoryId", categoryId);
+    }
+    public List<Product> listByPriceDec(int categoryId) {
+        return super.findWithNamedQuery("Product.findByCategoryAndPriceDec", "categoryId", categoryId);
     }
     public List<Product> search(String keyword) {
         return super.findWithNamedQuery("Product.search", "keyword", keyword);

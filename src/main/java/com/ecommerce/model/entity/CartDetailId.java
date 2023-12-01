@@ -9,22 +9,22 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
-public class CartId implements Serializable {
-    private static final long serialVersionUID = 5326685262579512102L;
+public class CartDetailId implements Serializable {
+    private static final long serialVersionUID = 2561497485581998488L;
     @NotNull
-    @Column(name = "id_customer", nullable = false)
-    private Integer idCustomer;
+    @Column(name = "id_cart", nullable = false)
+    private Integer idCart;
 
     @NotNull
     @Column(name = "id_product", nullable = false)
     private Integer idProduct;
 
-    public Integer getIdCustomer() {
-        return idCustomer;
+    public Integer getIdCart() {
+        return idCart;
     }
 
-    public void setIdCustomer(Integer idCustomer) {
-        this.idCustomer = idCustomer;
+    public void setIdCart(Integer idCart) {
+        this.idCart = idCart;
     }
 
     public Integer getIdProduct() {
@@ -39,14 +39,14 @@ public class CartId implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        CartId entity = (CartId) o;
-        return Objects.equals(this.idProduct, entity.idProduct) &&
-                Objects.equals(this.idCustomer, entity.idCustomer);
+        CartDetailId entity = (CartDetailId) o;
+        return Objects.equals(this.idCart, entity.idCart) &&
+                Objects.equals(this.idProduct, entity.idProduct);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idProduct, idCustomer);
+        return Objects.hash(idCart, idProduct);
     }
 
 }

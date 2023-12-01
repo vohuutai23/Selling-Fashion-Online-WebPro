@@ -1,16 +1,15 @@
 package com.ecommerce.DAO;
 import com.ecommerce.model.entity.Review;
-import com.ecommerce.model.entity.User;
 
+import java.time.Instant;
 import java.util.Date;
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 public class ReviewDAO extends JPADao<Review> implements iJPADao<Review>{
     @Override
     public Review create(Review review) {
-        review.setTimeReview(new Date());
+        review.setTimeReview(Instant.now());
         return super.create(review);
     }
 

@@ -9,22 +9,22 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
-public class ProductOrderId implements Serializable {
-    private static final long serialVersionUID = -722649907570787238L;
+public class OrderDetailId implements Serializable {
+    private static final long serialVersionUID = 6323318596742907097L;
     @NotNull
-    @Column(name = "id_orderDetail", nullable = false)
-    private Integer idOrderdetail;
+    @Column(name = "id_order", nullable = false)
+    private Integer idOrder;
 
     @NotNull
     @Column(name = "id_product", nullable = false)
     private Integer idProduct;
 
-    public Integer getIdOrderdetail() {
-        return idOrderdetail;
+    public Integer getIdOrder() {
+        return idOrder;
     }
 
-    public void setIdOrderdetail(Integer idOrderdetail) {
-        this.idOrderdetail = idOrderdetail;
+    public void setIdOrder(Integer idOrder) {
+        this.idOrder = idOrder;
     }
 
     public Integer getIdProduct() {
@@ -39,14 +39,14 @@ public class ProductOrderId implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        ProductOrderId entity = (ProductOrderId) o;
-        return Objects.equals(this.idOrderdetail, entity.idOrderdetail) &&
+        OrderDetailId entity = (OrderDetailId) o;
+        return Objects.equals(this.idOrder, entity.idOrder) &&
                 Objects.equals(this.idProduct, entity.idProduct);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idOrderdetail, idProduct);
+        return Objects.hash(idOrder, idProduct);
     }
 
 }

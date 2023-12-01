@@ -1,8 +1,6 @@
 package com.ecommerce.DAO;
-import com.ecommerce.model.entity.User;
-import com.ecommerce.DAO.JPADao;
 //import com.ecommerce.utility.HashUtility;
-
+import com.ecommerce.model.entity.User;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

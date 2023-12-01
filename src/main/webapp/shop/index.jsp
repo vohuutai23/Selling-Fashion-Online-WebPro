@@ -1,17 +1,15 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: VoHuuTai
-  Date: 11/24/2023
-  Time: 4:44 PM
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
-<html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>HomePage</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="shop/css/main.css" type="text/css"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="shop/images/logo.png">
+    <title>CoverYou</title>
 </head>
 <body>
 <%@ include file="/includes/header.jsp" %>
@@ -23,6 +21,8 @@
         </video>
     </div>
 </div>
+
+
 <div class="divider"></div>
 <section class="products text-center">
     <div class="container">
@@ -39,7 +39,7 @@
                             </a></div>
                         </figcaption>
                     </figure>
-                    <h4><a href="view_product?id=${product.id}">${product.nameProduct}</a></h4>
+                    <h4><a style="text-decoration: none" href="view_product?id=${product.id}">${product.nameProduct}</a></h4>
 <%--                    <p><span class="emphasis"><%@include file="product_rating.jsp" %></span></p>--%>
                     <p><span class="emphasis">$${product.price}</span></p>
                 </div>

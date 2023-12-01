@@ -1,7 +1,5 @@
 package com.ecommerce.DAO;
-
 import com.ecommerce.model.entity.Category;
-
 import java.util.List;
 
 public class CategoryDAO extends JPADao<Category> implements GenericDAO<Category> {

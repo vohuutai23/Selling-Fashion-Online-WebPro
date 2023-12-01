@@ -1,15 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="shop/css/main.css" type="text/css"/>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link rel="icon" type="image/x-icon" href="shop/images/logo.png">
-    <title>CoverYou</title>
-</head>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <body>
 <div id="header">
     <div id="nav">
@@ -27,18 +17,36 @@
                             <a class="nav-link" aria-current="page" href="${pageContext.request.contextPath}/">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Products</a>
+                            <a class="nav-link" href="list_product">Products</a>
                         </li>
 <%--                        <li class="nav-item">--%>
 <%--                            <a class="nav-link" href="#">Categories</a>--%>
+<%--                        </li>--%>
+<%--                        <li class="nav-item dropdown">--%>
+<%--                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">--%>
+<%--                                Categories--%>
+<%--                            </a>--%>
+<%--                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">--%>
+<%--                                <div class="container">--%>
+<%--                                    <div class="divider"></div>--%>
+<%--                                    <div class="row">--%>
+<%--                                        <c:forEach var="category" items="${listCategories}">--%>
+<%--                                            <div class="col-md-2">--%>
+<%--                                                <a href="view_category?id=${category.id}" style="color: black">--%>
+<%--                                                    <h6 class="text-uppercase">${category.detailCategory}</h6></a>--%>
+<%--                                            </div>--%>
+<%--                                        </c:forEach>--%>
+<%--                                    </div>--%>
+<%--                                </div>--%>
+<%--                            </div>--%>
 <%--                        </li>--%>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Categories
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="view_category?id=1">Quan</a></li>
-                                <li><a class="dropdown-item" href="view_category?id=2">Ao</a></li>
+                                <li><a class="dropdown-item" href="view_category?id=1">Quần</a></li>
+                                <li><a class="dropdown-item" href="view_category?id=2">Áo</a></li>
                             </ul>
                         </li>
                         <li class="nav-item">
@@ -64,7 +72,7 @@
                         <li class="nav-item">
                             <a class="nav-link"><i class="fa-solid fa-user fa-xl" style="color: #ffffff;"></i></a>
                             <c:if test="${loggedCustomer == null}">
-                                <a href="login" class="dropdown-item">Login</a>
+                                <a style="text-decoration: none;" href="login" class="text-light login-navigation">Login</a>
                             </c:if>
 
                             <c:if test="${loggedCustomer != null}">

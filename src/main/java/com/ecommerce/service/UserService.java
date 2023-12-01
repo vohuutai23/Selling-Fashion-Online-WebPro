@@ -1,13 +1,13 @@
 package com.ecommerce.service;
 
 import com.ecommerce.DAO.UserDAO;
+
 import com.ecommerce.model.entity.User;
-
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Objects;
 
@@ -20,10 +20,13 @@ public class UserService {
     private final HttpServletRequest request;
     private final HttpServletResponse response;
 
-    public UserService(HttpServletRequest request, HttpServletResponse response) {
+    public UserService(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
         this.request = request;
         this.response = response;
         userDAO = new UserDAO();
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html; charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
 
     }
 

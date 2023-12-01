@@ -1,66 +1,46 @@
 package com.ecommerce.model.entity;
 
-import com.ecommerce.model.entity.Product;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
-import java.util.HashMap;
-import java.util.Map;
-
+@Entity
+@Table(name = "cart")
 public class Cart {
-    private final Map<Product, Integer> cart = new HashMap<>();
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_cart", nullable = false)
+    private Integer id;
 
-    public void addItem(Product product) {
-        if (cart.containsKey(product)) {
-            Integer quantity = cart.get(product) + 1;
-            cart.put(product, quantity);
-        } else {
-            cart.put(product, 1);
-        }
+    @NotNull
+    @Column(name = "id_customer", nullable = false)
+    private Integer idCustomer;
+
+    @NotNull
+    @Column(name = "total_price", nullable = false)
+    private Float totalPrice;
+
+    public Integer getId() {
+        return id;
     }
 
-    public void removeItem(Product product) {
-        cart.remove(product);
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public int getTotalQuantity() {
-        int total = 0;
-
-        for (Product next : cart.keySet()) {
-            Integer quantity = cart.get(next);
-            total += quantity;
-        }
-
-        return total;
+    public Integer getIdCustomer() {
+        return idCustomer;
     }
 
-    public float getTotalAmount() {
-        float total = 0.0f;
-
-        for (Product product : cart.keySet()) {
-            Integer quantity = cart.get(product);
-            double subTotal = quantity * product.getPrice();
-            total += subTotal;
-        }
-
-        return total;
+    public void setIdCustomer(Integer idCustomer) {
+        this.idCustomer = idCustomer;
     }
 
-    public void updateCart(int[] productIds, int[] quantities) {
-        for (int i = 0; i < productIds.length; i++) {
-            Product key = new Product(productIds[i]);
-            Integer value = quantities[i];
-            cart.put(key, value);
-        }
+    public Float getTotalPrice() {
+        return totalPrice;
     }
 
-    public void clear() {
-        cart.clear();
+    public void setTotalPrice(Float totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
-    public int getTotalItems() {
-        return cart.size();
-    }
-
-    public Map<Product, Integer> getItems() {
-        return this.cart;
-    }
 }

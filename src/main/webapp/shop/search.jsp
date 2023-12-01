@@ -8,12 +8,13 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ include file="/includes/header.jsp" %>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Search Products</title>
+    <%@ include file="/includes/link.jsp" %>
 </head>
 <body>
+<%@ include file="/includes/header.jsp" %>
 <p>${message}</p>
 <div class="row">
     <!-- Sidebar Categories Component -->
@@ -27,7 +28,10 @@
                 <c:forEach items="${result}" var="product">
                     <div class="col-md-4">
                         <div class="rounded-5 " style="width: 16rem;">
-                            <img src="https://media.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85,format=auto/uploads/October2023/T-Shirt_Cotton_Compact.2_66.jpg" width="50%" height="50%" class="card-img-top shadow pt-2 rounded-5" alt="...">
+                            <td>
+                                <img src="data:image/jpeg;base64,${product.base64Image}" alt="Product Image" height="100%" width="100%">
+                            </td>
+<%--                            <img src="https://media.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85,format=auto/uploads/October2023/T-Shirt_Cotton_Compact.2_66.jpg" width="50%" height="50%" class="card-img-top shadow pt-2 rounded-5" alt="...">--%>
                             <div class="card-body text-light rounded-5 mt-2">
                                 <h5 class="card-title fw-bold text-black">${product.nameProduct}</h5>
                                 <p class="card-text text-black">$${product.price}</p>
