@@ -6,20 +6,23 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "cart_detail")
 @NamedQueries({
-        @NamedQuery(name = "CartDetail.findByCustomer", query = "SELECT DISTINCT cd.p FROM CartDetail cd WHERE cd.cart.customer.id = :customerId GROUP BY cd.product.id")})
+        @NamedQuery(name = "CartDetail.findByCartAndProduct",
+                query = "SELECT cd FROM CartDetail cd WHERE cd.cart.id = :cartId AND cd.product.id = :productId"),
+        @NamedQuery(
+                name = "CartDetail.findByCart",
+                query = "SELECT cd FROM CartDetail cd WHERE  cd.cart.id = :idCart")
+})
 public class CartDetail {
     @EmbeddedId
-    @AttributeOverrides({ @AttributeOverride(name = "", column = @Column(name = "id_cart")),
-            @AttributeOverride(name = "idProduct", column = @Column(name = "id_product")) })
     private CartDetailId id = new CartDetailId();
 
-//    @MapsId("idCart")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @MapsId("cart")
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "id_cart", nullable = false)
     private Cart cart;
 
-//    @MapsId("idProduct")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @MapsId("product")
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "id_product", nullable = false)
     private Product product;
 
@@ -30,8 +33,6 @@ public class CartDetail {
     @NotNull
     @Column(name = "total_price", nullable = false)
     private Float totalPrice;
-
-
     public CartDetail() {
     }
 
@@ -46,8 +47,9 @@ public class CartDetail {
         this.quantity = quantity;
         this.totalPrice = totalPrice;
     }
+
     public CartDetailId getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(CartDetailId id) {
@@ -63,14 +65,14 @@ public class CartDetail {
         this.cart = cart;
         this.id.setCart(cart);
     }
-
     public Product getProduct() {
         return this.product;
     }
 
     public void setProduct(Product product) {
-
+        System.out.println("check product 2222" + product);
         this.product = product;
+        System.out.println("check product 333" + this.product);
         this.id.setProduct(product);
     }
 
@@ -89,5 +91,13 @@ public class CartDetail {
     public void setTotalPrice(Float totalPrice) {
         this.totalPrice = totalPrice;
     }
-
+    @Override
+    public String toString() {
+        return "CartDetail{"+ cart +
+                "product=" + product.getId() +
+                ", quantity=" + quantity +
+                ", totalPrice=" + totalPrice +
+                // Thêm các trường khác bạn muốn hiển thị
+                '}';
+    }
 }

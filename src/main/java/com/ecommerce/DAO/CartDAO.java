@@ -1,6 +1,7 @@
 package com.ecommerce.DAO;
 
 import com.ecommerce.model.entity.Cart;
+import com.ecommerce.model.entity.CartDetail;
 
 import java.util.HashMap;
 import java.util.List;
@@ -22,12 +23,12 @@ public class CartDAO extends JPADao<Cart> implements GenericDAO<Cart> {
         return super.find(Cart.class, cartId);
     }
 
-    public Cart get(Integer cartId, Integer customerId) {
+    public Cart findByIdAndCustomer(Integer cartId, Integer customerId) {
         Map<String, Object> parameters = new HashMap<>();
-        parameters.put("cartId", cartId);
-        parameters.put("customerId", customerId);
+        parameters.put("idCart", cartId);
+        parameters.put("idCustomer", customerId);
 
-        List<Cart> result = super.findWithNamedQuery("ProductOrder.findByIdAndCustomer", parameters);
+        List<Cart> result = super.findWithNamedQuery("Cart.findByIdAndCustomer", parameters);
 
         if (!result.isEmpty()) {
             return result.get(0);
@@ -60,6 +61,14 @@ public class CartDAO extends JPADao<Cart> implements GenericDAO<Cart> {
 
     public List<Cart> listByCustomer(Integer customerId) {
         return super.findWithNamedQuery("ProductOrder.findByCustomer", "customerId", customerId);
+    }
+    public Cart findByCustomer(Integer customerID) {
+        List<Cart> result = super.findWithNamedQuery("Cart.findByCustomer", "idCustomer", customerID);
+
+        if (!result.isEmpty()) {
+            return result.get(0);
+        }
+        return null;
     }
 
 //    public List<ProductOrder> listMostRecentSales() {

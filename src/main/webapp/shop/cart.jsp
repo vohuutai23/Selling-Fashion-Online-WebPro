@@ -55,7 +55,7 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${cart.items}" var="item" varStatus="status">
+        <c:forEach items="${cartDetails}" var="item" varStatus="status">
             <tr>
                 <td>${status.index + 1}</td>
                 <td data-th="Product">
@@ -65,20 +65,20 @@
                                  class="img-fluid" alt="">
                         </div>
                         <div class="col-md-9 text-left mt-sm-2">
-                            <h4>${item.key.nameProduct}</h4>
+                            <h4>${item.product.getNameProduct()}</h4>
                         </div>
                     </div>
                 </td>
 
                 <td data-th="Quantity">
-                    <input type="hidden" name="productId" value="${item.key.id}"/>
-                    <input type="number" name="quantity${status.index + 1}" value="${item.value}"
+                    <input type="hidden" name="productId" value="${item.product.getId()}"/>
+                    <input type="number" name="quantity<%--${status.index + 1}--%>" value="${item.quantity}"
                            class="form-control text-center" value="1" min="1" required="required"/>
                 </td>
 
-                <td data-th="Price">$${item.key.price}</td>
+                <td data-th="Price">$${item.totalPrice}</td>
 
-                <td>$${item.value * item.key.price}</td>
+<%--                <td>$${item.quantity * item.key.price}</td>--%>
 
                 <td class="actions" data-th="">
                     <div class="text_center">
@@ -86,7 +86,7 @@
                             <i class="fas fa-sync"></i>
                         </button>
                         <a type="button" class="btn btn-white btn-md mb-2"
-                           href="remove_from_cart?product_id=${item.key.id}"><i
+                           href="remove_from_cart?product_id=${item.id}"><i
                                 class="fas fa-trash"></i></a>
                     </div>
                 </td>

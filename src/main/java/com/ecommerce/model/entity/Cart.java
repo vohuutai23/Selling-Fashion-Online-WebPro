@@ -2,11 +2,20 @@ package com.ecommerce.model.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "cart")
-//@NamedQueries({
-//        @NamedQuery(name = "OrderDetail.findByCustomer", query = "SELECT DISTINCT c.cart FROM Cart c WHERE od.productOrder.customer.customerId = :customerId GROUP BY od.product.productId")})
+@NamedQueries({ @NamedQuery(
+        name = "Cart.findByNameAndGroup",
+        query = "SELECT c FROM Cart c WHERE c.id = :idCart AND c.customer.id = :idCustomer"),
+        @NamedQuery(
+                name = "Cart.findByCustomer",
+                query = "SELECT c FROM Cart c WHERE  c.customer.id = :idCustomer"),
+
+         })
 public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,13 +23,26 @@ public class Cart {
     private Integer id;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_customer", nullable = false)
     private Customer customer;
 
     @NotNull
     @Column(name = "total_price", nullable = false)
     private Float totalPrice;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "cart" , cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<CartDetail> cartDetails = new HashSet<>(0);
+//    private Set<CartDetail> cartDetails = new LinkedHashSet<>();
+
+    public Set<CartDetail> getCartDetails() {
+        System.out.println("Kiem tra Cartdetails" + this.cartDetails);
+        return this.cartDetails;
+    }
+
+    public void setCartDetails(Set<CartDetail> cartDetails) {
+        this.cartDetails = cartDetails;
+    }
 
     public Integer getId() {
         return id;
@@ -45,5 +67,13 @@ public class Cart {
     public void setTotalPrice(Float totalPrice) {
         this.totalPrice = totalPrice;
     }
-
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", idcus='" + customer.getId() + '\'' +
+                ", price=" + totalPrice +
+                // Thêm các trường khác bạn muốn hiển thị
+                '}';
+    }
 }

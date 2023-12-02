@@ -126,7 +126,7 @@ public class OrderService {
         return savedOrder.getOrderId();
     }*/
 
-    private ProductOrder readOrderInfo() {
+    /*private ProductOrder readOrderInfo() {
         String recipientFullName = request.getParameter("recipientFullName");
 
         String recipientPhone = request.getParameter("recipientPhone");
@@ -139,11 +139,11 @@ public class OrderService {
         order.setPhone(recipientPhone);
         order.setShippingAddress(recipientAddress);
 
-        /*order.setRecipientCity(recipientCity);
+        *//*order.setRecipientCity(recipientCity);
         order.setRecipientState(recipientState);
         order.setRecipientZipCode(recipientZipCode);
         order.setRecipientCountry(recipientCountry);
-        order.setPaymentMethod(paymentMethod);*/
+        order.setPaymentMethod(paymentMethod);*//*
 
         HttpSession session = request.getSession();
         Customer customer = (Customer) session.getAttribute("loggedCustomer");
@@ -181,9 +181,9 @@ public class OrderService {
         order.setTotal(total);
 
         return order;
-    }
+    }*/
 
-    private void placeOrderCOD(ProductOrder order) throws ServletException, IOException {
+   /* private void placeOrderCOD(ProductOrder order) throws ServletException, IOException {
         saveOrder(order);
 
         messageForShop("Thank you. Your order has been received. Your product(s) will be delivered within a few days.",
@@ -381,6 +381,6 @@ public class OrderService {
                     String.format("Could not find the order with ID %s or it might have been deleted.", orderId),
                     request, response);
         }
-    }
+    }*/
 
 }

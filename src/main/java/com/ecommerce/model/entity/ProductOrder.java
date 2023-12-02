@@ -14,7 +14,7 @@ public class ProductOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_order", nullable = false)
-    private Integer id;
+    private Integer orderId;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -82,11 +82,11 @@ public class ProductOrder {
     }
 
     public Integer getId() {
-        return id;
+        return orderId;
     }
 
     public void setId(Integer id) {
-        this.id = id;
+        this.orderId = id;
     }
 
     public Customer getCustomer() {

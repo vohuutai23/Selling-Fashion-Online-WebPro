@@ -9,19 +9,17 @@ import java.util.Objects;
 
 @Embeddable
 public class CartDetailId implements Serializable {
-//    private static final long serialVersionUID = 2561497485581998488L;
-    private static final long serialVersionUID = 1L;
-
+    private static final long serialVersionUID = 2561497485581998488L;
     /*@NotNull
     @Column(name = "id_cart", nullable = false)*/
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_cart", insertable = false, updatable = false, nullable = false)
+    @JoinColumn(name = "id_cart", referencedColumnName = "id_cart", insertable = false, updatable = false, nullable = false)
     private Cart cart;
 
     /*@NotNull
     @Column(name = "id_product", nullable = false)*/
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_product", insertable = false, updatable = false, nullable = false)
+    @JoinColumn(name = "id_product", referencedColumnName = "id_product",insertable = false, updatable = false, nullable = false)
     private Product product;
 
     public Cart getCart() {
@@ -37,6 +35,7 @@ public class CartDetailId implements Serializable {
     }
 
     public void setProduct(Product product) {
+        System.out.println("check product ben id" + product);
         this.product = product;
     }
 
