@@ -55,6 +55,22 @@ public class CategoryDAO extends JPADao<Category> implements GenericDAO<Category
         }
         return null;
     }
+    public Category findGroupCategoryByName(String nameCategory) {
+        List<Category> result = super.findWithNamedQuery("Category.findGroupCategoryByName", "nameCategory", nameCategory);
+
+        if (result != null && result.size() > 0) {
+            return result.get(0);
+        }
+        return null;
+    }
+    public Category findIdCategoryByName(String nameCategory) {
+        List<Category> result = super.findWithNamedQuery("Category.findIdCategoryByName", "nameCategory", nameCategory);
+
+        if (result != null && result.size() > 0) {
+            return result.get(0);
+        }
+        return null;
+    }
     /*public List<Category> findByNameAndGroup(String nameCategory, String groupCategory) {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("nameCategory", nameCategory);

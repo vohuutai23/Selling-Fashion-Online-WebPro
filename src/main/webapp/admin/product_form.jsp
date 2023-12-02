@@ -1,17 +1,12 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: VoHuuTai
-  Date: 11/20/2023
-  Time: 9:17 AM
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
 
 
 <html>
 <head>
+    <meta charset="UTF-8">
     <title>
         <c:if test="${product != null}">Edit Product - Administration</c:if>
         <c:if test="${product == null}">Create Product - Administration</c:if>
@@ -124,7 +119,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="description" class="col-md-12">Description</label>
+                        <label class="col-md-12">Description</label>
                         <div class="col-md-12">
                             <textarea class="form-control form-control-line" rows="5" cols="50"
                                       name="description">${product.description}</textarea>

@@ -15,6 +15,7 @@
         <mapping class="com.ecommerce.model.entity.Review"/>
         <mapping class="com.ecommerce.model.entity.Product"/>
         <mapping class="com.ecommerce.model.entity.ProductOrder"/>
+        <mapping class="com.ecommerce.model.entity.OrderDetail"/>
         <mapping class="com.ecommerce.model.entity.Category"/>
 
 

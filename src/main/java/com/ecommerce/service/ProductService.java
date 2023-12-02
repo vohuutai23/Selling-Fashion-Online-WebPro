@@ -221,12 +221,14 @@ public class ProductService {
         Product product = productDAO.get(productId);
         System.out.println("id san pham input:" + productId);
         if (product != null) {
+
+//            Category category = categoryDAO.findIdCategoryByName(nameCategory, groupCategory);
 //            List<Category> listCategories = categoryDAO.listAll();
             List<Category> listGroupCategories = categoryDAO.listGroupCategory();
             request.setAttribute("listGroupCategories", listGroupCategories);
             String groupCategory = request.getParameter("groupCategory");
             if (groupCategory == null){
-                groupCategory = "Áo";
+                groupCategory = product.getCategory().getGroupCategory();
             }
 
             List<Category> listNameCategories = categoryDAO.listNameCategoryByGroup(groupCategory);

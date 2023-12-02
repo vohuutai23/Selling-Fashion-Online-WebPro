@@ -4,6 +4,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.Instant;
+import java.util.Date;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "product_order")
@@ -16,7 +19,7 @@ public class ProductOrder {
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_customer", nullable = false)
-    private Customer idCustomer;
+    private Customer customer;
 
     @Size(max = 50)
     @NotNull
@@ -33,12 +36,50 @@ public class ProductOrder {
 
     @NotNull
     @Column(name = "date_order", nullable = false)
-    private Instant dateOrder;
+    private Date dateOrder;
 
     @Size(max = 30)
     @NotNull
     @Column(name = "status", nullable = false, length = 30)
     private String status;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "productOrder", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<OrderDetail> orderDetails = new LinkedHashSet<>();
+
+    @Size(max = 50)
+    @Column(name = "full_name", length = 50)
+    private String fullName;
+
+    @Size(max = 20)
+    @Column(name = "phone", length = 20)
+    private String phone;
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+
+    public ProductOrder() {
+    }
+    public Set<OrderDetail> getOrderDetails() {
+        return orderDetails;
+    }
+
+    public void setOrderDetails(Set<OrderDetail> orderDetails) {
+        this.orderDetails = orderDetails;
+    }
 
     public Integer getId() {
         return id;
@@ -48,12 +89,12 @@ public class ProductOrder {
         this.id = id;
     }
 
-    public Customer getIdCustomer() {
-        return idCustomer;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setIdCustomer(Customer idCustomer) {
-        this.idCustomer = idCustomer;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     public String getShippingAddress() {
@@ -80,11 +121,11 @@ public class ProductOrder {
         this.totalPrice = totalPrice;
     }
 
-    public Instant getDateOrder() {
+    public Date getDateOrder() {
         return dateOrder;
     }
 
-    public void setDateOrder(Instant dateOrder) {
+    public void setDateOrder(Date dateOrder) {
         this.dateOrder = dateOrder;
     }
 

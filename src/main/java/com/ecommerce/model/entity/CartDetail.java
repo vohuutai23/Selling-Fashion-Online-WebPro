@@ -4,20 +4,21 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "order_detail")
-public class OrderDetail {
+@Table(name = "cart_detail")
+@NamedQueries({
+        @NamedQuery(name = "CartDetail.findByCustomer", query = "SELECT DISTINCT cd.p FROM CartDetail cd WHERE cd.cart.customer.id = :customerId GROUP BY cd.product.id")})
+public class CartDetail {
     @EmbeddedId
-//    private OrderDetailId id;
-    @AttributeOverrides({ @AttributeOverride(name = "idOrder", column = @Column(name = "id_order")),
+    @AttributeOverrides({ @AttributeOverride(name = "", column = @Column(name = "id_cart")),
             @AttributeOverride(name = "idProduct", column = @Column(name = "id_product")) })
-    private OrderDetailId id = new OrderDetailId();
+    private CartDetailId id = new CartDetailId();
 
-    @MapsId("idOrder")
+//    @MapsId("idCart")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "id_order", nullable = false)
-    private ProductOrder productOrder;
+    @JoinColumn(name = "id_cart", nullable = false)
+    private Cart cart;
 
-    @MapsId("idProduct")
+//    @MapsId("idProduct")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_product", nullable = false)
     private Product product;
@@ -31,42 +32,46 @@ public class OrderDetail {
     private Float totalPrice;
 
 
-    public OrderDetail() {
+    public CartDetail() {
     }
 
-    public OrderDetail(OrderDetailId id) {
+    public CartDetail(CartDetailId id) {
         this.id = id;
     }
 
-    public OrderDetail(OrderDetailId id, Product product, ProductOrder productOrder, int quantity, float totalPrice) {
+    public CartDetail(CartDetailId id, Product product, Cart cart, int quantity, float totalPrice) {
         this.id = id;
         this.product = product;
-        this.productOrder = productOrder;
+        this.cart = cart;
         this.quantity = quantity;
         this.totalPrice = totalPrice;
     }
-    public OrderDetailId getId() {
+    public CartDetailId getId() {
         return id;
     }
 
-    public void setId(OrderDetailId id) {
+    public void setId(CartDetailId id) {
         this.id = id;
     }
 
-    public ProductOrder getProductOrder() {
-        return productOrder;
+    public Cart getCart() {
+        return this.cart;
     }
 
-    public void setProductOrder(ProductOrder ProductOrder) {
-        this.productOrder = ProductOrder;
+    public void setCart(Cart cart) {
+
+        this.cart = cart;
+        this.id.setCart(cart);
     }
 
     public Product getProduct() {
-        return product;
+        return this.product;
     }
 
-    public void setProduct(Product idProduct) {
-        this.product = idProduct;
+    public void setProduct(Product product) {
+
+        this.product = product;
+        this.id.setProduct(product);
     }
 
     public Integer getQuantity() {
