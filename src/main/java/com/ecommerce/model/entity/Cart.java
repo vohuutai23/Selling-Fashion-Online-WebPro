@@ -36,7 +36,7 @@ public class Cart {
 //    private Set<CartDetail> cartDetails = new LinkedHashSet<>();
 
     public Set<CartDetail> getCartDetails() {
-        System.out.println("Kiem tra Cartdetails" + this.cartDetails);
+
         return this.cartDetails;
     }
 

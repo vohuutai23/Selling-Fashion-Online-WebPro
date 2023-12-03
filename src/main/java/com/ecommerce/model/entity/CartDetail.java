@@ -78,9 +78,7 @@ public class CartDetail implements Serializable {
     }
 
     public void setProduct(Product product) {
-        System.out.println("check product 2222" + product);
         this.product = product;
-        System.out.println("check product 333" + this.product);
        // this.id.setProduct(product);
         this.id.setProductId(product.getId());
     }

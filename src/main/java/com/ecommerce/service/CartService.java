@@ -43,10 +43,15 @@ public class CartService {
         List<CartDetail> cartDetails = cartDetailDAO.listByCart(cart.getId());
         request.setAttribute("cartDetails", cartDetails);
 
-        cart.setTotalPrice(cartDetailDAO.sumTotalPriceByCart(cart.getId()));
-        System.out.println("Tong tien" + cart.getTotalPrice());
+        Float totalPrice = cartDetailDAO.sumTotalPriceByCart(cart.getId());
+        if (totalPrice == null) {
+            totalPrice = 0.0f; // Thiết lập giá trị mặc định nếu cần
+        }
+        cart.setTotalPrice(totalPrice);
         cartDAO.update(cart);
+        System.out.println("Tong tien" + cart.getTotalPrice());
         request.setAttribute("totalPriceCart", cart.getTotalPrice());
+
         forwardToPage("shop/cart.jsp", request, response);
 
     }
@@ -94,7 +99,7 @@ public class CartService {
         Map<String, String[]> parameters = request.getParameterMap();
 
         for (String paramName : parameters.keySet()) {
-            System.out.println("test2");
+
             if (paramName.startsWith("quantity_")) {
 
                 // Tách ra ID sản phẩm từ tên tham số

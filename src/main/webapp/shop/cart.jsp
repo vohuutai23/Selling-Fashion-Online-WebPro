@@ -73,9 +73,7 @@
 
                 <td data-th="Quantity">
                     <input type="hidden" name="productId" value="${item.product.getId()}"/>
-                    <%--<input type="number" name="quantity&lt;%&ndash;${status.index + 1}&ndash;%&gt;" value="${item.quantity}"
-                           class="form-control text-center" value="1" min="1" required="required"/>--%>
-<%--                    <input type="number" name="quantity${status.index + 1}" value="${item.quantity}" class="form-control text-center" min="1" required="required"/>--%>
+
                     <input  type="number" name="quantity_${item.product.getId()}" value="${item.quantity}" class="form-control text-center" min="1" required="required"/>
 
 
