@@ -35,28 +35,20 @@ public class CartService {
     }
 
     public void viewCartDetail() throws ServletException, IOException {
-//        int cartId = Integer.parseInt(request.getParameter("id"));
+
         HttpSession session = request.getSession();
         Customer customer = (Customer) session.getAttribute("loggedCustomer");
 
         Cart cart = cartDAO.findByCustomer(customer.getId());
         List<CartDetail> cartDetails = cartDetailDAO.listByCart(cart.getId());
         request.setAttribute("cartDetails", cartDetails);
-        // Redirect to the cart page or another page
 
+        cart.setTotalPrice(cartDetailDAO.sumTotalPriceByCart(cart.getId()));
+        System.out.println("Tong tien" + cart.getTotalPrice());
+        cartDAO.update(cart);
+        request.setAttribute("totalPriceCart", cart.getTotalPrice());
         forwardToPage("shop/cart.jsp", request, response);
 
-        /*Cart cart =cartDAO.get(cartId);
-
-        if (cart != null) {
-            request.setAttribute("cart",cart);
-            forwardToPage("cart_detail.jsp", request, response);
-//            request.getSession().setAttribute("cart", cart);
-        }
-        else {
-            messageForAdmin(String.format("Could not find cart with ID %s.", cartId), request, response);
-        }
-//        forwardToPage("shop/cart.jsp", request, response);*/
     }
 
     public void addToCart() throws IOException, ServletException {
@@ -87,13 +79,13 @@ public class CartService {
             newCartDetail.setTotalPrice(product.getPrice() * quantity);
 
             cart.getCartDetails().add(newCartDetail);
+
             cartDAO.update(cart);
         }
-//        viewCartDetail();
-//        response.sendRedirect("shop/cart.jsp");
+
         String cartPage = request.getContextPath().concat("/view_cart");
         response.sendRedirect(cartPage);
-        // Xử lý phản hồi, chuyển hướng, v.v...
+
     }
 
 
@@ -119,7 +111,9 @@ public class CartService {
 
                 existingCartDetail.setQuantity(quantity);
                 existingCartDetail.setTotalPrice(product.getPrice() * quantity);
+
                 cartDetailDAO.updateCartDetail(existingCartDetail);
+
             }
         }
         System.out.println("test4");
@@ -153,8 +147,9 @@ public class CartService {
            // CartDetailId cartDetailId = cartDetail.getId(); // Lấy CartDetailId
             cartDetailDAO.deleteByCartAndProduct(cartDetail.getCart().getId(),cartDetail.getProduct().getId()); // Sử dụng CartDetailId để xóa
         }
+        /*cart.setTotalPrice(cartDetailDAO.sumTotalPriceByCart(cart.getId()));
+        cartDAO.update(cart);*/
 
-        System.out.println("check sp");
         // Chuyển hướng người dùng trở lại trang giỏ hàng
         String cartPage = request.getContextPath().concat("/view_cart");
         response.sendRedirect(cartPage);
@@ -169,6 +164,8 @@ public class CartService {
             // Lấy giỏ hàng của khách hàng
             Cart cart = cartDAO.findByCustomer(customer.getId());
             cartDetailDAO.deleteByCart(cart.getId());
+            /*cart.setTotalPrice(cartDetailDAO.sumTotalPriceByCart(cart.getId()));
+            cartDAO.update(cart);*/
             /*if (cart != null) {
                 // Lấy danh sách tất cả CartDetail liên quan đến giỏ hàng
                 List<CartDetail> cartDetails = cartDetailDAO.listByCart(cart.getId());

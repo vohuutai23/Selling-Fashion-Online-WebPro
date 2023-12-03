@@ -12,7 +12,11 @@ import java.io.Serializable;
                 query = "SELECT cd FROM CartDetail cd WHERE cd.cart.id = :cartId AND cd.product.id = :productId"),
         @NamedQuery(
                 name = "CartDetail.findByCart",
-                query = "SELECT cd FROM CartDetail cd WHERE  cd.cart.id = :idCart")
+                query = "SELECT cd FROM CartDetail cd WHERE  cd.cart.id = :idCart"),
+        @NamedQuery(
+                name = "CartDetail.sumTotalPriceByCart",
+                query = "SELECT SUM(cd.totalPrice) FROM CartDetail cd WHERE cd.cart.id = :idCart"
+        )
 })
 public class CartDetail implements Serializable {
     private static final long serialVersionUID = 1L;

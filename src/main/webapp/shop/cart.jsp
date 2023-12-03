@@ -76,7 +76,7 @@
                     <%--<input type="number" name="quantity&lt;%&ndash;${status.index + 1}&ndash;%&gt;" value="${item.quantity}"
                            class="form-control text-center" value="1" min="1" required="required"/>--%>
 <%--                    <input type="number" name="quantity${status.index + 1}" value="${item.quantity}" class="form-control text-center" min="1" required="required"/>--%>
-                    <input type="number" name="quantity_${item.product.getId()}" value="${item.quantity}" class="form-control text-center" min="1" required="required"/>
+                    <input  type="number" name="quantity_${item.product.getId()}" value="${item.quantity}" class="form-control text-center" min="1" required="required"/>
 
 
                 </td>
@@ -108,8 +108,9 @@
     <div class="col-md-4">
         <div class="float-right text-right">
             <h4>Total:</h4>
-            <h1>$${cart.totalAmount}</h1>
+            <h1>$${totalPriceCart}</h1>
         </div>
+
         <div class="text-md-right">
             <a href="checkout" class="btn btn-primary btn-lg pl-5 pr-5">Checkout</a>
         </div>
