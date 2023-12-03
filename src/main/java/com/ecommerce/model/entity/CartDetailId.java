@@ -9,20 +9,62 @@ import java.util.Objects;
 
 @Embeddable
 public class CartDetailId implements Serializable {
-    private static final long serialVersionUID = 2561497485581998488L;
+    private static final long serialVersionUID = 1L;
+    /*private static final long serialVersionUID = 2561497485581998488L;*/
     /*@NotNull
     @Column(name = "id_cart", nullable = false)*/
-    @ManyToOne(fetch = FetchType.LAZY)
+//    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_cart", referencedColumnName = "id_cart", insertable = false, updatable = false, nullable = false)
-    private Cart cart;
+//    private Cart cart;
+    private Integer cartId;
 
     /*@NotNull
     @Column(name = "id_product", nullable = false)*/
-    @ManyToOne(fetch = FetchType.LAZY)
+//    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_product", referencedColumnName = "id_product",insertable = false, updatable = false, nullable = false)
-    private Product product;
+//    private Product product;
+    private Integer productId;
+    // Constructors
+    public CartDetailId() {}
 
-    public Cart getCart() {
+    public CartDetailId(Integer cartId, Integer productId) {
+        this.cartId = cartId;
+        this.productId = productId;
+    }
+
+    // Getters
+    public Integer getCartId() {
+        return cartId;
+    }
+
+    public Integer getProductId() {
+        return productId;
+    }
+
+    // Setters
+    public void setCartId(Integer cartId) {
+        this.cartId = cartId;
+    }
+
+    public void setProductId(Integer productId) {
+        this.productId = productId;
+    }
+
+    // equals() and hashCode()
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CartDetailId that = (CartDetailId) o;
+        return Objects.equals(cartId, that.cartId) &&
+                Objects.equals(productId, that.productId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(cartId, productId);
+    }
+    /*public Cart getCart() {
         return cart;
     }
 
@@ -38,8 +80,8 @@ public class CartDetailId implements Serializable {
         System.out.println("check product ben id" + product);
         this.product = product;
     }
-
-    @Override
+*/
+    /*@Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
@@ -51,6 +93,13 @@ public class CartDetailId implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(cart, product);
-    }
+    }*/
+    @Override
+    public String toString() {
+        return "CartDetailID{"+ cartId +
+                "product=" +  productId+
 
+
+                // Thêm các trường khác bạn muốn hiển thị
+                '}';}
 }

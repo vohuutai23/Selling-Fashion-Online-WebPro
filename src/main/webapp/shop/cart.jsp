@@ -65,6 +65,7 @@
                                  class="img-fluid" alt="">
                         </div>
                         <div class="col-md-9 text-left mt-sm-2">
+                            <input type="hidden" name="productId1" value="${item.product.getId()}"/>
                             <h4>${item.product.getNameProduct()}</h4>
                         </div>
                     </div>
@@ -72,8 +73,12 @@
 
                 <td data-th="Quantity">
                     <input type="hidden" name="productId" value="${item.product.getId()}"/>
-                    <input type="number" name="quantity<%--${status.index + 1}--%>" value="${item.quantity}"
-                           class="form-control text-center" value="1" min="1" required="required"/>
+                    <%--<input type="number" name="quantity&lt;%&ndash;${status.index + 1}&ndash;%&gt;" value="${item.quantity}"
+                           class="form-control text-center" value="1" min="1" required="required"/>--%>
+<%--                    <input type="number" name="quantity${status.index + 1}" value="${item.quantity}" class="form-control text-center" min="1" required="required"/>--%>
+                    <input type="number" name="quantity_${item.product.getId()}" value="${item.quantity}" class="form-control text-center" min="1" required="required"/>
+
+
                 </td>
 
                 <td data-th="Price">$${item.totalPrice}</td>
@@ -86,7 +91,7 @@
                             <i class="fas fa-sync"></i>
                         </button>
                         <a type="button" class="btn btn-white btn-md mb-2"
-                           href="remove_from_cart?product_id=${item.id}"><i
+                           href="remove_from_cart?product_id=${item.product.id}"><i
                                 class="fas fa-trash"></i></a>
                     </div>
                 </td>

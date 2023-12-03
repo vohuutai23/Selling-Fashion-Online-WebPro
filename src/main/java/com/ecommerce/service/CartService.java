@@ -3,10 +3,7 @@ package com.ecommerce.service;
 import com.ecommerce.DAO.CartDAO;
 import com.ecommerce.DAO.CartDetailDAO;
 import com.ecommerce.DAO.ProductDAO;
-import com.ecommerce.model.entity.Cart;
-import com.ecommerce.model.entity.CartDetail;
-import com.ecommerce.model.entity.Customer;
-import com.ecommerce.model.entity.Product;
+import com.ecommerce.model.entity.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -14,8 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 import static com.ecommerce.util.CommonUtil.*;
 
@@ -93,107 +89,102 @@ public class CartService {
             cart.getCartDetails().add(newCartDetail);
             cartDAO.update(cart);
         }
-        viewCartDetail();
+//        viewCartDetail();
 //        response.sendRedirect("shop/cart.jsp");
+        String cartPage = request.getContextPath().concat("/view_cart");
+        response.sendRedirect(cartPage);
         // Xử lý phản hồi, chuyển hướng, v.v...
     }
 
 
 
-    /*public void addToCart() throws IOException , ServletException{
-        *//*HttpSession session = request.getSession();
-        Integer productId = Integer.parseInt(request.getParameter("productId"));
-        int quantity = Integer.parseInt(request.getParameter("quantity"));
+    public void updateCart() throws IOException {
+        Map<String, String[]> parameters = request.getParameterMap();
 
-        Product product = productDAO.get(productId);
-        Cart cart = (Cart) session.getAttribute("cart");
+        for (String paramName : parameters.keySet()) {
+            System.out.println("test2");
+            if (paramName.startsWith("quantity_")) {
 
-        if (cart == null) {
-            cart = new Cart();
-            session.setAttribute("cart", cart);
+                // Tách ra ID sản phẩm từ tên tham số
+                int productId = Integer.parseInt(paramName.split("_")[1]);
+                int quantity = Integer.parseInt(parameters.get(paramName)[0]);
+
+                // Xử lý cập nhật số lượng cho mỗi sản phẩm
+                Product product = productDAO.get(productId);
+                HttpSession session = request.getSession();
+                Customer customer = (Customer) session.getAttribute("loggedCustomer");
+                int idCustomer = customer.getId();
+                Cart cart = cartDAO.findByCustomer(idCustomer);
+                CartDetail existingCartDetail = cartDetailDAO.findCartDetailByCartAndProduct(cart.getId(), productId);
+
+                existingCartDetail.setQuantity(quantity);
+                existingCartDetail.setTotalPrice(product.getPrice() * quantity);
+                cartDetailDAO.updateCartDetail(existingCartDetail);
+            }
+        }
+        System.out.println("test4");
+    // Chuyển hướng sau khi xử lý
+        String cartPage = request.getContextPath().concat("/view_cart");
+        response.sendRedirect(cartPage);
+
+    }
+
+
+    public void removeFromCart() throws ServletException,IOException {
+        int productId = Integer.parseInt(request.getParameter("product_id"));
+
+        // Lấy thông tin người dùng hiện tại từ session
+        HttpSession session = request.getSession();
+        Customer customer = (Customer) session.getAttribute("loggedCustomer");
+        int customerId = customer.getId();
+
+        // Tìm giỏ hàng của người dùng
+        Cart cart = cartDAO.findByCustomer(customerId);
+
+        Set<CartDetail> cartDetails = cart.getCartDetails();
+        System.out.println("check cos sn ko"+ cartDetails);
+
+
+        // Tìm CartDetail tương ứng với productId trong giỏ hàng
+        CartDetail cartDetail = cartDetailDAO.findCartDetailByCartAndProduct(cart.getId(), productId);
+        if (cartDetail != null) {
+            System.out.println("check id cart"+ cartDetail.getCart().getId());
+            System.out.println("check id pro"+ cartDetail.getProduct().getId());
+           // CartDetailId cartDetailId = cartDetail.getId(); // Lấy CartDetailId
+            cartDetailDAO.deleteByCartAndProduct(cartDetail.getCart().getId(),cartDetail.getProduct().getId()); // Sử dụng CartDetailId để xóa
         }
 
-        cart.addProduct(product, quantity);
-        cartDAO.update(cart);
-        response.sendRedirect("cart.jsp");*//*
-        System.out.println("check");
-        int productId = Integer.parseInt(request.getParameter("productId"));
-        System.out.println("check id product" + productId);
-//        int quantity = Integer.parseInt(request.getParameter("quantity"));
-        int quantity = 1;
-        ProductDAO productDAO = new ProductDAO();
-        Product product = productDAO.get(productId);
+        System.out.println("check sp");
+        // Chuyển hướng người dùng trở lại trang giỏ hàng
+        String cartPage = request.getContextPath().concat("/view_cart");
+        response.sendRedirect(cartPage);
 
-        System.out.println("check product" + product);
 
+    }
+
+    public void clearCart() throws IOException {
         HttpSession session = request.getSession();
         Customer customer = (Customer) session.getAttribute("loggedCustomer");
+        if (customer != null) {
+            // Lấy giỏ hàng của khách hàng
+            Cart cart = cartDAO.findByCustomer(customer.getId());
+            cartDetailDAO.deleteByCart(cart.getId());
+            /*if (cart != null) {
+                // Lấy danh sách tất cả CartDetail liên quan đến giỏ hàng
+                List<CartDetail> cartDetails = cartDetailDAO.listByCart(cart.getId());
+                System.out.println("check id cart"+ cart.getId());
+                // Xóa mỗi CartDetail
 
-        int idCustomer = customer.getId();
-        System.out.println("check is cuss" + idCustomer);
-        Cart cart = cartDAO.findByCustomer(idCustomer);
-        System.out.println("check cart" + cart);
-        float subtotal = quantity * product.getPrice();
+                *//*for (CartDetail cartDetail : cartDetails) {
+                    cartDetailDAO.delete(cartDetail.getId());
+                }*//*
+            }*/
+        }
 
-        CartDetail cartDetail = new CartDetail();
-        cartDetail.setCart(cart);
-        cartDetail.setProduct(product);
-        cartDetail.setQuantity(quantity);
-        cartDetail.setTotalPrice(subtotal);
-
-        float newTotal = cart.getTotalPrice() + subtotal;
-        cart.setTotalPrice(newTotal);
-        System.out.println("check cartdetail " + cartDetail);
-        cart.getCartDetails().add(cartDetail);
-        cartDAO.update(cart);
-        System.out.println("final");
-//        CartDAO cartDAO = new CartDAO();
-
-        *//*request.setAttribute("product", product);
-        session.setAttribute("NewProductPendingToAddToCart", true);
-
-        forwardToPage("add_product_result.jsp", request, response);*//*
-    }*/
-
-    public void updateCart() throws IOException {
-
-        int quantity = Integer.parseInt(request.getParameter("quantity"));
-        int productId = Integer.parseInt(request.getParameter("productId"));
-        Product product = productDAO.get(productId);
-        HttpSession session = request.getSession();
-        Customer customer = (Customer) session.getAttribute("loggedCustomer");
-        int idCustomer = customer.getId();
-        Cart cart = cartDAO.findByCustomer(idCustomer);
-        CartDetail existingCartDetail = cartDetailDAO.findCartDetailByCartAndProduct(cart.getId(), productId);
-        int newQuantity = existingCartDetail.getQuantity() + quantity;
-
-        existingCartDetail.setQuantity(newQuantity);
-        existingCartDetail.setTotalPrice(product.getPrice() * newQuantity);
-        cartDetailDAO.updateCartDetail(existingCartDetail);
-
+        // Chuyển hướng người dùng trở lại trang giỏ hàng sau khi xóa
         String cartPage = request.getContextPath().concat("/view_cart");
         response.sendRedirect(cartPage);
     }
 
-    public void removeFromCart() throws IOException {
-        /*Integer productId = Integer.parseInt(request.getParameter("product_id"));
-
-        Object cartObject = request.getSession().getAttribute("cart");
-
-        Cart cart = (Cart) cartObject;
-
-        cart.removeItem(new Product(productId));
-
-        String cartPage = request.getContextPath().concat("/view_cart");
-        response.sendRedirect(cartPage);*/
-    }
-
-    public void clearCart() throws IOException {
-        /*Cart cart = (Cart) request.getSession().getAttribute("cart");
-        cart.clear();
-
-        String cartPage = request.getContextPath().concat("/view_cart");
-        response.sendRedirect(cartPage);*/
-    }
 
 }
