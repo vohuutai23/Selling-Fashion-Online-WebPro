@@ -3,20 +3,22 @@ package com.ecommerce.service;
 
 import com.ecommerce.DAO.CategoryDAO;
 import com.ecommerce.DAO.ProductDAO;
+import com.ecommerce.DAO.CartDetailDAO;
+import com.ecommerce.model.entity.CartDetail;
 import com.ecommerce.model.entity.Category;
 import com.ecommerce.model.entity.Product;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
-import javax.validation.constraints.Null;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.time.Instant;
 import java.util.List;
-//import org.apache.commons.text.StringEscapeUtils;
+import java.io.InputStream;
+import java.util.Objects;
+
+
 
 import static com.ecommerce.utility.CommonUtility.*;
 
@@ -26,6 +28,7 @@ public class ProductService {
     private final HttpServletResponse response;
     private final ProductDAO productDAO;
     private final CategoryDAO categoryDAO;
+    private final CartDetailDAO cartDetailDAO;
     private List<Category> selectNameCategories;
 
     public ProductService(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
@@ -33,6 +36,7 @@ public class ProductService {
         this.response = response;
         productDAO = new ProductDAO();
         categoryDAO = new CategoryDAO();
+        cartDetailDAO = new CartDetailDAO();
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html; charset=UTF-8");
         response.setCharacterEncoding("UTF-8");
@@ -41,9 +45,11 @@ public class ProductService {
     public void listProductByCategory() throws ServletException, IOException {
         int categoryId = Integer.parseInt(request.getParameter("id"));
 //        int categoryId = 1;
-//        Category category = categoryDAO.get(categoryId);
+        Category category = categoryDAO.get(categoryId);
         List<Product> listProducts = productDAO.listByCategory(categoryId);
-
+        List<Category> listCategories = categoryDAO.listAll();
+        String sort = request.getParameter("sort");
+//        List<Category> listCategories = categoryDAO.listAll();
 //        System.out.println("Number of products: " + listProducts.size()); // In số lượng sản phẩm để kiểm tra
 //        for (Product product : listProducts) {
 //            System.out.println("Product ID: " + product.getId());
@@ -51,12 +57,55 @@ public class ProductService {
 //            System.out.println("Product Price: " + product.getPrice());
 //            // ... In thông tin khác của sản phẩm nếu cần
 //        }
+        if (Objects.equals(sort, "newest")) {
+            listProducts = productDAO.listByNewest(categoryId);
+        }
+        if (Objects.equals(sort, "price_dec")) {
+            listProducts = productDAO.listByPriceDec(categoryId);
+        }
+        if (Objects.equals(sort, "price_inc")) {
+            listProducts = productDAO.listByPriceInc(categoryId);
+        }
 
         request.setAttribute("listProducts", listProducts);
-//        request.setAttribute("listCategories", listCategories);
+        request.setAttribute("category", category);
 //        request.setAttribute("category", category);
+        request.setAttribute("listCategories", listCategories);
+
+        List<CartDetail> listCartDetails = cartDetailDAO.listAll();
+        request.setAttribute("listCartDetails", listCartDetails);
 
         forwardToPage("shop/product_by_category.jsp", request, response);
+    }
+
+    public void listAllProduct() throws ServletException, IOException {
+        List<Product> listProducts = productDAO.listAll();
+        List<Category> listCategories = categoryDAO.listAll();
+
+        String sort = request.getParameter("sort");
+
+
+        if (Objects.equals(sort, "newest")) {
+            listProducts = productDAO.listByNewestProducts();
+        }
+        if (Objects.equals(sort, "price_inc")) {
+            listProducts = productDAO.listByPriceIncProducts();
+        }
+
+        if (Objects.equals(sort, "price_dec")) {
+            listProducts = productDAO.listByPriceDecProducts();
+        }
+
+
+
+        request.setAttribute("listProducts", listProducts);
+        request.setAttribute("listCategories", listCategories);
+
+        request.setAttribute("sort", sort);
+        List<CartDetail> listCartDetails = cartDetailDAO.listAll();
+        request.setAttribute("listCartDetails", listCartDetails);
+
+        forwardToPage("shop/product_list.jsp", request, response);
     }
     public void viewProductDetail() throws ServletException, IOException {
         Integer productId = Integer.parseInt(request.getParameter("id"));
@@ -64,6 +113,9 @@ public class ProductService {
         Product product = productDAO.get(productId);
 
         request.setAttribute("product", product);
+
+        List<CartDetail> listCartDetails = cartDetailDAO.listAll();
+        request.setAttribute("listCartDetails", listCartDetails);
         forwardToPage("shop/product_detail.jsp", request, response);
     }
 
@@ -90,6 +142,9 @@ public class ProductService {
 //        request.setAttribute("keyword", keyword);
         request.setAttribute("result", result);
 
+        List<CartDetail> listCartDetails = cartDetailDAO.listAll();
+        request.setAttribute("listCartDetails", listCartDetails);
+
         forwardToPage("shop/search.jsp", request, response);
     }
 
@@ -113,77 +168,35 @@ public class ProductService {
         if (message != null) {
             request.setAttribute("message", message);
         }
+        List<CartDetail> listCartDetails = cartDetailDAO.listAll();
+        request.setAttribute("listCartDetails", listCartDetails);
 
         forwardToPage("product_list.jsp", message, request, response);
     }
-
-    public void loadSelectNameCategories() throws ServletException, IOException {
-        List<Category> listGroupCategories = categoryDAO.listGroupCategory();
-        request.setAttribute("listGroupCategories", listGroupCategories);
-        String groupCategory = request.getParameter("groupCategory");
-        System.out.println("Group" + groupCategory);
-        if (groupCategory == null) {
-            groupCategory = "Áo";
-        }
-        selectNameCategories = categoryDAO.listNameCategoryByGroup(groupCategory);
-        System.out.println(selectNameCategories );
-
-        // Không cần setAttribute vì chúng ta sẽ trả dữ liệu trực tiếp qua AJAX
-    }
-
-    public List<Category> getSelectNameCategories() {
-        return selectNameCategories;
-    }
-
     public void showNewProductForm() throws ServletException, IOException {
-        /*List<Category> listCategories = categoryDAO.listAll();
+        List<Category> listCategories = categoryDAO.listAll();
 
         request.setAttribute("listCategories", listCategories);
-*/
-        List<Category> listGroupCategories = categoryDAO.listGroupCategory();
-        request.setAttribute("listGroupCategories", listGroupCategories);
-        String groupCategory = request.getParameter("groupCategory");
-        if (groupCategory == null){
-            groupCategory = "Áo";
-        }
-
-        List<Category> listNameCategories = categoryDAO.listNameCategoryByGroup(groupCategory);
-        request.setAttribute("listNameCategories", listNameCategories);
-
-
 
         forwardToPage("product_form.jsp", request, response);
     }
     private void readProductFields(Product product) throws ServletException, IOException {
         String nameProduct = request.getParameter("nameProduct");
-        System.out.println("name "+nameProduct);
+//        Integer categoryId = Integer.parseInt(request.getParameter("category"));
+//        Category category = categoryDAO.get(categoryId);
+//        System.out.println("Ten san pham input:" + nameProduct);
         String description = request.getParameter("description");
-        System.out.println("mota " +description);
-        Float price = Float.parseFloat(request.getParameter("price"));
-        System.out.println("giá "+price);
-
+//        System.out.println("Mo ta input:" + description);
+//        String size = request.getParameter("size");
+//        Float price = Float.parseFloat(request.getParameter("price"));
         Instant postDate = Instant.now(); // Lấy thời điểm hiện tại dưới dạng Instant
-        System.out.println(postDate);
 
-        Instant updateDate = Instant.now();
-        System.out.println(updateDate);
 
         product.setNameProduct(nameProduct);
         product.setDescription(description);
-
-        product.setPrice(price);
+//        product.setCategory(category);
+//        product.setPrice(price);
         product.setPostDate(postDate);
-        product.setUpdateDate(updateDate);
-
-        String groupCategory = request.getParameter("groupCategory");
-        String nameCategory = request.getParameter("nameCategory");
-        System.out.println(groupCategory);
-        System.out.println(nameCategory);
-        Category category = categoryDAO.findByNameAndGroup(nameCategory, groupCategory);
-        System.out.println(category);
-        product.setCategory(category);
-
-
         Part part = request.getPart("imageProduct");
         if (part != null && part.getSize() > 0) {
             InputStream inputStream = part.getInputStream();
@@ -192,13 +205,25 @@ public class ProductService {
             product.setImageProduct(imageBytes);
             inputStream.close();
         }
-
-
-
+//        Part part = request.getPart("productImage");
+//
+//        if (part != null && part.getSize() > 0) {
+//            long size = part.getSize();
+//            byte[] imageByte = new byte[(int) size];
+//
+//            InputStream inputStream = part.getInputStream();
+//            inputStream.read(imageByte);
+//            inputStream.close();
+//
+//            product.setImage(imageByte);
+//        }
+//
+//        boolean active = Boolean.parseBoolean(request.getParameter("active"));
+//        product.setActive(active);
     }
     public void createProduct() throws ServletException, IOException {
         String nameProduct = request.getParameter("nameProduct");
-        System.out.println("name"+nameProduct);
+
         Product existProduct = productDAO.findByTitle(nameProduct);
         System.out.println("San pham ton tai" + existProduct);
         if (existProduct != null) {
@@ -208,6 +233,7 @@ public class ProductService {
 
         Product newProduct = new Product();
         readProductFields(newProduct);
+        newProduct.setId(12);
         Product createdProduct = productDAO.create(newProduct);
 
         if (createdProduct.getId() > 0) {
@@ -219,20 +245,10 @@ public class ProductService {
     public void editProduct() throws ServletException, IOException {
         Integer productId = Integer.parseInt(request.getParameter("id"));
         Product product = productDAO.get(productId);
-        System.out.println("id san pham input:" + productId);
+
         if (product != null) {
-
-//            Category category = categoryDAO.findIdCategoryByName(nameCategory, groupCategory);
 //            List<Category> listCategories = categoryDAO.listAll();
-            List<Category> listGroupCategories = categoryDAO.listGroupCategory();
-            request.setAttribute("listGroupCategories", listGroupCategories);
-            String groupCategory = request.getParameter("groupCategory");
-            if (groupCategory == null){
-                groupCategory = product.getCategory().getGroupCategory();
-            }
 
-            List<Category> listNameCategories = categoryDAO.listNameCategoryByGroup(groupCategory);
-            request.setAttribute("listNameCategories", listNameCategories);
             request.setAttribute("product", product);
 //            request.setAttribute("listCategories", listCategories);
 
@@ -247,20 +263,22 @@ public class ProductService {
     }
 
     public void updateProduct() throws ServletException, IOException {
-//        System.out.println("id san pham update:" + request.getParameter("productId"));
-        Integer productId = Integer.parseInt(request.getParameter("productId"));
+//        Integer productId = Integer.parseInt(request.getParameter("productId"));
+        Integer productId = 1;
         String nameProduct = request.getParameter("nameProduct");
+
         Product existProduct = productDAO.get(productId);
         Product productByTitle = productDAO.findByTitle(nameProduct);
-        /*if (productByTitle != null && !existProduct.equals(productByTitle)) {
-            System.out.println("checkdkienif");
 
+        if (productByTitle != null && !existProduct.equals(productByTitle)) {
             listProduct("Could not update product because there is another product having same title.");
             return;
-        }*/
+        }
 
         readProductFields(existProduct);
+
         productDAO.update(existProduct);
+
         listProduct("The product has been updated successfully.");
     }
 
@@ -295,6 +313,23 @@ public class ProductService {
 //                    productDAO.delete(productId);
 //                    listProduct("The product has been deleted successfully.");
 //            }
+    }
+    public void loadSelectNameCategories() throws ServletException, IOException {
+        List<Category> listGroupCategories = categoryDAO.listGroupCategory();
+        request.setAttribute("listGroupCategories", listGroupCategories);
+        String groupCategory = request.getParameter("groupCategory");
+        System.out.println("Group" + groupCategory);
+        if (groupCategory == null) {
+            groupCategory = "Áo";
+        }
+        selectNameCategories = categoryDAO.listNameCategoryByGroup(groupCategory);
+        System.out.println(selectNameCategories );
+
+        // Không cần setAttribute vì chúng ta sẽ trả dữ liệu trực tiếp qua AJAX
+    }
+
+    public List<Category> getSelectNameCategories() {
+        return selectNameCategories;
     }
 }
 

@@ -25,7 +25,7 @@
     }
 
     .container {
-        max-width: 500px;
+        width: 550px;
         margin: 0 auto;
         padding: 20px;
         background-color: #fff;
@@ -54,6 +54,7 @@
         padding: 10px;
         border: 1px solid #ccc;
         border-radius: 4px;
+        display: flex;
     }
 
     .form-group input[type="submit"] {
@@ -72,10 +73,6 @@
         color: #888;
     }
 
-    .signup-image {
-        margin-left: 20px;
-    }
-
     .signup-image img {
         max-width: 100%;
         border-radius: 5px;
@@ -87,39 +84,44 @@
         margin-top: 20px;
     }
 </style>
-<div class="container mt-5">
+<div class="container mt-5 border border-info-subtle">
+    <div class="signup-image">
+        <a href="view_profile" class="signup-image-link"><i class="fa-solid fa-arrow-left">Quay lại</i></a>
+    </div>
     <div class="signup-form">
-        <h5 class="form-title">Edit My Profile</h5>
+
+        <h2 style="font-family: 'Dancing Script', cursive;
+        font-style: italic;" class="form-title">Chỉnh sửa hồ sơ</h2>
 
         <form method="post" action="update_profile" class="register-form" id="customerForm">
             <div class="form-group">
-                <label for="name"><i class="zmdi zmdi-account material-icons-name"></i> Full Name</label>
-                <input type="text" name="name" id="name" placeholder="Your full name"
+                <label for="nameCustomer"><i class="zmdi zmdi-account material-icons-name"></i>Tên</label>
+                <input type="text" name="nameCustomer" id="nameCustomer" placeholder="Tên của bạn"
                        value="${loggedCustomer.nameCustomer}" required="required" maxlength="32"/>
             </div>
 
             <div class="form-group">
-                <label for="email"><i class="zmdi zmdi-email"></i> Email Address</label>
-                <input type="email" name="email" id="email" placeholder="Your email" readonly="readonly"
+                <label for="email"><i class="zmdi zmdi-email"></i> Địa chỉ email</label>
+                <input type="email" name="email" id="email" placeholder="Email của bạn" readonly="readonly"
                        value="${loggedCustomer.email}"/>
-                <i>Email cannot be changed</i>
+                <i>Địa chỉ email không thể thay đổi</i>
             </div>
 
             <div class="form-group">
-                <label for="phone"><i class="zmdi zmdi-lock"></i> Phone Number</label>
-                <input type="text" name="phone" id="phone" placeholder="Your phone number"
+                <label for="phone"><i class="zmdi zmdi-lock"></i> Số điện thoại</label>
+                <input type="text" name="phone" id="phone" placeholder="Số điện thoại của bạn"
                        value="${loggedCustomer.phone}" required="required" maxlength="16"/>
             </div>
 
             <div class="form-group">
-                <label for="address"><i class="zmdi zmdi-lock"></i> Address</label>
-                <input type="text" name="address" id="address" placeholder="Your address"
+                <label for="address"><i class="zmdi zmdi-lock"></i> Địa chỉ</label>
+                <input type="text" name="address" id="address" placeholder="Địa chỉ của bạn"
                        value="${loggedCustomer.address}" required="required" maxlength="128"/>
             </div>
 
             <div class="form-group">
-                <label for="country"><i class="zmdi zmdi-lock"></i> Country</label>
-                <select name="country" id="country" class="form-control">
+                <label for="country"><i class="zmdi zmdi-lock"></i> Quốc gia</label>
+                <select name="country" id="country">
                     <c:forEach items="${mapCountries}" var="country">
                         <option value="${country.value}"
                                 <c:if test="${loggedCustomer.country eq country.value}">selected="selected"</c:if>>${country.key}</option>
@@ -128,33 +130,29 @@
             </div>
 
             <div class="form-group">
-                <label for="password"><i class="zmdi zmdi-lock"></i> Password</label>
-                <input type="password" name="password" id="password" placeholder="Your password"/>
+                <label for="password"><i class="zmdi zmdi-lock"></i> Mật khẩu</label>
+                <input type="password" name="password" id="password" placeholder="Mật khẩu của bạn"/>
             </div>
 
             <div class="form-group">
-                <label for="confirmPassword"><i class="zmdi zmdi-lock-outline"></i> Confirm Password</label>
+                <label for="confirmPassword"><i class="zmdi zmdi-lock-outline"></i> Xác nhận mật khẩu</label>
                 <input type="password" name="confirmPassword" id="confirmPassword"
-                       placeholder="Confirm your password"/>
+                       placeholder="Xác nhận mật khẩu"/>
+            </div>
+            <div class="d-flex justify-content-center">
+                <input class="btn btn-outline-primary justify-content-center" type="submit" name="signup" id="signup" value="Cập nhật"/>
             </div>
 
-            <div class="form-group form-button">
-                <input type="submit" name="signup" id="signup" class="form-submit" value="Confirm"/>
-            </div>
         </form>
-    </div>
-
-    <div class="signup-image">
-<%--        <figure>--%>
-<%--            <img src="#" alt="sign up image">--%>
-<%--        </figure>--%>
-        <a href="view_profile" class="signup-image-link"><i class="fa-solid fa-arrow-left">Go back</i></a>
     </div>
 </div>
 <!-- Bootstrap JS and jQuery -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
+<%--<footer>--%>
+<%--    <%@ include file="/includes/footer.jsp" %>--%>
+<%--</footer>--%>
 </html>
 
 

@@ -20,7 +20,7 @@ public class CustomerLoginFilter extends HttpFilter implements Filter {
 	private static final long serialVersionUID = 1L;
 	private static final String[] loginRequiredURLs = { "/view_profile", "/edit_profile", "/update_profile",
 			"/write_review", "/checkout", "/place_order", "/view_order", "/show_order_detail", "/review_payment",
-			"/show_contact" };
+			"/show_contact", "/add_to_cart", "/view_cart" };
 
 	@Override
 	public void init(FilterConfig config) throws ServletException {

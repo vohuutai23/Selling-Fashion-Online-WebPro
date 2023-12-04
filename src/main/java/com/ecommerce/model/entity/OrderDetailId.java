@@ -4,21 +4,35 @@ import org.hibernate.Hibernate;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.JoinColumn;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
 public class OrderDetailId implements Serializable {
-    private static final long serialVersionUID = 6323318596742907097L;
-    @NotNull
+    private static final long serialVersionUID = 1L;
+    @JoinColumn(name = "id_order", referencedColumnName = "id_order", insertable = false, updatable = false, nullable = false)
+
     @Column(name = "id_order", nullable = false)
     private Integer idOrder;
 
-    @NotNull
+    @JoinColumn(name = "id_product", referencedColumnName = "id_product", insertable = false, updatable = false, nullable = false)
+
     @Column(name = "id_product", nullable = false)
     private Integer idProduct;
 
+
+    public OrderDetailId()
+    {
+
+    }
+
+    public OrderDetailId(Integer idOrder, Integer idProduct)
+    {
+        this.idOrder = idOrder;
+        this.idProduct = idProduct;
+    }
     public Integer getIdOrder() {
         return idOrder;
     }

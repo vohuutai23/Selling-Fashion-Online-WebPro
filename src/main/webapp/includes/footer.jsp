@@ -1,3 +1,4 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,32 +11,42 @@
     <title>CoverYou</title>
 </head>
 <footer class="footer">
-    <div id="footer">
+    <div id="footer" class="mt-4 p-3">
         <div class="row">
             <div class="col-md-3 text-center">
-                <h3 class="footer-heading">SHOP</h3>
+                <h5 class="footer-heading fw-bold mb-2">Tài khoản</h5>
                 <ul class="footer-list">
-                    <li class="footer-link">Adasd</li>
-                    <li class="footer-link">adsad</li>
-                    <li class="footer-link">dasds</li>
+                    <li class="footer-link"><a style="text-decoration: none; color: white" href="register">Đăng kí tài khoản</a></li>
+                    <%--                    <li class="footer-link">adsad</li>--%>
+                    <%--                    <li class="footer-link">dasds</li>--%>
                 </ul>
             </div>
             <div class="col-md-3 text-center">
-                <h3 class="footer-heading">SUPPORT</h3>
+                <h5 class="footer-heading fw-bold mb-2">Chăm sóc khách hàng</h5>
                 <ul class="footer-list">
-                    <li class="footer-link">Adasd</li>
-                    <li class="footer-link">adsad</li>
-                    <li class="footer-link">dasds</li>
+                    <li class="footer-link">Các câu hỏi thường gặp</li>
+                    <li class="footer-link">Hỏi đáp</li>
+                    <li class="footer-link">Hướng dẫn mua sắm</li>
                 </ul>
             </div>
             <div class="col-md-3 text-center">
-                <h3 class="footer-heading">CONTACT</h3>
+                <h5 class="footer-heading fw-bold mb-2">Mạng xã hội</h5>
                 <ul class="footer-list">
-                    <li class="footer-link">Adasd</li>
-                    <li class="footer-link">adsad</li>
-                    <li class="footer-link">dasds</li>
+                    <i class="fa-brands fa-facebook p-2"></i> <i class="fa-brands fa-instagram p-2"></i> <i class="fa-brands fa-tiktok p-2"></i>
+                    <%--                    <li class="footer-link"><i class="fa-brands fa-facebook"></i></li>--%>
+                    <%--                    <li class="footer-link"><i class="fa-brands fa-instagram"></i></li>--%>
+                    <%--                    <li class="footer-link"><i class="fa-brands fa-tiktok"></i></li>--%>
                 </ul>
             </div>
+            <div class="col-md-3 text-center">
+                <h5 class="footer-heading fw-bold mb-2">Địa chỉ liên hệ</h5>
+                <ul class="footer-list">
+                    <li class="footer-link">1. Số 1 Võ Văn Ngân, phường Linh Chiểu, thành phố Thủ Đức</li>
+                    <li class="footer-link">2. 448 Lê Văn Việt, phường Tăng Nhơn Phú A, thành phố Thủ Đức</li>
+
+                </ul>
+            </div>
+
         </div>
     </div>
 </footer>

@@ -1,8 +1,10 @@
 package com.ecommerce.service;
+import com.ecommerce.DAO.CartDetailDAO;
 import com.ecommerce.DAO.CustomerDAO;
 import com.ecommerce.DAO.OrderDAO;
 import com.ecommerce.DAO.ReviewDAO;
 //import com.ecommerce.utility.HashUtility;
+import com.ecommerce.model.entity.CartDetail;
 import com.ecommerce.model.entity.Customer;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -18,11 +20,13 @@ public class CustomerService {
     private final HttpServletRequest request;
     private final HttpServletResponse response;
     private final CustomerDAO customerDAO;
+    private final CartDetailDAO cartDetailDAO;
 
     public CustomerService(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
         this.request = request;
         this.response = response;
         customerDAO = new CustomerDAO();
+        cartDetailDAO = new CartDetailDAO();
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html; charset=UTF-8");
         response.setCharacterEncoding("UTF-8");
@@ -250,10 +254,14 @@ public class CustomerService {
     }
 
     public void showCustomerProfile() throws ServletException, IOException {
+        List<CartDetail> listCartDetails = cartDetailDAO.listAll();
+        request.setAttribute("listCartDetails", listCartDetails);
         forwardToPage("shop/customer_profile.jsp", request, response);
     }
 
     public void showCustomerProfileEditForm() throws ServletException, IOException {
+        List<CartDetail> listCartDetails = cartDetailDAO.listAll();
+        request.setAttribute("listCartDetails", listCartDetails);
         generateCountryList(request);
         forwardToPage("shop/edit_profile.jsp", request, response);
     }

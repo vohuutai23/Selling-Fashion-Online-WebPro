@@ -1,93 +1,114 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%--<!DOCTYPE html>--%>
-<%--<html lang="en">--%>
-<%--<head>--%>
-<%--    <meta charset="UTF-8">--%>
-<%--    <meta name="viewport" content="width=device-width, initial-scale=1.0">--%>
-<%--    <link rel="stylesheet" href="assets/css/main.css" type="text/css"/>--%>
-<%--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">--%>
-<%--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">--%>
-<%--    <link rel="icon" type="image/x-icon" href="assets/images/logo.png">--%>
-<%--    <title>CoverYou</title>--%>
-<%--</head>--%>
-<%--<body>--%>
-<%--<div id="header">--%>
-<%--    <div id="nav">--%>
-<%--        <nav class="nav-full navbar navbar-expand-lg fixed-top">--%>
-<%--            <div class="container-fluid navigation">--%>
-<%--                <a class="navbar-brand" href="#">--%>
-<%--                    <img class="ms-5" src="/shop/images/logo.png" alt="Logo" width="60" height="60" >--%>
-<%--                </a>--%>
-<%--                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">--%>
-<%--                    <span class="navbar-toggler-icon"></span>--%>
-<%--                </button>--%>
-<%--                <div class="collapse navbar-collapse" id="navbarNav">--%>
-<%--                    <ul class="navbar-nav nav-element text-uppercase nav-text">--%>
-<%--                        <li class="nav-item text-white">--%>
-<%--                            <a class="nav-link" aria-current="page" href="#">Home</a>--%>
-<%--                        </li>--%>
-<%--                        <li class="nav-item">--%>
-<%--                            <a class="nav-link" href="#">Products</a>--%>
-<%--                        </li>--%>
-<%--                        <li class="nav-item">--%>
-<%--                            <a class="nav-link" href="#">Categories</a>--%>
-<%--                        </li>--%>
-<%--                        <li class="nav-item">--%>
-<%--                            <a class="nav-link" href="#">Contact</a>--%>
-<%--                        </li>--%>
-<%--                        <li class="nav-item">--%>
-<%--                            <a class="nav-link" href="#"><i class="fa-solid fa-magnifying-glass fa-xl" style="color: #ffffff;"></i></a>--%>
-<%--                        </li>--%>
-<%--                        <li class="nav-item">--%>
-<%--                            <a class="nav-link" href="#"><i class="fa-solid fa-cart-shopping fa-xl" style="color: #ffffff;"></i></a>--%>
-<%--                        </li>--%>
-<%--                        <li class="nav-item">--%>
-<%--                            <a class="nav-link" href="#"><i class="fa-solid fa-user fa-xl" style="color: #ffffff;"></i></a>--%>
-<%--                        </li>--%>
-<%--                    </ul>--%>
-<%--                </div>--%>
-<%--            </div>--%>
-<%--        </nav>--%>
-<%--    </div>--%>
-<%--</div>--%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%@ include file="/includes/link.jsp" %>
+
+</head>
+<body>
 <%@ include file="/includes/header.jsp" %>
+
+<style>
+    .rating {
+        display: inline-block;
+        position: relative;
+        height: 50px;
+        line-height: 50px;
+        font-size: 50px;
+    }
+
+    .rating label {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        cursor: pointer;
+    }
+
+    .rating label:last-child {
+        position: static;
+    }
+
+    .rating label:nth-child(1) {
+        z-index: 5;
+    }
+
+    .rating label:nth-child(2) {
+        z-index: 4;
+    }
+
+    .rating label:nth-child(3) {
+        z-index: 3;
+    }
+
+    .rating label:nth-child(4) {
+        z-index: 2;
+    }
+
+    .rating label:nth-child(5) {
+        z-index: 1;
+    }
+
+    .rating label input {
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0;
+    }
+
+    .rating label .icon {
+        float: left;
+        color: transparent;
+    }
+
+    .rating label:last-child .icon {
+        color: #000;
+    }
+
+    .rating:not(:hover) label input:checked ~ .icon,
+    .rating:hover label:hover input ~ .icon {
+        color: #09f;
+    }
+
+    .rating label input:focus:not(:checked) ~ .icon:last-child {
+        color: #000;
+        text-shadow: 0 0 5px #09f;
+    }
+</style>
 <!-- Content: Product details -->
-<div id="content-product-details">
+<div id="content-product-details mb-5">
     <div class="container mt-5">
         <div class="product-single">
             <div class="row">
                 <div class="col-md-6">
                     <div class="background-product">
-                        <img src="https://media.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85,format=auto/uploads/October2023/T-Shirt_Cotton_Compact.2_66.jpg" width="80%" height="80%" alt="">
+                        <img src="data:image/jpeg;base64,${product.base64Image}" alt="Product Image" height="80%" width="80%">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="info-product mt-5">
-
-                        <input type="text" name="productId" value="${product.id}">
                         <div class="row m-4 fs-1 fw-medium">${product.nameProduct}</div>
-                        <div class="row m-4 fs-3 fw-medium">$ ${product.price}</div>
+                        <div class="row m-4 fs-3 fw-medium">${product.price}đ</div>
                         <div class="row m-5 fs-5">
                             ${product.description}
 
                         </div>
                         <div class="row select-to-order m-4">
-<%--                            <div class="col-4">--%>
-<%--                                Quantity--%>
-<%--                            </div>--%>
+                            <%--                            <div class="col-4">--%>
+                            <%--                                Quantity--%>
+                            <%--                            </div>--%>
                             <div class="col-4">
+                                <%--                                <form action="view_cart" method="post">--%>
+                                <%--                                    <input type="hidden" name="id" value="${product.id}">--%>
+                                <%--                                    <input type="submit" value="Add To Cart" class="btn btn-outline-info">--%>
+                                <%--                                </form>--%>
+                                <%--                                    <a href="add_to_cart?product_id=${product.id}" type="button" id="buttonAddToCart" class="btn btn-full-width btn-lg btn-outline-primary">Add to cart</a></div>--%>
                                 <form action="add_to_cart" method="post">
                                     <input type="hidden" name="productId" value="${product.id}">
-                                    <input type="submit" value="Add To Cart" class="btn btn-full-width btn-lg btn-outline-primary">
+                                    <input type="submit" value="Thêm vào giỏ hàng" class="btn btn-full-width btn-lg btn-outline-primary">
                                 </form>
-
-<%--                                <form action="view_cart" method="post">--%>
-<%--                                    <input type="hidden" name="id" value="${product.id}">--%>
-<%--                                    <input type="submit" value="Add To Cart" class="btn btn-outline-info">--%>
-<%--                                </form>--%>
-<%--                                    <a href="add_to_cart?product_id=${product.id}" type="button" id="buttonAddToCart" class="btn btn-full-width btn-lg btn-outline-primary">Add to cart</a></div>--%>
-<%--                                        <a href="#" type="button" id="buttonAddToCart" class="btn btn-full-width btn-lg btn-outline-primary">Add to cart</a>--%>
                             </div>
                         </div>
 
@@ -95,15 +116,109 @@
                 </div>
             </div>
         </div>
+
     </div>
 </div>
-<%--<script src="shop/js/jquery-3.1.1.min.js"></script>
-<script src="shop/bootstrap/js/bootstrap.min.js"></script>
-<script src="shop/js/tether.min.js"></script>
-<script type="text/javascript">
-    $(document).ready(function () {
-        $("#buttonAddToCart").click(function () {
-            window.location = 'add_to_cart?product_id=' + ${product.id};
-        });
-    });--%>
-</script>
+<%--    <h2 class="products text-center">${loggedCustomer.fullName} Reviews</h2>--%>
+<%--    <h3 class="mb-3 mt-0">${product.nameProduct}</h3>--%>
+<%--    <div class="rating-star">--%>
+<%--&lt;%&ndash;        <form class="rating" action="submit_review" method="post">&ndash;%&gt;--%>
+<%--&lt;%&ndash;            <label>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                <input type="radio" name="rating" value="1" />&ndash;%&gt;--%>
+<%--&lt;%&ndash;                <span class="icon">★</span>&ndash;%&gt;--%>
+<%--&lt;%&ndash;            </label>&ndash;%&gt;--%>
+<%--&lt;%&ndash;            <label>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                <input type="radio" name="rating" value="2" />&ndash;%&gt;--%>
+<%--&lt;%&ndash;                <span class="icon">★</span>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                <span class="icon">★</span>&ndash;%&gt;--%>
+<%--&lt;%&ndash;            </label>&ndash;%&gt;--%>
+<%--&lt;%&ndash;            <label>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                <input type="radio" name="rating" value="3" />&ndash;%&gt;--%>
+<%--&lt;%&ndash;                <span class="icon">★</span>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                <span class="icon">★</span>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                <span class="icon">★</span>&ndash;%&gt;--%>
+<%--&lt;%&ndash;            </label>&ndash;%&gt;--%>
+<%--&lt;%&ndash;            <label>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                <input type="radio" name="rating" value="4" />&ndash;%&gt;--%>
+<%--&lt;%&ndash;                <span class="icon">★</span>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                <span class="icon">★</span>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                <span class="icon">★</span>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                <span class="icon">★</span>&ndash;%&gt;--%>
+<%--&lt;%&ndash;            </label>&ndash;%&gt;--%>
+<%--&lt;%&ndash;            <label>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                <input type="radio" name="rating" value="5" />&ndash;%&gt;--%>
+<%--&lt;%&ndash;                <span class="icon">★</span>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                <span class="icon">★</span>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                <span class="icon">★</span>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                <span class="icon">★</span>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                <span class="icon">★</span>&ndash;%&gt;--%>
+<%--&lt;%&ndash;            </label>&ndash;%&gt;--%>
+<%--&lt;%&ndash;        </form>&ndash;%&gt;--%>
+<%--    <form class="rating" action="submit_review" method="post">--%>
+<%--        <label>--%>
+<%--            <input type="radio" name="rating" value="1" />--%>
+<%--            <span class="icon">★</span>--%>
+<%--        </label>--%>
+<%--        <label>--%>
+<%--            <input type="radio" name="rating" value="2" />--%>
+<%--            <span class="icon">★</span>--%>
+<%--            <span class="icon">★</span>--%>
+<%--        </label>--%>
+<%--        <label>--%>
+<%--            <input type="radio" name="rating" value="3" />--%>
+<%--            <span class="icon">★</span>--%>
+<%--            <span class="icon">★</span>--%>
+<%--            <span class="icon">★</span>--%>
+<%--        </label>--%>
+<%--        <label>--%>
+<%--            <input type="radio" name="rating" value="4" />--%>
+<%--            <span class="icon">★</span>--%>
+<%--            <span class="icon">★</span>--%>
+<%--            <span class="icon">★</span>--%>
+<%--            <span class="icon">★</span>--%>
+<%--        </label>--%>
+<%--        <label>--%>
+<%--            <input type="radio" name="rating" value="5" />--%>
+<%--            <span class="icon">★</span>--%>
+<%--            <span class="icon">★</span>--%>
+<%--            <span class="icon">★</span>--%>
+<%--            <span class="icon">★</span>--%>
+<%--            <span class="icon">★</span>--%>
+<%--        </label>--%>
+<%--        <input type="hidden" name="selectedRating" id="selectedRating" value="1" />--%>
+<%--&lt;%&ndash;        <button class="btn btn-lg btn-outline-primary" type="submit">Submit</button>&ndash;%&gt;--%>
+<%--    </form>--%>
+<%--    </div>--%>
+<%--    <form action="submit_review" method="post">--%>
+<%--        <div class="container">--%>
+<%--            <div class="row">--%>
+<%--                <div class="col-md-6 mt-5 mt-md-2 text-center text-md-left">--%>
+
+<%--                    <input type="hidden" name="productId" value="${product.id}"/>--%>
+<%--                    <br>--%>
+<%--&lt;%&ndash;                    <input type="text" name="headline" size="60"&ndash;%&gt;--%>
+<%--&lt;%&ndash;                           placeholder="Headline or summary for your review (required)" required="required"/>&ndash;%&gt;--%>
+<%--                    <textarea name="comment" cols="70" rows="10" placeholder="Write your review details..."--%>
+<%--                              required="required"></textarea>--%>
+<%--                    <button class="btn btn-lg btn-outline-primary" type="submit">Submit</button>--%>
+<%--                    &nbsp;&nbsp;--%>
+<%--                    <button class="btn btn-lg btn-outline-primary" onclick="history.go(-1);">Cancel</button>--%>
+<%--                </div>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--    </form>--%>
+
+
+<%--<script>--%>
+<%--    $(':radio').change(function() {--%>
+<%--        console.log('New star rating: ' + this.value);--%>
+<%--    });--%>
+<%--</script>--%>
+<%--<script>--%>
+<%--    // Sử dụng jQuery để cập nhật giá trị của hidden input khi người dùng chọn số sao--%>
+<%--    $('.rating input').on('change', function() {--%>
+<%--        $('#selectedRating').val($(this).val());--%>
+<%--    });--%>
+<%--</script>--%>
+</body>
+

@@ -7,7 +7,7 @@
 --%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,7 +19,7 @@
 <div class="row">
     <!-- Sidebar Categories Component -->
     <div class="col-md-3 mt-5">
-       <p class="margin-top-content">Kết quả tìm kiếm</p>
+        <p class="margin-top-content">Kết quả tìm kiếm</p>
     </div>
     <!-- Products -->
     <div class="col-md-9">
@@ -31,11 +31,11 @@
                             <td>
                                 <img src="data:image/jpeg;base64,${product.base64Image}" alt="Product Image" height="100%" width="100%">
                             </td>
-<%--                            <img src="https://media.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85,format=auto/uploads/October2023/T-Shirt_Cotton_Compact.2_66.jpg" width="50%" height="50%" class="card-img-top shadow pt-2 rounded-5" alt="...">--%>
+                                <%--                            <img src="https://media.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85,format=auto/uploads/October2023/T-Shirt_Cotton_Compact.2_66.jpg" width="50%" height="50%" class="card-img-top shadow pt-2 rounded-5" alt="...">--%>
                             <div class="card-body text-light rounded-5 mt-2">
                                 <h5 class="card-title fw-bold text-black">${product.nameProduct}</h5>
                                 <p class="card-text text-black">$${product.price}</p>
-                                <a href="view_product?id=${product.id}" class="btn btn-outline-info">Buy now</a>
+                                <a href="view_product?id=${product.id}" class="btn btn-outline-info">Mua ngay</a>
                             </div>
                         </div>
                     </div>
@@ -44,5 +44,6 @@
         </div>
     </div>
 </div>
+<%@ include file="/includes/footer.jsp" %>
 </body>
 </html>
