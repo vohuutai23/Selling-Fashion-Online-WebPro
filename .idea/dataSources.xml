@@ -12,14 +12,7 @@ C:/Users/HOME/OneDrive/Documents/GitHub/Selling-Fashion-Online-WebPro/src/main/r
       <jdbc-url>jdbc:mysql://localhost:3306/fashion_database</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="fashion_database@localhost" uuid="12e87fc8-86dd-447d-b23b-27d0c58af225">
-      <driver-ref>mysql.8</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3306/fashion_database</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
-    <data-source source="LOCAL" name="fashion_database2@localhost" uuid="68d1e75a-7e41-4cc6-85d6-b634d0bb4a8d">
+    <data-source source="LOCAL" name="fashion_database2@localhost" uuid="db63b068-0877-4265-b93d-73b7117c8f43">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
