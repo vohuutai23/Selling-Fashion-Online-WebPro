@@ -44,7 +44,7 @@
             <div id="assignment" class="container-fluid m-5 text-center">
                 <div class="row p-4">
                     <c:forEach items="${listNewProducts}" var="product" begin="0" end="3">
-                        <div class="col-md-4">
+                        <div class="col-md-4 mb-4">
                             <div class="rounded-5 " style="width: 16rem;">
                                 <img src="data:image/jpeg;base64,${product.base64Image}" alt="Product Image" width="50%" height="50%" class="card-img-top shadow pt-2 rounded-5" >
                                 <div class="card-body text-light rounded-5 mt-2">
