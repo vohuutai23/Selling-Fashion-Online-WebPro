@@ -52,10 +52,10 @@
                         <c:forEach items="${listProducts}" var="product">
                             <div class="col-md-4">
                                 <div class="rounded-5 " style="width: 16rem;">
-                                    <img src="https://media.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85,format=auto/uploads/October2023/T-Shirt_Cotton_Compact.2_66.jpg" width="50%" height="50%" class="card-img-top shadow pt-2 rounded-5" alt="...">
+                                    <img src="data:image/jpeg;base64,${product.base64Image}" alt="Product Image" width="50%" height="50%" class="card-img-top shadow pt-2 rounded-5" >
                                     <div class="card-body text-light rounded-5 mt-2">
                                         <h5 class="card-title fw-bold text-black">${product.nameProduct}</h5>
-                                        <p class="card-text text-black">${product.price}$</p>
+                                        <p class="card-text text-black">${product.price}đ</p>
                                         <a href="view_product?id=${product.id}" class="btn btn-outline-info">Mua ngay</a>
                                     </div>
                                 </div>
