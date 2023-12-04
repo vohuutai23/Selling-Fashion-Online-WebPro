@@ -2,7 +2,7 @@
 <project version="4">
   <component name="DBNavigator.Project.DataEditorManager">
     <record-view-column-sorting-type value="BY_INDEX" />
-    <value-preview-text-wrapping value="true" />
+    <value-preview-text-wrapping value="false" />
     <value-preview-pinned value="false" />
   </component>
   <component name="DBNavigator.Project.DatabaseBrowserManager">
@@ -93,7 +93,7 @@
           <tcp-port-from value="4000" />
           <tcp-port-to value="4999" />
         </debugger>
-        <object-filters hide-empty-schemas="false" hide-pseudo-columns="false" hide-audit-columns="false">
+        <object-filters hide-empty-schemas="false" hide-pseudo-columns="false">
           <object-type-filter>
             <object-type name="SCHEMA" enabled="true" />
             <object-type name="USER" enabled="true" />
@@ -186,7 +186,7 @@
           <tcp-port-from value="4000" />
           <tcp-port-to value="4999" />
         </debugger>
-        <object-filters hide-empty-schemas="false" hide-pseudo-columns="false" hide-audit-columns="false">
+        <object-filters hide-empty-schemas="false" hide-pseudo-columns="false">
           <object-type-filter>
             <object-type name="SCHEMA" enabled="true" />
             <object-type name="USER" enabled="true" />
@@ -374,7 +374,6 @@
       <confirmations>
         <save-changes value="false" />
         <revert-changes value="true" />
-        <exit-on-changes value="ASK" />
       </confirmations>
     </code-editor-settings>
     <code-completion-settings>
@@ -621,5 +620,9 @@
         </visibility-settings>
       </environment>
     </general-settings>
+  </component>
+  <component name="DBNavigator.Project.StatementExecutionManager">
+    <execution-variables />
+    <execution-variable-types />
   </component>
 </project>

@@ -1,16 +1,9 @@
 package com.ecommerce.model.entity;
 
-import com.ecommerce.model.entity.Review;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.Instant;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.Set;
-
 
 @Entity
 @Table(name = "customer")
@@ -18,7 +11,6 @@ import java.util.Set;
         @NamedQuery(name = "Customer.findByEmail", query = "SELECT c FROM Customer c WHERE c.email = :email"),
         @NamedQuery(name = "Customer.countAll", query = "SELECT COUNT(c.email) FROM Customer c"),
         @NamedQuery(name = "Customer.findByEmailAndPassword", query = "SELECT c FROM Customer c WHERE c.email = :email AND c.password = :password") })
-
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,35 +18,42 @@ public class Customer {
     private Integer id;
 
     @Size(max = 30)
-    @Column(name = "name_customer", length = 30)
+    @NotNull
+    @Column(name = "name_customer", nullable = false, length = 30)
     private String nameCustomer;
 
     @Size(max = 20)
-    @Column(name = "phone", length = 20)
+    @NotNull
+    @Column(name = "phone", nullable = false, length = 20)
     private String phone;
 
     @Size(max = 50)
-    @Column(name = "address", length = 50)
+    @NotNull
+    @Column(name = "address", nullable = false, length = 50)
     private String address;
 
     @Size(max = 50)
-    @Column(name = "email", length = 50)
+    @NotNull
+    @Column(name = "email", nullable = false, length = 50)
     private String email;
 
     @Size(max = 25)
-    @Column(name = "country", length = 25)
+    @NotNull
+    @Column(name = "country", nullable = false, length = 25)
     private String country;
 
-    @Column(name = "register_date")
-    private Date registerDate;
-
     @Size(max = 50)
-    @Column(name = "password", length = 50)
+    @NotNull
+    @Column(name = "password", nullable = false, length = 50)
     private String password;
 
     @NotNull
+    @Column(name = "register_date", nullable = false)
+    private Instant registerDate;
+
+    @NotNull
     @Column(name = "active", nullable = false)
-    private boolean active;
+    private Byte active;
 
     public Integer getId() {
         return id;
@@ -65,7 +64,7 @@ public class Customer {
     }
 
     public String getNameCustomer() {
-        return this.nameCustomer;
+        return nameCustomer;
     }
 
     public void setNameCustomer(String nameCustomer) {
@@ -104,14 +103,6 @@ public class Customer {
         this.country = country;
     }
 
-    public Date getRegisterDate() {
-        return registerDate;
-    }
-
-    public void setRegisterDate(Date registerDate) {
-        this.registerDate = registerDate;
-    }
-
     public String getPassword() {
         return password;
     }
@@ -119,25 +110,32 @@ public class Customer {
     public void setPassword(String password) {
         this.password = password;
     }
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer")
-    //private Set<Review> reviews;// = new HashSet<>(0);
-    //private Set<Review> Reviews = new HashSet<>(0);
-    private Set<Review> reviews = new LinkedHashSet<>();
 
-    public boolean getActive() {
+    public Instant getRegisterDate() {
+        return registerDate;
+    }
+
+    public void setRegisterDate(Instant registerDate) {
+        this.registerDate = registerDate;
+    }
+
+    public Byte getActive() {
         return active;
     }
 
-    public void setActive(boolean active) {
+    public void setActive(Byte active) {
         this.active = active;
     }
 
-    public Set<Review> getReviews() {
-        return this.reviews;
-    }
-    public void setReviews(Set<Review> reviews) {
-        this.reviews = reviews;
-    }
-
-
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer")
+//    //private Set<Review> reviews;// = new HashSet<>(0);
+//    //private Set<Review> Reviews = new HashSet<>(0);
+//    private Set<Review> reviews = new LinkedHashSet<>();
+//
+//    public Set<Review> getReviews() {
+//        return this.reviews;
+//    }
+//    public void setReviews(Set<Review> reviews) {
+//        this.reviews = reviews;
+//    }
 }

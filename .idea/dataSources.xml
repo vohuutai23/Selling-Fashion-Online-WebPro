@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="fashion_database@localhost" uuid="5a227023-d5c5-4949-8c68-066828f41e46">
-      <driver-ref>mysql.8</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3306/fashion_database</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
     <data-source source="LOCAL" name="hibernate.cfg.xml/Hibernate" uuid="9b1b6b9c-ffb3-4a38-870a-21832b3cc4ce">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
@@ -17,6 +10,20 @@
 C:/Users/HOME/OneDrive/Documents/GitHub/Selling-Fashion-Online-WebPro/src/main/resources/hibernate.cfg.xml</remarks>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mysql://localhost:3306/fashion_database</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="fashion_database@localhost" uuid="12e87fc8-86dd-447d-b23b-27d0c58af225">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306/fashion_database</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="fashion_database2@localhost" uuid="68d1e75a-7e41-4cc6-85d6-b634d0bb4a8d">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306/fashion_database2</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>

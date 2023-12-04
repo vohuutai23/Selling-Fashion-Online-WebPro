@@ -1,7 +1,8 @@
 package com.ecommerce.DAO;
-import com.ecommerce.model.entity.Customer;
 //import com.ecommerce.utility.HashUtility;
+import com.ecommerce.model.entity.Customer;
 
+import java.time.Instant;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -10,7 +11,7 @@ public class CustomerDAO extends JPADao<Customer> implements iJPADao<Customer>{
 
     @Override
     public Customer create(Customer customer) {
-        customer.setRegisterDate(new Date());
+        customer.setRegisterDate(Instant.now());
         return super.create(customer);
     }
 

@@ -5,14 +5,16 @@ import static com.ecommerce.utility.CommonUtility.forwardToPage;
 import java.io.IOException;
 import java.util.List;
 
+import com.ecommerce.DAO.ProductDAO;
+import com.ecommerce.model.entity.Product;
+import com.ecommerce.model.entity.Category;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.ecommerce.DAO.ProductDAO;
-import com.ecommerce.model.entity.Product;
+import com.ecommerce.DAO.CategoryDAO;
 
 @WebServlet(name = "ShopHomePageServlet", value = "")
 public class ShopHomePageServlet extends HttpServlet {
@@ -23,12 +25,13 @@ public class ShopHomePageServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         ProductDAO productDAO = new ProductDAO();
-
+        CategoryDAO categoryDAO = new CategoryDAO();
         List<Product> listNewProducts = productDAO.listNewProducts();
 //        List<Product> listBestSellingProducts = productDAO.listBestSellingProducts();
 //        List<Product> listFavoredProducts = productDAO.listMostFavoredProducts();
-
+        List<Category> listCategories = categoryDAO.listAll();
         request.setAttribute("listNewProducts", listNewProducts);
+        request.setAttribute("listCategories", listCategories);
 //        request.setAttribute("listBestSellingProducts", listBestSellingProducts);
 //        request.setAttribute("listFavoredProducts", listFavoredProducts);
 
