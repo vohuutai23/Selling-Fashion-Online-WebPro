@@ -10,6 +10,12 @@ import java.util.Set;
 
 @Entity
 @Table(name = "product_order")
+@NamedQueries({
+        @NamedQuery(name = "ProductOrder.findAll", query = "SELECT po FROM ProductOrder po"),
+        @NamedQuery(name = "ProductOrder.countAll", query = "SELECT COUNT(*) FROM ProductOrder"),
+        @NamedQuery(name = "ProductOrder.countByCustomer", query = "SELECT COUNT(po.orderId) FROM ProductOrder po WHERE po.customer.id = :customerId"),
+        @NamedQuery(name = "ProductOrder.findByCustomer", query = "SELECT po FROM ProductOrder po WHERE po.customer.id = :customerId"),
+        @NamedQuery(name = "ProductOrder.findByIdAndCustomer", query = "SELECT po FROM ProductOrder po WHERE po.orderId = :orderId AND po.customer.id = :customerId") })
 public class ProductOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,6 +60,18 @@ public class ProductOrder {
     @Column(name = "phone", length = 20)
     private String phone;
 
+    @Size(max = 50)
+    @Column(name = "payment_method", length = 50)
+    private String paymentMethod;
+
+    public String getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(String paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
+
     public String getPhone() {
         return phone;
     }
@@ -74,7 +92,7 @@ public class ProductOrder {
     public ProductOrder() {
     }
     public Set<OrderDetail> getOrderDetails() {
-        return orderDetails;
+        return this.orderDetails;
     }
 
     public void setOrderDetails(Set<OrderDetail> orderDetails) {
@@ -135,6 +153,22 @@ public class ProductOrder {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+    @Override
+    public String toString() {
+        return "ProductOrder{" +
+                "orderId=" + orderId +
+                ", customer=" + (customer != null ? customer.getId() : null) + // Chỉ in ID của customer để tránh lấy tất cả thông tin khách hàng
+                ", shippingAddress='" + shippingAddress + '\'' +
+                ", fee=" + fee +
+                ", totalPrice=" + totalPrice +
+                ", dateOrder=" + dateOrder +
+                ", status='" + status + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", phone='" + phone + '\'' +
+                ", paymentMethod='" + paymentMethod + '\'' +
+                ", orderDetails=" + orderDetails + // Có thể cần phương thức toString() riêng cho OrderDetail
+                '}';
     }
 
 }

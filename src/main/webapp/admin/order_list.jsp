@@ -1,14 +1,11 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-<!DOCTYPE html>
-<html lang="en">
-
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Danh Sách Khách Hàng</title>
+    <title>Danh Hóa Đơn</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
     <!-- jQuery -->
@@ -23,13 +20,8 @@
     <!-- Custom CSS và JS c?a b?n -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/admin/styles/assets/css/list_customer_style.css">
 
-
-
-
 </head>
-
 <body>
-
 
 <%@ include file="slidebar.jsp" %>
 
@@ -59,50 +51,45 @@
     <div class="list_table">
         <div class="table-responsive">
             <div class="cardHeader">
-                <h2>List Customer</h2>
+                <h2>List Order</h2>
                 <a href="new_customer" class="btn">Create Customer</a>
             </div>
 
-            <table id="customerTable" class="table table-striped table-bordered" style="width:100%">
+<%--            <table id="customerTable" class="table table-striped table-bordered" style="width:100%">--%>
+            <table id="orderTable" class="table table-striped table-bordered" style="width:100%">
                 <thead>
                 <tr>
                     <th>Index</th>
-                    <th>ID</th>
-                    <th>Full Name</th>
-                    <th>Phone</th>
-                    <th>Address</th>
-                    <th>Email</th>
-                    <th>Country</th>
-                    <th>Register Date</th>
-                    <th>Active</th>
+                    <th>Order ID</th>
+<%--                    <th>Ordered by</th>--%>
+<%--                    <th>Product Copies</th>--%>
+                    <th>Total</th>
+                    <th>Payment method</th>
+                    <th>Status</th>
+                    <th>Order Date</th>
                     <th>Action</th>
                 </tr>
                 </thead>
-
-                <tbody>
-                <c:forEach var="customer" items="${listCustomers}" varStatus="status">
+                <tbody class="list">
+                <c:forEach var="order" items="${listOrder}" varStatus="status">
                     <tr>
                         <td>${status.index + 1}</td>
-                        <td>${customer.id}</td>
-                        <td>${customer.nameCustomer}</td>
-                        <td>${customer.phone}</td>
-                        <td>${customer.address}</td>
-
-                        <td>${customer.email}</td>
-
-                        <td>${customer.country}</td>
-                        <td>${customer.registerDate}</td>
-                        <td class="active">
-                            <c:if test="${customer.active == true}">Enable</c:if>
-                            <c:if test="${customer.active == false}">Disable</c:if>
-                        </td>
+                        <td>${order.id}</td>
+<%--                        <td>${order.customer.getNameCustomer()}</td>--%>
+<%--                        <td>${order.productCopies}</td>--%>
+                        <td>$${order.totalPrice}</td>
+                        <td>${order.paymentMethod}</td>
+                        <td>${order.status}</td>
+                        <td>${order.dateOrder}</td>
                         <td>
                             <a class="btn waves-effect waves-light btn btn-info hidden-sm-down text-white"
-                               href="edit_customer?id=${customer.id}">Edit</a> &nbsp;
+                               href="view_order?id=${order.id}">View</a> &nbsp;
+                            <a class="btn waves-effect waves-light btn btn-info hidden-sm-down text-white"
+                               href="edit_order?id=${order.id}">Edit</a> &nbsp;
                             <button class="btn waves-effect waves-light btn btn-info hidden-sm-down text-white"
-                                    type="button" onclick="delete_customer(${customer.id})">
-                                Delete
+                                    type="button" onclick="delete_order(${order.id})">Delete
                             </button>
+                        </td>
                     </tr>
                 </c:forEach>
                 </tbody>
@@ -119,7 +106,7 @@
 <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
 <script>
     $(document).ready(function () {
-        $('#customerTable').DataTable({
+        $('#orderTable').DataTable({
             "pagingType": "full_numbers",
             "lengthChange": true,
             "searching": true,
@@ -150,5 +137,4 @@
 <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
-
 </html>

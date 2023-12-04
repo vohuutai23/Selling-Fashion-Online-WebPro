@@ -8,17 +8,17 @@ import javax.validation.constraints.NotNull;
 public class OrderDetail {
     @EmbeddedId
 //    private OrderDetailId id;
-    @AttributeOverrides({ @AttributeOverride(name = "idOrder", column = @Column(name = "id_order")),
-            @AttributeOverride(name = "idProduct", column = @Column(name = "id_product")) })
+   /* @AttributeOverrides({ @AttributeOverride(name = "idOrder", column = @Column(name = "id_order")),
+            @AttributeOverride(name = "idProduct", column = @Column(name = "id_product")) })*/
     private OrderDetailId id = new OrderDetailId();
 
     @MapsId("idOrder")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "id_order", nullable = false)
     private ProductOrder productOrder;
 
     @MapsId("idProduct")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "id_product", nullable = false)
     private Product product;
 
@@ -58,15 +58,19 @@ public class OrderDetail {
     }
 
     public void setProductOrder(ProductOrder ProductOrder) {
+
         this.productOrder = ProductOrder;
+        this.id.setIdOrder(ProductOrder.getId());
     }
 
     public Product getProduct() {
-        return product;
+        return this.product;
     }
 
-    public void setProduct(Product idProduct) {
-        this.product = idProduct;
+    public void setProduct(Product product) {
+
+        this.product = product;
+        this.id.setIdProduct(product.getId());
     }
 
     public Integer getQuantity() {
@@ -84,5 +88,13 @@ public class OrderDetail {
     public void setTotalPrice(Float totalPrice) {
         this.totalPrice = totalPrice;
     }
-
+    @Override
+    public String toString() {
+        return "OrderDetail{"+  productOrder.getId()+
+                "product=" + product.getId() +
+                ", quantity=" + quantity +
+                ", totalPrice=" + totalPrice +
+                // Thêm các trường khác bạn muốn hiển thị
+                '}';
+    }
 }

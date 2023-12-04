@@ -4,8 +4,27 @@
 <html>
 <head>
     <title>Title</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1;
+        }
+        footer {
+            background-color: #f8f9fa; /* Adjust the background color as needed */
+            margin-top: 50%;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
+<%--<%@ include file="/includes/header.jsp" %>--%>
 <section class="cart text-center">
     <div class="container">
         <c:if test="${message != null}">
@@ -14,11 +33,12 @@
             </div>
         </c:if>
 
-        <c:set var="cart" value="${sessionScope['cart']}"/>
 
-        <c:if test="${cart.totalItems == 0}">
+
+        <c:if test="${numberOfCartDetails == 0}">
             <h2>There's no items in your cart</h2>
         </c:if>
+
         <div class="row">
             <div class="col-sm-6 mb-3 mb-m-1 text-md-left">
                 <a href=""><i class="fas fa-arrow-left mr-2"></i>Continue Shopping</a>
@@ -27,7 +47,7 @@
                 <a href="view_cart" class="btn btn-primary btn-lg pl-5 pr-5">Edit cart</a>
             </div>
         </div>
-        <c:if test="${cart.totalItems > 0}">
+        <c:if test="${numberOfCartDetails > 0}">
             <div class="row">
                 <div class="col-12 text-center">
                     <h2 class="mt-5 mb-2">Review Your Order Detail </h2>
@@ -37,110 +57,80 @@
                             <th style="width: 50%">Product</th>
                             <th style="width: 15%">Price</th>
                             <th style="width: 15%">Quantity</th>
-                            <th style="width: 15%">Subtotal</th>
+
                         </tr>
 
-                        <c:forEach items="${cart.items}" var="item" varStatus="status">
+                        <c:forEach items="${cartDetails}" var="item" varStatus="status">
                             <tr>
                                 <td>${status.index + 1}</td>
-                                <td>
+                                <td data-th="Product">
                                     <div class="row">
                                         <div class="col-md-3 text-left">
-                                            <img src="data:image/jpg;base64,${item.key.base64Image}"
+                                            <img src="https://media.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85,format=auto/uploads/October2023/T-Shirt_Cotton_Compact.2_66.jpg"
                                                  class="img-fluid" alt="">
                                         </div>
                                         <div class="col-md-9 text-left mt-sm-2">
-                                            <h4>${item.key.title}</h4>
+                                            <input type="hidden" name="productId1" value="${item.product.getId()}"/>
+                                            <h4>${item.product.getNameProduct()}</h4>
+                                            <input type="hidden" name="productIds" value="${item.product.getId()}">
                                         </div>
                                     </div>
                                 </td>
-                                <td>$${item.key.price}</td>
-                                <td>${item.value}
+
+                                <td data-th="Quantity">
+                                    <input type="hidden" name="productId" value="${item.product.getId()}"/>
+
+                                    <input type="number" name="quantity_${item.product.getId()}" value="${item.quantity}" class="form-control text-center" required="required"/>
+<%--                                    <input type="number" name="quantity_${item.product.getId()}" value="${item.quantity}" class="form-control text-center" required="required"/>--%>
+                                      <%--  ${item.quantity}--%>
+                                    <!-- Gửi số lượng dưới dạng trường ẩn -->
+                                    <%--<input type="hidden" name="quantities" value="${item.quantity}">--%>
+
                                 </td>
-                                <td>$${item.value * item.key.price}</td>
+
+                                <td data-th="Price">$${item.totalPrice}</td>
+
                             </tr>
                         </c:forEach>
                     </table>
                     <div class="float-right text-right">
-                        <h4>${cart.totalQuantity} product(s)</h4>
-                        <h4>Subtotal: $${cart.totalAmount}</h4>
-                        <h4>Tax: $${tax}</h4>
+                     <%--<h4>${cart.totalQuantity} product(s)</h4>--%>
+                        <h4>Subtotal: $${totalPriceCart}</h4>
+
                         <h4>Shipping Fee: $${shippingFee}</h4>
                         <h3>TOTAL: $${total}</h3>
                     </div>
                 </div>
             </div>
-            <div class="divider"></div>
+
 
             <form action="place_order" method="post">
                 <div class="row">
                     <div class="col-12 text-center">
                         <h2 class="mt-5 mb-2">Your Shipping Information</h2>
                         <div class="text-left">
+
                             <table align="center">
                                 <tr>
-                                    <td>First Name:</td>
-                                    <td><input type="text" name="recipientFirstName" value="${loggedCustomer.firstName}"
-                                               required="required" maxlength="32"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Last Name:</td>
-                                    <td><input type="text" name="recipientLastName" value="${loggedCustomer.lastName}"
+                                    <td>Full Name:</td>
+                                    <td><input type="text" name="recipientFullName" value="${loggedCustomer.nameCustomer}"
                                                required="required" maxlength="32"/>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Phone:</td>
-                                    <td><input type="number" name="recipientPhone" value="${loggedCustomer.phone}"
+                                    <td><input type="text" name="recipientPhone" value="${loggedCustomer.phone}"
                                                required="required" maxlength="16"/>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Address Line 1:</td>
-                                    <td><input type="text" name="recipientAddressLine1"
-                                               value="${loggedCustomer.addressLine1}"
+                                    <td>Address:</td>
+                                    <td><input type="text" name="recipientAddress"
+                                               value="${loggedCustomer.address}"
                                                required="required" maxlength="128"/>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>Address Line 2:</td>
-                                    <td><input type="text" name="recipientAddressLine2"
-                                               value="${loggedCustomer.addressLine2}"
-                                               required="required" maxlength="128"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>City:</td>
-                                    <td><input type="text" name="recipientCity" value="${loggedCustomer.city}"
-                                               required="required"
-                                               maxlength="32">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>State:</td>
-                                    <td><input type="text" name="recipientState" value="${loggedCustomer.state}"
-                                               required="required"
-                                               maxlength="32">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Zip Code:</td>
-                                    <td><input type="text" name="recipientZipCode" value="${loggedCustomer.zipCode}"
-                                               required="required" maxlength="16"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Country:</td>
-                                    <td>
-                                        <select name="recipientCountry" class="btn btn-lg btn-white dropdown-toggle">
-                                            <c:forEach items="${mapCountries}" var="country">
-                                                <option value="${country.value}"
-                                                        <c:if test="${loggedCustomer.country eq country.value}">selected="selected"</c:if>>${country.key}</option>
-                                            </c:forEach>
-                                        </select>
-                                    </td>
-                                </tr>
+
                                 <tr>
                                     <td>Payment method:
                                     </td>
@@ -154,7 +144,13 @@
                             </table>
                         </div>
                     </div>
-
+                    <c:forEach items="${cartDetails}" var="item" varStatus="status">
+                        <!-- Các thông tin về sản phẩm -->
+                        <!-- Trường ẩn cho ID sản phẩm -->
+                        <input type="hidden" name="productIds" value="${item.product.getId()}">
+                        <!-- Trường cho số lượng sản phẩm -->
+                        <input type="number" name="quantity_${item.product.getId()}" value="${item.quantity}" class="form-control text-center" required="required"/>
+                    </c:forEach>
                     <div class="products text-center container">
                         <button class="btn btn-lg btn-outline-primary" type="submit">Place Order</button> &nbsp;&nbsp;
                         <a class="btn btn-lg btn-outline-primary" href="${pageContext.request.contextPath}/">Continue

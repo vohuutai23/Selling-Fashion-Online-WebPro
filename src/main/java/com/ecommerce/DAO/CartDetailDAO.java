@@ -120,6 +120,7 @@ public class CartDetailDAO extends JPADao<CartDetail> implements GenericDAO<Cart
         entityManager.getTransaction().commit();
         entityManager.close();
     }
+
     public Float sumTotalPriceByCart(Integer cartId) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         Query query = entityManager.createNamedQuery("CartDetail.sumTotalPriceByCart");

@@ -65,7 +65,7 @@ public class Customer {
     }
 
     public String getNameCustomer() {
-        return nameCustomer;
+        return this.nameCustomer;
     }
 
     public void setNameCustomer(String nameCustomer) {

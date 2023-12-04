@@ -1,8 +1,6 @@
 package com.ecommerce.service;
 
-import com.ecommerce.DAO.CartDAO;
-import com.ecommerce.DAO.OrderDAO;
-import com.ecommerce.DAO.ProductDAO;
+import com.ecommerce.DAO.*;
 //import com.ecommerce.DAO.Cart;
 import com.ecommerce.model.entity.*;
 /*import com.paypal.api.payments.ItemList;
@@ -25,11 +23,19 @@ public class OrderService {
     private final OrderDAO orderDAO;
     private final  CartDAO cartDAO;
 
+    private final CartDetailDAO cartDetailDAO;
+    private final ProductDAO productDAO;
+
+    private  final OrderDetailDAO orderDetailDAO;
+
     public OrderService(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
         this.request = request;
         this.response = response;
         this.orderDAO = new OrderDAO();
         this.cartDAO = new CartDAO();
+        this.cartDetailDAO = new CartDetailDAO();
+        this.productDAO = new ProductDAO();
+        this.orderDetailDAO = new OrderDetailDAO();
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html; charset=UTF-8");
         response.setCharacterEncoding("UTF-8");
@@ -41,6 +47,10 @@ public class OrderService {
 
     public void listOrder(String message) throws ServletException, IOException {
         List<ProductOrder> listOrder = orderDAO.listAll();
+//        System.out.println(List<ProductOrder>);
+        for (ProductOrder order : listOrder) {
+            System.out.println(order); // Hoặc in thông tin cụ thể, ví dụ: System.out.println(order.getId());
+        }
         request.setAttribute("listOrder", listOrder);
 
         if (message != null) {
@@ -65,11 +75,22 @@ public class OrderService {
 
     public void showCheckoutForm() throws ServletException, IOException {
         HttpSession session = request.getSession();
-        Cart cart = (Cart) session.getAttribute("cart");
-//        List<CartDetail> listCartDetail = CartDAO.
-//        float tax = (float) (cart.getTotalAmount() * 0.1);
+        Customer customer = (Customer) session.getAttribute("loggedCustomer");
 
-        float shippingFee = 200000;//art.getTotalPrice() * 5.0f;
+        Cart cart = cartDAO.findByCustomer(customer.getId());
+        List<CartDetail> cartDetails = cartDetailDAO.listByCart(cart.getId());
+        int numberOfCartDetails = cartDetails.size(); // Lấy số lượng và lưu vào biến
+        request.setAttribute("cartDetails", cartDetails);
+        request.setAttribute("numberOfCartDetails", numberOfCartDetails); // Lưu biến vào request để sử dụng sau này
+
+        Float totalPrice = cartDetailDAO.sumTotalPriceByCart(cart.getId());
+        if (totalPrice == null) {
+            totalPrice = 0.0f; // Thiết lập giá trị mặc định nếu cần
+        }
+        cart.setTotalPrice(totalPrice);
+        request.setAttribute("totalPriceCart", cart.getTotalPrice());
+
+        float shippingFee = 20000;//art.getTotalPrice() * 5.0f;
 
         float total = cart.getTotalPrice() + shippingFee;
 
@@ -82,18 +103,12 @@ public class OrderService {
         forwardToPage("shop/checkout.jsp", request, response);
     }
 
-   /* public void placeOrder() throws ServletException, IOException {
+    public void placeOrder() throws ServletException, IOException {
         String paymentMethod = request.getParameter("paymentMethod");
         ProductOrder order = readOrderInfo();
+        placeOrderCOD(order);
 
-        if (paymentMethod.equals("PayPal")) {
-            PaymentService paymentService = new PaymentService(request, response);
-            request.getSession().setAttribute("orderForPayPal", order);
-            paymentService.authorizePayment(order);
-        } else {
-            placeOrderCOD(order);
-        }
-    }*/
+    }
 
     /*public Integer placeOrderPayPal(Payment payment) {
         ProductOrder order = (ProductOrder) request.getSession().getAttribute("orderForPayPal");
@@ -117,80 +132,137 @@ public class OrderService {
         return saveOrder(order);
     }*/
 
-    /*private Integer saveOrder(ProductOrder order) {
+    private Integer saveOrder(ProductOrder order) {
+        // Kiểm tra xem order đã tồn tại hay chưa
+        if (order.getId() == null) {
+            System.out.println("Saving new order...");
+            ProductOrder savedOrder = orderDAO.create(order);
+
+            // Xử lý liên quan đến Customer và Cart
+            HttpSession session = request.getSession();
+            Customer customer = (Customer) session.getAttribute("loggedCustomer");
+            if (customer != null) {
+                Cart cart = cartDAO.findByCustomer(customer.getId());
+                if (cart != null) {
+                    cart.setTotalPrice(0.0f);
+                    cartDAO.update(cart);
+                    cartDetailDAO.deleteByCart(cart.getId());
+
+                }
+            }
+            return savedOrder.getId();
+        } else {
+            System.out.println("Order already exists with ID: " + order.getId());
+            HttpSession session = request.getSession();
+            Customer customer = (Customer) session.getAttribute("loggedCustomer");
+            if (customer != null) {
+                Cart cart = cartDAO.findByCustomer(customer.getId());
+                if (cart != null) {
+                    cart.setTotalPrice(0.0f);
+                    cartDAO.update(cart);
+                    cartDetailDAO.deleteByCart(cart.getId());
+
+                }
+            }
+            return order.getId();
+        }
+    }
+
+    private ProductOrder saveOrder2(ProductOrder order) {
+        System.out.println("Saving order...");
         ProductOrder savedOrder = orderDAO.create(order);
+        System.out.println("Order saved with ID: " + savedOrder.getId());
+        // thêm các bước xử lý khác nếu cần
+        return savedOrder;
+    }
 
-        Cart cart = (Cart) request.getSession().getAttribute("cart");
-        cart.clear();
+    private ProductOrder readOrderInfo() {
+        HttpSession session = request.getSession();
+        Customer customer = (Customer) session.getAttribute("loggedCustomer");
 
-        return savedOrder.getOrderId();
-    }*/
 
-    /*private ProductOrder readOrderInfo() {
+        // Extracting order information from request parameters
         String recipientFullName = request.getParameter("recipientFullName");
-
         String recipientPhone = request.getParameter("recipientPhone");
         String recipientAddress = request.getParameter("recipientAddress");
-//        String recipientCountry = request.getParameter("recipientCountry");
-//        String paymentMethod = request.getParameter("paymentMethod");
+        String paymentMethod = request.getParameter("paymentMethod");
 
+        // Creating a new ProductOrder instance and setting its properties
         ProductOrder order = new ProductOrder();
+//        ProductOrder orderSave = new ProductOrder();
+
+        order.setCustomer(customer);
         order.setFullName(recipientFullName);
         order.setPhone(recipientPhone);
         order.setShippingAddress(recipientAddress);
+        order.setPaymentMethod(paymentMethod);
 
-        *//*order.setRecipientCity(recipientCity);
-        order.setRecipientState(recipientState);
-        order.setRecipientZipCode(recipientZipCode);
-        order.setRecipientCountry(recipientCountry);
-        order.setPaymentMethod(paymentMethod);*//*
+        int idCustomer = customer.getId();
+        Cart cart = cartDAO.findByCustomer(idCustomer);
+        float shippingFee = (float) session.getAttribute("shippingFee");
+        float total = cart.getTotalPrice() + shippingFee;
 
-        HttpSession session = request.getSession();
-        Customer customer = (Customer) session.getAttribute("loggedCustomer");
-        order.setCustomer(customer);
+        order.setFee(shippingFee);
+        order.setTotalPrice(total);
 
-        Cart cart = (Cart) session.getAttribute("cart");
-        Map<Product, Integer> items = cart.getItems();
-
-        Iterator<Product> iterator = items.keySet().iterator();
         Set<OrderDetail> orderDetails = new HashSet<>();
+        System.out.println("check1");
+        Map<String, String[]> parameters = request.getParameterMap();
+        System.out.println("check2");
 
-        while (iterator.hasNext()) {
-            Product product = iterator.next();
-            Integer quantity = items.get(product);
-            float subtotal = quantity * product.getPrice();
+        int orderId = saveOrder(order);
+        for (String paramName : parameters.keySet()) {
+            System.out.println("check3" + paramName);
 
-            OrderDetail orderDetail = new OrderDetail();
-            orderDetail.setProduct(product);
-            orderDetail.setProductOrder(order);
-            orderDetail.setQuantity(quantity);
-            orderDetail.setSubtotal(subtotal);
+            if (paramName.startsWith("quantity_")) {
 
-            orderDetails.add(orderDetail);
+                // Tách ra ID sản phẩm từ tên tham số
+                int productId = Integer.parseInt(paramName.split("_")[1]);
+                int quantity = Integer.parseInt(parameters.get(paramName)[0]);
+
+                // Xử lý cập nhật số lượng cho mỗi sản phẩm
+                Product product = productDAO.get(productId);
+
+
+                float subtotal = quantity * product.getPrice();
+                Cart cart2 = cartDAO.findByCustomer(idCustomer);
+                CartDetail existingCartDetail = cartDetailDAO.findCartDetailByCartAndProduct(cart2.getId(), productId);
+                OrderDetail orderDetail= new OrderDetail();
+
+                orderDetail.setProduct(product);
+                orderDetail.setProductOrder(order);
+                System.out.println("Check order_id" + order.getId());
+                orderDetail.setQuantity(quantity);
+                orderDetail.setTotalPrice(subtotal);
+                System.out.println("Check order_detail" + orderDetail);
+                orderDetails.add(orderDetail);
+                //orderDetailDAO.create(orderDetail);
+                order.getOrderDetails().add(orderDetail);
+
+                orderDAO.update(order);
+            }
         }
+
+        System.out.println("check4");
 
         order.setOrderDetails(orderDetails);
 
-        float tax = (float) session.getAttribute("tax");
-        float shippingFee = (float) session.getAttribute("shippingFee");
-        float total = (float) session.getAttribute("total");
+        // Calculating total price, tax, and shipping fee
 
-        order.setSubtotal(cart.getTotalAmount());
-        order.setTax(tax);
-        order.setShippingFee(shippingFee);
-        order.setTotal(total);
 
+        order.setOrderDetails(orderDetails);
         return order;
-    }*/
-
-   /* private void placeOrderCOD(ProductOrder order) throws ServletException, IOException {
-        saveOrder(order);
-
-        messageForShop("Thank you. Your order has been received. Your product(s) will be delivered within a few days.",
-                request, response);
     }
 
-    public void listOrderByCustomer() throws ServletException, IOException {
+
+    private void placeOrderCOD(ProductOrder order) throws ServletException, IOException {
+        saveOrder(order);
+        /*messageForShop("Thank you. Your order has been received. Your product(s) will be delivered within a few days.",
+                request, response);*/
+        System.out.println("Thankk you");
+    }
+
+  public void listOrderByCustomer() throws ServletException, IOException {
         HttpSession session = request.getSession();
         Customer customer = (Customer) session.getAttribute("loggedCustomer");
         List<ProductOrder> listOrder = orderDAO.listByCustomer(customer.getId());
@@ -221,7 +293,7 @@ public class OrderService {
             return;
         }
 
-        HttpSession session = request.getSession();
+        /*HttpSession session = request.getSession();
         Object isPendingProduct = session.getAttribute("NewProductPendingToAddToOrder");
 
         if (isPendingProduct == null) {
@@ -230,7 +302,7 @@ public class OrderService {
             session.removeAttribute("NewProductPendingToAddToOrder");
         }
 
-        generateCountryList(request);
+        generateCountryList(request);*/
 
         forwardToPage("order_form.jsp", request, response);
     }
@@ -243,7 +315,7 @@ public class OrderService {
         forwardToPage("add_product_form.jsp", request, response);
     }
 
-    public void addToOrder() throws ServletException, IOException {
+   public void addToOrder() throws ServletException, IOException {
         int productId = Integer.parseInt(request.getParameter("productId"));
         int quantity = Integer.parseInt(request.getParameter("quantity"));
 
@@ -258,10 +330,10 @@ public class OrderService {
         OrderDetail orderDetail = new OrderDetail();
         orderDetail.setProduct(product);
         orderDetail.setQuantity(quantity);
-        orderDetail.setSubtotal(subtotal);
+        orderDetail.setTotalPrice(subtotal);
 
-        float newTotal = order.getTotal() + subtotal;
-        order.setTotal(newTotal);
+        float newTotal = order.getTotalPrice() + subtotal;
+        order.setTotalPrice(newTotal);
 
         order.getOrderDetails().add(orderDetail);
 
@@ -271,7 +343,7 @@ public class OrderService {
         forwardToPage("add_product_result.jsp", request, response);
     }
 
-    public void removeFromOrder() throws ServletException, IOException {
+  /*   public void removeFromOrder() throws ServletException, IOException {
         int productId = Integer.parseInt(request.getParameter("id"));
         HttpSession session = request.getSession();
         ProductOrder order = (ProductOrder) session.getAttribute("order");
@@ -287,12 +359,13 @@ public class OrderService {
                 order.setTotal(newTotal);
                 iterator.remove();
             }
+            }
         }
 
         forwardToPage("order_form.jsp", request, response);
     }
-
-    public void updateService() throws ServletException, IOException {
+*/
+   /* public void updateService() throws ServletException, IOException {
         HttpSession session = request.getSession();
         ProductOrder order = (ProductOrder) session.getAttribute("order");
 
@@ -312,17 +385,17 @@ public class OrderService {
         String paymentMethod = request.getParameter("paymentMethod");
         String orderStatus = request.getParameter("orderStatus");
 
-        order.setRecipientFirstName(recipientFirstName);
-        order.setRecipientLastName(recipientLastName);
-        order.setRecipientPhone(recipientPhone);
-        order.setRecipientAddressLine1(recipientAddressLine1);
-        order.setRecipientAddressLine2(recipientAddressLine2);
-        order.setRecipientCity(recipientCity);
-        order.setRecipientState(recipientState);
-        order.setRecipientZipCode(recipientZipCode);
-        order.setRecipientCountry(recipientCountry);
-        order.setShippingFee(shippingFee);
-        order.setTax(tax);
+//        order.setRecipientFirstName(recipientFirstName);
+//        order.setRecipientLastName(recipientLastName);
+//        order.setRecipientPhone(recipientPhone);
+//        order.setRecipientAddressLine1(recipientAddressLine1);
+//        order.setRecipientAddressLine2(recipientAddressLine2);
+//        order.setRecipientCity(recipientCity);
+//        order.setRecipientState(recipientState);
+//        order.setRecipientZipCode(recipientZipCode);
+//        order.setRecipientCountry(recipientCountry);
+//        order.setShippingFee(shippingFee);
+//        order.setTax(tax);
         order.setPaymentMethod(paymentMethod);
         order.setStatus(orderStatus);
 
@@ -366,7 +439,7 @@ public class OrderService {
         orderDAO.update(order);
 
         listOrder(String.format("The order %s has been updated successfully.", order.getOrderId()));
-    }
+    }*/
 
     public void deleteOrder() throws ServletException, IOException {
         Integer orderId = Integer.parseInt(request.getParameter("id"));
@@ -381,6 +454,6 @@ public class OrderService {
                     String.format("Could not find the order with ID %s or it might have been deleted.", orderId),
                     request, response);
         }
-    }*/
+    }
 
 }
