@@ -220,5 +220,7 @@
 <%--        $('#selectedRating').val($(this).val());--%>
 <%--    });--%>
 <%--</script>--%>
+<%@ include file="/includes/footer.jsp" %>
 </body>
+
 

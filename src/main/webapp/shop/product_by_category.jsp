@@ -34,7 +34,7 @@
                 </div>
             </div>
             <%--Text display information about products in this category--%>
-            <div class="col-md-9">
+            <div class="col-md-9 border-bottom">
                 <h3>${category.nameCategory}</h3>
             </div>
         </div>
