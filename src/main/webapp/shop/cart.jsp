@@ -61,12 +61,12 @@
                 <td data-th="Product">
                     <div class="row">
                         <div class="col-md-3 text-left">
-                            <img src="data:image/jpeg;base64,${item.product.base64Image}" alt="Product Image"
+                            <img src="data:image/jpeg;base64,${item.product.base64Image}" width="90px" height="120px" alt="Product Image"
                                  class="img-fluid" alt="">
                         </div>
                         <div class="col-md-9 text-left mt-sm-2">
                             <input type="hidden" name="productId1" value="${item.product.getId()}"/>
-                            <h4>${item.product.getNameProduct()}</h4>
+                            <h5>${item.product.getNameProduct()}</h5>
                         </div>
                     </div>
                 </td>
