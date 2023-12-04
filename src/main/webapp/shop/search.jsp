@@ -7,7 +7,7 @@
 --%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,7 +35,7 @@
                             <div class="card-body text-light rounded-5 mt-2">
                                 <h5 class="card-title fw-bold text-black">${product.nameProduct}</h5>
                                 <p class="card-text text-black">$${product.price}</p>
-                                <a href="view_product?id=${product.id}" class="btn btn-outline-info">Buy now</a>
+                                <a href="view_product?id=${product.id}" class="btn btn-outline-info">Mua ngay</a>
                             </div>
                         </div>
                     </div>
@@ -44,5 +44,6 @@
         </div>
     </div>
 </div>
+<%@ include file="/includes/footer.jsp" %>
 </body>
 </html>

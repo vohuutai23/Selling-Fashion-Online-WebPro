@@ -1,25 +1,25 @@
+package com.ecommerce.controller.shop.review;
 
-package com.ecommerce.controller.shop.cart;
-
-import com.ecommerce.service.CartService;
+import java.io.IOException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
-@WebServlet(name = "AddToCartServlet", value = "/add_to_cart")
-public class AddToCartServlet extends HttpServlet {
+import com.ecommerce.service.ReviewService;
+
+@WebServlet(name = "SubmitReviewServlet", value = "/submit_review")
+public class SubmitReviewServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        CartService cartService = new CartService(request, response);
-        cartService.addToCart();
+        ReviewService reviewService = new ReviewService(request, response);
+        reviewService.submitReview();
     }
 
 }

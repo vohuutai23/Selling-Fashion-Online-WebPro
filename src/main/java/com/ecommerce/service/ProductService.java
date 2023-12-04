@@ -3,6 +3,8 @@ package com.ecommerce.service;
 
 import com.ecommerce.DAO.CategoryDAO;
 import com.ecommerce.DAO.ProductDAO;
+import com.ecommerce.DAO.CartDetailDAO;
+import com.ecommerce.model.entity.CartDetail;
 import com.ecommerce.model.entity.Category;
 import com.ecommerce.model.entity.Product;
 import javax.servlet.ServletException;
@@ -25,12 +27,14 @@ public class ProductService {
     private final HttpServletResponse response;
     private final ProductDAO productDAO;
     private final CategoryDAO categoryDAO;
+    private final CartDetailDAO cartDetailDAO;
 
     public ProductService(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
         this.request = request;
         this.response = response;
         productDAO = new ProductDAO();
         categoryDAO = new CategoryDAO();
+        cartDetailDAO = new CartDetailDAO();
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html; charset=UTF-8");
         response.setCharacterEncoding("UTF-8");
@@ -41,6 +45,7 @@ public class ProductService {
 //        int categoryId = 1;
         Category category = categoryDAO.get(categoryId);
         List<Product> listProducts = productDAO.listByCategory(categoryId);
+        List<Category> listCategories = categoryDAO.listAll();
         String sort = request.getParameter("sort");
 //        List<Category> listCategories = categoryDAO.listAll();
 //        System.out.println("Number of products: " + listProducts.size()); // In số lượng sản phẩm để kiểm tra
@@ -63,6 +68,10 @@ public class ProductService {
         request.setAttribute("listProducts", listProducts);
         request.setAttribute("category", category);
 //        request.setAttribute("category", category);
+        request.setAttribute("listCategories", listCategories);
+
+        List<CartDetail> listCartDetails = cartDetailDAO.listAll();
+        request.setAttribute("listCartDetails", listCartDetails);
 
         forwardToPage("shop/product_by_category.jsp", request, response);
     }
@@ -91,6 +100,8 @@ public class ProductService {
         request.setAttribute("listCategories", listCategories);
 
         request.setAttribute("sort", sort);
+        List<CartDetail> listCartDetails = cartDetailDAO.listAll();
+        request.setAttribute("listCartDetails", listCartDetails);
 
         forwardToPage("shop/product_list.jsp", request, response);
     }
@@ -100,6 +111,9 @@ public class ProductService {
         Product product = productDAO.get(productId);
 
         request.setAttribute("product", product);
+
+        List<CartDetail> listCartDetails = cartDetailDAO.listAll();
+        request.setAttribute("listCartDetails", listCartDetails);
         forwardToPage("shop/product_detail.jsp", request, response);
     }
 
@@ -126,6 +140,9 @@ public class ProductService {
 //        request.setAttribute("keyword", keyword);
         request.setAttribute("result", result);
 
+        List<CartDetail> listCartDetails = cartDetailDAO.listAll();
+        request.setAttribute("listCartDetails", listCartDetails);
+
         forwardToPage("shop/search.jsp", request, response);
     }
 
@@ -149,6 +166,8 @@ public class ProductService {
         if (message != null) {
             request.setAttribute("message", message);
         }
+        List<CartDetail> listCartDetails = cartDetailDAO.listAll();
+        request.setAttribute("listCartDetails", listCartDetails);
 
         forwardToPage("product_list.jsp", message, request, response);
     }

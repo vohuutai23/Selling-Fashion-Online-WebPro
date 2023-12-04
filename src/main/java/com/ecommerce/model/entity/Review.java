@@ -23,7 +23,7 @@ public class Review {
 
     @NotNull
     @Column(name = "rating", nullable = false)
-    private Float rating;
+    private Integer rating;
 
     @Size(max = 50)
     @NotNull
@@ -34,6 +34,11 @@ public class Review {
     @Column(name = "time_review", nullable = false)
     private Instant timeReview;
 
+
+    public Review(int idCustomer, int idProduct){
+        idCustomer = idCustomer;
+        idProduct = idProduct;
+    }
     public Integer getId() {
         return id;
     }
@@ -58,11 +63,11 @@ public class Review {
         this.idProduct = idProduct;
     }
 
-    public Float getRating() {
+    public Integer getRating() {
         return rating;
     }
 
-    public void setRating(Float rating) {
+    public void setRating(Integer rating) {
         this.rating = rating;
     }
 

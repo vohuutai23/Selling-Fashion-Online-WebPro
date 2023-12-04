@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+@import url(https://fonts.googleapis.com/css?family=Dancing+Script);
 *{
     margin: 0;
     padding: 0;
@@ -61,3 +62,55 @@
 .payment-content{
     margin-top: 100px;
 }
+
+/*Menu mega*/
+.navbar .megamenu{ padding: 1rem; }
+
+/* ============ desktop view ============ */
+@media all and (min-width: 992px) {
+
+    .navbar .has-megamenu{position:static!important;}
+    .navbar .megamenu{left:0; right:0; width:100%; margin-top:0;  }
+
+}
+/* ============ desktop view .end// ============ */
+
+/* ============ mobile view ============ */
+@media(max-width: 991px){
+    .navbar.fixed-top .navbar-collapse, .navbar.sticky-top .navbar-collapse{
+        overflow-y: auto;
+        max-height: 90vh;
+        margin-top:10px;
+    }
+}
+
+
+/*Test CSS hover icon user*/
+/*.navigation {*/
+/*    position: relative;*/
+/*    display: inline-block;*/
+/*}*/
+
+/*.dropdown {*/
+/*    display: none;*/
+/*    position: absolute;*/
+/*    background-color: #f9f9f9;*/
+/*    min-width: 160px;*/
+/*    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);*/
+/*    z-index: 1;*/
+/*}*/
+
+/*.dropdown a {*/
+/*    padding: 12px 16px;*/
+/*    display: block;*/
+/*    text-decoration: none;*/
+/*    color: #333;*/
+/*}*/
+
+/*.dropdown a:hover {*/
+/*    background-color: #ddd;*/
+/*}*/
+
+/*.navigation:hover .dropdown {*/
+/*    display: block;*/
+/*}*/

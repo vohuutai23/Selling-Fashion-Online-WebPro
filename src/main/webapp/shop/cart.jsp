@@ -5,12 +5,13 @@
   Time: 6:49 PM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ include file="/includes/link.jsp" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <html>
 <head>
-    <title>Cart</title>
+    <title>Giỏ hàng</title>
     <style>
         body {
             margin: 0;
@@ -33,29 +34,28 @@
 </head>
 <body>
 <%@ include file="/includes/header.jsp" %>
-<div class="row">
+<div class="row mt-4">
     <div class="col-sm-6 mb-3 mb-m-1 text-md-left">
-        <a href="${pageContext.request.contextPath}/"><i class="fas fa-arrow-left mr-2"></i> Continue
-            Shopping</a>
+        <a class="btn btn-outline-success" href="${pageContext.request.contextPath}/"><i class="fa-solid fa-arrow-left"></i> Tiếp tục mua sắm</a>
     </div>
 </div>
-<h1 class="text-info fs-2 fw-bold text-center">Your cart</h1>
+<h1 class="text-info fs-2 fw-bold text-center mb-4">Giỏ hàng của bạn</h1>
 <form action="update_cart" method="post" id="cartForm">
     <table class="table table-condensed">
         <thead>
         <tr>
-            <th style="width: 5%">No</th>
-            <th style="width: 50%">Product</th>
-            <th style="width: 10%">Quantity</th>
-            <th style="width: 10%">Price</th>
-            <th style="width: 10%">Subtotal</th>
-            <th style="width: 15%">
-                <a href="clear_cart" type="button" id="clearCart">Clear All</a>
+            <th style="width: 5%">STT</th>
+            <th style="width: 50%">Sản phẩm</th>
+            <th style="width: 10%">Số lượng</th>
+            <th style="width: 10%">Giá</th>
+            <th style="width: 10%">Tạm tính</th>
+            <th style="width: 10%">
+                <a style="text-decoration: none; color: red" href="clear_cart" type="button" id="clearCart">Xoá tất cả</a>
             </th>
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${cart.items}" var="item" varStatus="status">
+        <c:forEach items="${cartDetails}" var="item" varStatus="status">
             <tr>
                 <td>${status.index + 1}</td>
                 <td data-th="Product">
@@ -65,29 +65,32 @@
                                  class="img-fluid" alt="">
                         </div>
                         <div class="col-md-9 text-left mt-sm-2">
-                            <h4>${item.key.nameProduct}</h4>
+                            <input type="hidden" name="productId1" value="${item.product.getId()}"/>
+                            <h4>${item.product.getNameProduct()}</h4>
                         </div>
                     </div>
                 </td>
 
                 <td data-th="Quantity">
-                    <input type="hidden" name="productId" value="${item.key.id}"/>
-                    <input type="number" name="quantity${status.index + 1}" value="${item.value}"
-                           class="form-control text-center" value="1" min="1" required="required"/>
+                    <input type="hidden" name="productId" value="${item.product.getId()}"/>
+
+                    <input  type="number" name="quantity_${item.product.getId()}" value="${item.quantity}" class="form-control text-center" min="1" required="required"/>
+
+
                 </td>
 
-                <td data-th="Price">$${item.key.price}</td>
+                <td data-th="Price">${item.totalPrice}đ</td>
 
-                <td>$${item.value * item.key.price}</td>
+                <td>${item.quantity * item.totalPrice}đ</td>
 
                 <td class="actions" data-th="">
                     <div class="text_center">
                         <button type="submit" class="btn btn-white btn-md mb-2">
-                            <i class="fas fa-sync"></i>
+                            <i class="fa-solid fa-rotate-right"></i>
                         </button>
                         <a type="button" class="btn btn-white btn-md mb-2"
-                           href="remove_from_cart?product_id=${item.key.id}"><i
-                                class="fas fa-trash"></i></a>
+                           href="remove_from_cart?product_id=${item.product.id}"><i
+                                class="fa-solid fa-trash"></i></a>
                     </div>
                 </td>
             </tr>
@@ -102,17 +105,16 @@
     </div>
     <div class="col-md-4">
         <div class="float-right text-right">
-            <h4>Total:</h4>
-            <h1>$${cart.totalAmount}</h1>
+            <h4>Tổng tiền:</h4>
+            <h1>$${totalPriceCart}</h1>
         </div>
+
         <div class="text-md-right">
-            <a href="checkout" class="btn btn-primary btn-lg pl-5 pr-5">Checkout</a>
+            <a href="checkout" class="btn btn-primary btn-lg pl-5 pr-5">Thanh toán</a>
         </div>
     </div>
 </div>
-
+<%@ include file="/includes/footer.jsp" %>
 </body>
-<footer>
-    <%@ include file="/includes/footer.jsp" %>
-</footer>
+
 </html>
