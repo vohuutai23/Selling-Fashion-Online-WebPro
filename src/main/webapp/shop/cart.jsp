@@ -66,7 +66,7 @@
                         </div>
                         <div class="col-md-9 text-left mt-sm-2">
                             <input type="hidden" name="productId1" value="${item.product.getId()}"/>
-                            <h4>${item.product.getNameProduct()}</h4>
+                            <h5>${item.product.getNameProduct()}</h5>
                         </div>
                     </div>
                 </td>
