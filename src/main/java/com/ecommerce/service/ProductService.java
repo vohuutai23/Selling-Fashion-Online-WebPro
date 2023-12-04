@@ -58,6 +58,9 @@ public class ProductService {
         if (Objects.equals(sort, "newest")) {
             listProducts = productDAO.listByNewest(categoryId);
         }
+        if (Objects.equals(sort, "best_selling")) {
+            listProducts = productDAO.listBestSellingProductsByCategory(categoryId);
+        }
         if (Objects.equals(sort, "price_dec")) {
             listProducts = productDAO.listByPriceDec(categoryId);
         }
@@ -106,6 +109,9 @@ public class ProductService {
 
         if (Objects.equals(sort, "newest")) {
             listProducts = productDAO.listByNewestProducts();
+        }
+        if (Objects.equals(sort, "best_selling")){
+            listProducts = productDAO.listBestSellingProducts();
         }
         if (Objects.equals(sort, "price_inc")) {
             listProducts = productDAO.listByPriceIncProducts();

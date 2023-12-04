@@ -34,8 +34,8 @@
                 </div>
             </div>
             <%--Text display information about products in this category--%>
-            <div class="col-md-9 border-bottom">
-                <h3 class="fw-semibold text-primary">${category.nameCategory}</h3>
+            <div class="col-md-9 border-bottom border-success">
+                <h3 class="fw-semibold text-primary pt-5">${category.nameCategory}</h3>
             </div>
         </div>
         <div class="row">
