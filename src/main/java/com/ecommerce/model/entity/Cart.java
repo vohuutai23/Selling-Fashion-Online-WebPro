@@ -1,66 +1,79 @@
 package com.ecommerce.model.entity;
 
-import com.ecommerce.model.entity.Product;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
-import java.util.HashMap;
-import java.util.Map;
+@Entity
+@Table(name = "cart")
+@NamedQueries({ @NamedQuery(
+        name = "Cart.findByNameAndGroup",
+        query = "SELECT c FROM Cart c WHERE c.id = :idCart AND c.customer.id = :idCustomer"),
+        @NamedQuery(
+                name = "Cart.findByCustomer",
+                query = "SELECT c FROM Cart c WHERE  c.customer.id = :idCustomer"),
 
+         })
 public class Cart {
-    private final Map<Product, Integer> cart = new HashMap<>();
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_cart", nullable = false)
+    private Integer id;
 
-    public void addItem(Product product) {
-        if (cart.containsKey(product)) {
-            Integer quantity = cart.get(product) + 1;
-            cart.put(product, quantity);
-        } else {
-            cart.put(product, 1);
-        }
+    @NotNull
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "id_customer", nullable = false)
+    private Customer customer;
+
+    @NotNull
+    @Column(name = "total_price", nullable = false)
+    private Float totalPrice;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "cart" , cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<CartDetail> cartDetails = new HashSet<>(0);
+//    private Set<CartDetail> cartDetails = new LinkedHashSet<>();
+
+    public Set<CartDetail> getCartDetails() {
+
+        return this.cartDetails;
     }
 
-    public void removeItem(Product product) {
-        cart.remove(product);
+    public void setCartDetails(Set<CartDetail> cartDetails) {
+        this.cartDetails = cartDetails;
     }
 
-    public int getTotalQuantity() {
-        int total = 0;
-
-        for (Product next : cart.keySet()) {
-            Integer quantity = cart.get(next);
-            total += quantity;
-        }
-
-        return total;
+    public Integer getId() {
+        return id;
     }
 
-    public float getTotalAmount() {
-        float total = 0.0f;
-
-        for (Product product : cart.keySet()) {
-            Integer quantity = cart.get(product);
-            double subTotal = quantity * product.getPrice();
-            total += subTotal;
-        }
-
-        return total;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public void updateCart(int[] productIds, int[] quantities) {
-        for (int i = 0; i < productIds.length; i++) {
-            Product key = new Product(productIds[i]);
-            Integer value = quantities[i];
-            cart.put(key, value);
-        }
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void clear() {
-        cart.clear();
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
-    public int getTotalItems() {
-        return cart.size();
+    public Float getTotalPrice() {
+        return totalPrice;
     }
 
-    public Map<Product, Integer> getItems() {
-        return this.cart;
+    public void setTotalPrice(Float totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", idcus='" + customer.getId() + '\'' +
+                ", price=" + totalPrice +
+                // Thêm các trường khác bạn muốn hiển thị
+                '}';
     }
 }

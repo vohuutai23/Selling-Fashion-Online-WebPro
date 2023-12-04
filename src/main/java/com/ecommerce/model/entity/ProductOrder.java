@@ -4,19 +4,28 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.Instant;
+import java.util.Date;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "product_order")
+@NamedQueries({
+        @NamedQuery(name = "ProductOrder.findAll", query = "SELECT po FROM ProductOrder po"),
+        @NamedQuery(name = "ProductOrder.countAll", query = "SELECT COUNT(*) FROM ProductOrder"),
+        @NamedQuery(name = "ProductOrder.countByCustomer", query = "SELECT COUNT(po.orderId) FROM ProductOrder po WHERE po.customer.id = :customerId"),
+        @NamedQuery(name = "ProductOrder.findByCustomer", query = "SELECT po FROM ProductOrder po WHERE po.customer.id = :customerId"),
+        @NamedQuery(name = "ProductOrder.findByIdAndCustomer", query = "SELECT po FROM ProductOrder po WHERE po.orderId = :orderId AND po.customer.id = :customerId") })
 public class ProductOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_order", nullable = false)
-    private Integer id;
+    private Integer orderId;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_customer", nullable = false)
-    private Customer idCustomer;
+    private Customer customer;
 
     @Size(max = 50)
     @NotNull
@@ -33,27 +42,77 @@ public class ProductOrder {
 
     @NotNull
     @Column(name = "date_order", nullable = false)
-    private Instant dateOrder;
+    private Date dateOrder;
 
     @Size(max = 30)
     @NotNull
     @Column(name = "status", nullable = false, length = 30)
     private String status;
 
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "productOrder", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<OrderDetail> orderDetails = new LinkedHashSet<>();
+
+    @Size(max = 50)
+    @Column(name = "full_name", length = 50)
+    private String fullName;
+
+    @Size(max = 20)
+    @Column(name = "phone", length = 20)
+    private String phone;
+
+    @Size(max = 50)
+    @Column(name = "payment_method", length = 50)
+    private String paymentMethod;
+
+    public String getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(String paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+
+    public ProductOrder() {
+    }
+    public Set<OrderDetail> getOrderDetails() {
+        return this.orderDetails;
+    }
+
+    public void setOrderDetails(Set<OrderDetail> orderDetails) {
+        this.orderDetails = orderDetails;
+    }
+
     public Integer getId() {
-        return id;
+        return orderId;
     }
 
     public void setId(Integer id) {
-        this.id = id;
+        this.orderId = id;
     }
 
-    public Customer getIdCustomer() {
-        return idCustomer;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setIdCustomer(Customer idCustomer) {
-        this.idCustomer = idCustomer;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     public String getShippingAddress() {
@@ -80,11 +139,11 @@ public class ProductOrder {
         this.totalPrice = totalPrice;
     }
 
-    public Instant getDateOrder() {
+    public Date getDateOrder() {
         return dateOrder;
     }
 
-    public void setDateOrder(Instant dateOrder) {
+    public void setDateOrder(Date dateOrder) {
         this.dateOrder = dateOrder;
     }
 
@@ -94,6 +153,22 @@ public class ProductOrder {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+    @Override
+    public String toString() {
+        return "ProductOrder{" +
+                "orderId=" + orderId +
+                ", customer=" + (customer != null ? customer.getId() : null) + // Chỉ in ID của customer để tránh lấy tất cả thông tin khách hàng
+                ", shippingAddress='" + shippingAddress + '\'' +
+                ", fee=" + fee +
+                ", totalPrice=" + totalPrice +
+                ", dateOrder=" + dateOrder +
+                ", status='" + status + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", phone='" + phone + '\'' +
+                ", paymentMethod='" + paymentMethod + '\'' +
+                ", orderDetails=" + orderDetails + // Có thể cần phương thức toString() riêng cho OrderDetail
+                '}';
     }
 
 }

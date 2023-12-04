@@ -64,6 +64,8 @@
                 </div>
                 <div class="col-md-6">
                     <div class="info-product mt-5">
+
+                        <input type="text" name="productId" value="${product.id}">
                         <div class="row m-4 fs-1 fw-medium">${product.nameProduct}</div>
                         <div class="row m-4 fs-3 fw-medium">$ ${product.price}</div>
                         <div class="row m-5 fs-5">
@@ -75,11 +77,17 @@
 <%--                                Quantity--%>
 <%--                            </div>--%>
                             <div class="col-4">
+                                <form action="add_to_cart" method="post">
+                                    <input type="hidden" name="productId" value="${product.id}">
+                                    <input type="submit" value="Add To Cart" class="btn btn-full-width btn-lg btn-outline-primary">
+                                </form>
+
 <%--                                <form action="view_cart" method="post">--%>
 <%--                                    <input type="hidden" name="id" value="${product.id}">--%>
 <%--                                    <input type="submit" value="Add To Cart" class="btn btn-outline-info">--%>
 <%--                                </form>--%>
-                                    <a href="add_to_cart?product_id=${product.id}" type="button" id="buttonAddToCart" class="btn btn-full-width btn-lg btn-outline-primary">Add to cart</a></div>
+<%--                                    <a href="add_to_cart?product_id=${product.id}" type="button" id="buttonAddToCart" class="btn btn-full-width btn-lg btn-outline-primary">Add to cart</a></div>--%>
+<%--                                        <a href="#" type="button" id="buttonAddToCart" class="btn btn-full-width btn-lg btn-outline-primary">Add to cart</a>--%>
                             </div>
                         </div>
 
@@ -89,3 +97,13 @@
         </div>
     </div>
 </div>
+<%--<script src="shop/js/jquery-3.1.1.min.js"></script>
+<script src="shop/bootstrap/js/bootstrap.min.js"></script>
+<script src="shop/js/tether.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#buttonAddToCart").click(function () {
+            window.location = 'add_to_cart?product_id=' + ${product.id};
+        });
+    });--%>
+</script>

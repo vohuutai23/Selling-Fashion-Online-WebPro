@@ -172,4 +172,14 @@ public class Product {
         this.base64Image = base64Image;
     }*/
 
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + nameProduct + '\'' +
+                ", price=" + price +
+                // Thêm các trường khác bạn muốn hiển thị
+                '}';
+    }
+
 }

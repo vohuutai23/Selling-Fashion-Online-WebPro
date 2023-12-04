@@ -3,6 +3,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaDelete;
+import javax.persistence.criteria.Root;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -52,6 +55,23 @@ public class JPADao <E>{
         entityManager.getTransaction().begin();
         Object reference = entityManager.getReference(type, id);
         entityManager.remove(reference);
+        entityManager.getTransaction().commit();
+        entityManager.close();
+    }
+    public void deleteByTwoFields(Class<E> type, String fieldName1, Object id1, String fieldName2, Object id2) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        entityManager.getTransaction().begin();
+
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaDelete<E> criteriaDelete = cb.createCriteriaDelete(type);
+        Root<E> root = criteriaDelete.from(type);
+
+        // Assuming that the fields are of type String
+        criteriaDelete.where(cb.and(cb.equal(root.get(fieldName1), id1), cb.equal(root.get(fieldName2), id2)));
+
+        Query query = entityManager.createQuery(criteriaDelete);
+        query.executeUpdate();
+
         entityManager.getTransaction().commit();
         entityManager.close();
     }

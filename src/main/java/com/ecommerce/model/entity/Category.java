@@ -10,6 +10,8 @@ import java.util.Set;
 @Table(name = "category")
 @NamedQueries({ @NamedQuery(name = "Category.findAll", query = "SELECT c FROM Category c"),
         @NamedQuery(name = "Category.listNameCategoryByGroup", query = "SELECT c.nameCategory FROM Category c WHERE c.groupCategory = :groupCategory"),
+        @NamedQuery(name = "Category.findGroupCategoryByName", query = "SELECT c.groupCategory FROM Category c WHERE c.nameCategory = :nameCategory"),
+        @NamedQuery(name = "Category.findIdCategoryByName", query = "SELECT c.id FROM Category c WHERE c.id = :nameCategory"),
         @NamedQuery(name = "Category.findDistinctGroupCategories",
                 query = "SELECT DISTINCT c.groupCategory FROM Category c"),
         @NamedQuery(
