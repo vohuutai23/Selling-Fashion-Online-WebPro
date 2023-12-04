@@ -106,7 +106,7 @@
     <div class="col-md-4">
         <div class="float-right text-right">
             <h4>Tổng tiền:</h4>
-            <h1>$${totalPriceCart}</h1>
+            <h1>${totalPriceCart}đ</h1>
         </div>
 
         <div class="text-md-right">

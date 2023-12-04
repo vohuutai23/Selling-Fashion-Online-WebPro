@@ -113,6 +113,10 @@ public class ProductService {
 
         List<CartDetail> listCartDetails = cartDetailDAO.listAll();
         request.setAttribute("listCartDetails", listCartDetails);
+
+        List<Category> listCategories = categoryDAO.listAll();
+        request.setAttribute("listCategories", listCategories);
+
         forwardToPage("shop/product_detail.jsp", request, response);
     }
 
@@ -141,6 +145,9 @@ public class ProductService {
 
         List<CartDetail> listCartDetails = cartDetailDAO.listAll();
         request.setAttribute("listCartDetails", listCartDetails);
+
+        List<Category> listCategories = categoryDAO.listAll();
+        request.setAttribute("listCategories", listCategories);
 
         forwardToPage("shop/search.jsp", request, response);
     }
