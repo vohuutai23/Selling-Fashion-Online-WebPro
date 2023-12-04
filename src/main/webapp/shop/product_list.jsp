@@ -8,9 +8,34 @@
 <body>
 <%@ include file="/includes/header.jsp" %>
 
+<style>
+    .btn-group.float-right {
+        margin-left: 10px;
+    }
+
+    .btn-group a {
+        display: inline-block;
+        padding: 5px 10px;
+        margin: 0 2px;
+        color: #444342;
+        text-decoration: none;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .btn-group a:hover {
+        background-color: #f2f2f2;
+    }
+
+    .btn-group a.active {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+</style>
 <!-- Content: Products by Category -->
 <div id="content-product-list">
-    <div class="container mt-5 margin-top-content">
+    <div class="container mt-0 margin-top-content">
         <!-- Filter -->
 
         <!-- List products -->
@@ -49,8 +74,8 @@
             <div class="col-md-9">
                 <div id="assignment" class="container-fluid m-5 text-center">
                     <div class="row p-4">
-                        <c:forEach items="${listProducts}" var="product">
-                            <div class="col-md-4">
+                        <c:forEach items="${listProducts}" var="product" begin="${numBegin}" end="${numEnd}">
+                            <div class="col-md-4 mb-4">
                                 <div class="rounded-5 " style="width: 16rem;">
                                     <img src="data:image/jpeg;base64,${product.base64Image}" alt="Product Image" width="50%" height="50%" class="card-img-top shadow pt-2 rounded-5" >
                                     <div class="card-body text-light rounded-5 mt-2">
@@ -60,6 +85,12 @@
                                     </div>
                                 </div>
                             </div>
+                        </c:forEach>
+                    </div>
+                    <div class="btn-group float-right ml-3 mt-3">
+                        <c:forEach begin="1" end="${numberOfPages}" var="i">
+                            <a id="${i}" style="color: #444342"
+                               href="list_product?sort=${sort}&page=${i}">&nbsp${i}&nbsp</a>
                         </c:forEach>
                     </div>
                 </div>

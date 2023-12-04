@@ -81,6 +81,28 @@ public class ProductService {
 
         String sort = request.getParameter("sort");
 
+        String pageId = request.getParameter("page");
+
+        if (pageId == null) {
+            pageId = "1";
+        }
+        request.setAttribute("pageId", pageId);
+
+        int numberOfPages = listProducts.size();
+        int numberOfProducts = 6;
+
+        if (numberOfPages % numberOfProducts != 0) {
+            numberOfPages = numberOfPages / numberOfProducts + 1;
+        } else {
+            numberOfPages = numberOfPages / numberOfProducts;
+        }
+        request.setAttribute("numberOfPages", numberOfPages);
+
+        int numEnd = Integer.parseInt(pageId) * numberOfProducts - 1;
+        int numBegin = numEnd - numberOfProducts + 1;
+
+        request.setAttribute("numBegin", numBegin);
+        request.setAttribute("numEnd", numEnd);
 
         if (Objects.equals(sort, "newest")) {
             listProducts = productDAO.listByNewestProducts();
@@ -92,13 +114,14 @@ public class ProductService {
         if (Objects.equals(sort, "price_dec")) {
             listProducts = productDAO.listByPriceDecProducts();
         }
+        request.setAttribute("sort", sort);
 
 
 
         request.setAttribute("listProducts", listProducts);
         request.setAttribute("listCategories", listCategories);
 
-        request.setAttribute("sort", sort);
+
         List<CartDetail> listCartDetails = cartDetailDAO.listAll();
         request.setAttribute("listCartDetails", listCartDetails);
 

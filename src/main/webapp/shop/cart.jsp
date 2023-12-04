@@ -61,7 +61,7 @@
                 <td data-th="Product">
                     <div class="row">
                         <div class="col-md-3 text-left">
-                            <img src="https://media.coolmate.me/cdn-cgi/image/width=672,height=990,quality=85,format=auto/uploads/October2023/T-Shirt_Cotton_Compact.2_66.jpg"
+                            <img src="data:image/jpeg;base64,${item.product.base64Image}" alt="Product Image"
                                  class="img-fluid" alt="">
                         </div>
                         <div class="col-md-9 text-left mt-sm-2">
