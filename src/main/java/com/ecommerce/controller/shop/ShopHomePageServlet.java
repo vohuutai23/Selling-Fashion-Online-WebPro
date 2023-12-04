@@ -35,9 +35,11 @@ public class ShopHomePageServlet extends HttpServlet {
 //        List<Product> listFavoredProducts = productDAO.listMostFavoredProducts();
         List<Category> listCategories = categoryDAO.listAll();
         List<CartDetail> listCartDetails = cartDetailDAO.listAll();
+        List<Product> listBestSellingProducts = productDAO.listBestSellingProducts();
         request.setAttribute("listCartDetails", listCartDetails);
         request.setAttribute("listNewProducts", listNewProducts);
         request.setAttribute("listCategories", listCategories);
+        request.setAttribute("listBestSellingProducts", listBestSellingProducts);
 
 //        request.setAttribute("listBestSellingProducts", listBestSellingProducts);
 //        request.setAttribute("listFavoredProducts", listFavoredProducts);
