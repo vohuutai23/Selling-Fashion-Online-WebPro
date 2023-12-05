@@ -43,7 +43,7 @@
     </div> -->
 
     <div class="user">
-      <img src="assets/imgs/customer01.jpg" alt="">
+      <img src="../shop/images/logo.png" alt="">
     </div>
   </div>
 
@@ -144,9 +144,9 @@
               <div class="col-sm-12">
                 <a class="btn btn-success" href="edit_order?id=${order.id}">Edit this Order</a>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <button class="btn waves-effect waves-light btn btn-info hidden-sm-down text-white"
-                        type="button" onclick="delete_order(${order.id})">Delete
-                </button>
+<%--                <button class="btn waves-effect waves-light btn btn-info hidden-sm-down text-white"--%>
+<%--                        type="button" onclick="delete_order(${order.id})">Delete--%>
+<%--                </button>--%>
               </div>
             </div>
           </div>

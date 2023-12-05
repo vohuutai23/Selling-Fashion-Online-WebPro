@@ -50,7 +50,7 @@
         </div> -->
 
         <div class="user">
-            <img src="assets/imgs/customer01.jpg" alt="">
+            <img src="../shop/images/logo.png" alt="">
         </div>
     </div>
 

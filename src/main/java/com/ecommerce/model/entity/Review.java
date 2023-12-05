@@ -6,7 +6,7 @@ import javax.validation.constraints.Size;
 import java.time.Instant;
 
 @Entity
-@Table(name = "review")
+@Table(name = "Review")
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

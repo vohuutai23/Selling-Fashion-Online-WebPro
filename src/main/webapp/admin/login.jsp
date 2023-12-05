@@ -14,7 +14,7 @@
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/login_admin.css">
 
-    <title>Modern Login Page | AsmrProg</title>
+    <title>Login Admin</title>
 </head>
 
 <body>
@@ -29,22 +29,22 @@
                     <h4>${message}</h4>
                 </div>
             </c:if>
-            <h1>ADMIN SIGN IN</h1>
+            <h1>ĐĂNG NHẬP ADMIN</h1>
 
             <input placeholder="Email" type="email" name="email" size="20" required="required" minlength="6"
                    maxlength="30">
-            <input placeholder="Password" type="password" name="password" size="20" required="required" minlength="5"
+            <input placeholder="Mật khẩu" type="password" name="password" size="20" required="required" minlength="5"
                    maxlength="30">
-            <a href="#">Forget Your Password?</a>
-            <button type="submit">Sign In</button>
+
+            <button type="submit">Đăng nhập</button>
         </form>
     </div>
     <div class="toggle-container">
         <div class="toggle">
 
             <div class="toggle-panel toggle-right">
-                <h1>Hello, Admin!</h1>
-                <p>Wellcom back</p>
+                <h1>Admin</h1>
+                <p>Xin chào</p>
 
             </div>
         </div>

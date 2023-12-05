@@ -249,9 +249,9 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link  dropdown-toggle" href="#" data-bs-toggle="dropdown"><i class="fa-solid fa-user fa-xl" style="color: #ffffff;"></i></a>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="view_profile"> My profile</a></li>
-                            <li><a class="dropdown-item" href="view_order"> My Orders</a></li>
-                            <li><a class="dropdown-item" href="logout"> Log out</a></li>
+                            <li><a class="dropdown-item" href="view_profile"> Hồ sơ cá nhân</a></li>
+                            <li><a class="dropdown-item" href="view_order"> Quản lý đơn hàng</a></li>
+                            <li><a class="dropdown-item" href="logout"> Đăng xuất</a></li>
                         </ul>
                     </li>
                     <li class=nav-item">
