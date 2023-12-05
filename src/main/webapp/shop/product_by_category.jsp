@@ -41,7 +41,7 @@
         <div class="row">
             <!-- Sidebar Categories Component -->
             <div class="col-md-3 mt-5">
-                <h1>Thanh các selection cho category dưới này hehe:</h1>
+                <h1>Danh mục sản phẩm:</h1>
                 <div class="row">
                     <c:forEach items="${listCategories}" var="category">
                         <a style="width: 60%; margin: 0 auto;" class="btn btn-outline-success btn-sm mx-auto mb-2 fw-bold" href="view_category?id=${category.id}">${category.nameCategory}</a>

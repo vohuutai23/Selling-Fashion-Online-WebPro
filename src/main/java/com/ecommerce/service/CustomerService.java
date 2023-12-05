@@ -247,8 +247,8 @@ public class CustomerService {
                 response.sendRedirect(redirectURL);
 
             } else {
-//                showCustomerProfile();
-                forwardToPage("shop/index.jsp", request, response);
+                showCustomerProfile();
+//                forwardToPage("shop/index.jsp", request, response);
             }
         }
     }
