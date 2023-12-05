@@ -14,7 +14,7 @@ import java.util.Set;
                 name = "Cart.findByCustomer",
                 query = "SELECT c FROM Cart c WHERE  c.customer.id = :idCustomer"),
 
-         })
+    })
 public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
