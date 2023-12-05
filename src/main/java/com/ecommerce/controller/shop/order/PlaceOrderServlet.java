@@ -77,7 +77,7 @@ public class PlaceOrderServlet extends HttpServlet {
 			}
 		});
 
-		String emailTo = "vohuutai2369@gmail.com"; // Thay thế bằng địa chỉ email của người nhận
+		String emailTo = request.getParameter("email");
 //		String emailTo = request.getParameter(customer.getEmail());
 		String emailSubject = "Order Confirmation";
 		String emailContent = "Thank you for your order. It has been successfully placed.";
