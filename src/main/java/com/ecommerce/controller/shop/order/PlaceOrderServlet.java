@@ -62,8 +62,8 @@ public class PlaceOrderServlet extends HttpServlet {
 	private void sendOrderConfirmationEmail(HttpServletRequest request) {
 //		HttpSession session1 = request.getSession();
 //		Customer customer = (Customer) session1.getAttribute("loggedCustomer");
-		final String username = "21110294@student.hcmute.edu.vn"; // Thay thế bằng email của bạn
-		final String password = "Gohuynh232003@"; // Thay thế bằng mật khẩu của bạn
+		final String username = "21110309@student.hcmute.edu.vn";
+		final String password = "thinh178";
 
 		Properties prop = new Properties();
 		prop.put("mail.smtp.host", "smtp.gmail.com");
@@ -77,11 +77,11 @@ public class PlaceOrderServlet extends HttpServlet {
 			}
 		});
 
-		String emailTo = "vohuutai2369@gmail.com"; // Thay thế bằng địa chỉ email của người nhận
+		String emailTo = "vohuutai2369@gmail.com";
 //		String emailTo = request.getParameter(customer.getEmail());
 		String emailSubject = "Order Confirmation";
 		String emailContent = "Thank you for your order. It has been successfully placed.";
-		System.out.println("Email la:"+ emailTo);
+
 		try {
 			Message message = new MimeMessage(session);
 			message.setFrom(new InternetAddress(username));
