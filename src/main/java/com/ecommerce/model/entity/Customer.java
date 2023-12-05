@@ -28,7 +28,7 @@ public class Customer {
     private String phone;
 
     @Size(max = 50)
-    @NotNull
+
     @Column(name = "address", nullable = false, length = 50)
     private String address;
 
@@ -38,7 +38,7 @@ public class Customer {
     private String email;
 
     @Size(max = 25)
-    @NotNull
+
     @Column(name = "country", nullable = false, length = 25)
     private String country;
 

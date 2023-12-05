@@ -5,25 +5,26 @@
   Time: 3:32 SA
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <html>
 <head>
-    <title>Title</title>
+  <%@ include file="/includes/link.jsp" %>
 </head>
 <body>
+<%@ include file="/includes/header.jsp" %>
 <section class="featured-block text-center">
   <div class="container">
     <c:if test="${order == null}">
       <div class="row">
         <div class="col-12 text-center">
-          <h2 class="mt-5 mb-2">You are not authorized to view this order</h2>
+          <h2 class="mt-5 mb-2">Bạn không có đơn hàng nào</h2>
         </div>
       </div>
     </c:if>
     <c:if test="${order != null}">
       <div class="row">
         <div class="col-md-6 text-center">
-          <h2>Order Overview</h2>
+          <h2>Tổng quan đơn hàng</h2>
           <div align="center">
             <table>
               <%--<tr>
@@ -31,39 +32,39 @@
                 <td>${order.customer.nameCustomer}</td>
               </tr>--%>
               <tr>
-                <td><b>Order Status: </b></td>
+                <td><b>Trạng thái đơn hàng: </b></td>
                 <td>${order.status}</td>
               </tr>
               <tr>
-                <td><b>Order Date: </b></td>
+                <td><b>Ngày đặt hàng: </b></td>
                 <td>${order.dateOrder}</td>
               </tr>
               <tr>
-                <td><b>Payment Method: </b></td>
+                <td><b>Phương thức thanh toán: </b></td>
                 <td>${order.paymentMethod}</td>
               </tr>
 
               <tr>
-                <td><b>Total Amount: </b></td>
+                <td><b>Tổng tiền: </b></td>
                 <td>$${order.totalPrice}</td>
               </tr>
             </table>
           </div>
         </div>
         <div class="col-md-6 text-center">
-          <h2>Recipient Information</h2>
+          <h2>Thông tin hoá đơn</h2>
           <div align="center">
             <table>
               <tr>
-                <td><b>Full Name: </b></td>
+                <td><b>Tên: </b></td>
                 <td>${order.fullName}</td>
               </tr>
               <tr>
-                <td><b>Phone: </b></td>
+                <td><b>Số điện thoại: </b></td>
                 <td>${order.phone}</td>
               </tr>
               <tr>
-                <td><b>Address: </b></td>
+                <td><b>Địa chỉ: </b></td>
                 <td>${order.shippingAddress}</td>
               </tr>
             </table>
@@ -78,17 +79,17 @@
   <c:if test="${order != null}">
     <div class="container">
       <div class="text-center">
-        <h2>Ordered Products</h2>
+        <h2>Sản phẩm đã đặt</h2>
       </div>
       <div class="row">
         <table class="table table-condensed">
           <thead>
           <tr>
-            <th style="width: 5%">Index</th>
-            <th style="width: 50%">Product Title</th>
-            <th style="width: 10%">Price</th>
-            <th style="width: 10%">Quantity</th>
-            <th style="width: 10%">Subtotal</th>
+            <th style="width: 5%">STT</th>
+            <th style="width: 50%">Tên sản phẩm</th>
+            <th style="width: 10%">Giá</th>
+            <th style="width: 10%">Số lượng</th>
+            <th style="width: 10%">Thành tiền</th>
 <%--            <th style="width: 15%">Help us reviews</th>--%>
           </tr>
           </thead>
@@ -106,9 +107,9 @@
                   </div>
                 </div>
               </td>
-              <td>$${orderDetail.product.price}</td>
+              <td>${orderDetail.product.price}đ</td>
               <td>${orderDetail.quantity}</td>
-              <td>$${orderDetail.toltalPrice}</td>
+              <td>${orderDetail.toltalPrice}đ</td>
 <%--              <th><a href="write_review?product_id=${orderDetail.product.id}">Write reviews</a></th>--%>
             </tr>
           </c:forEach>
@@ -116,8 +117,8 @@
             <td colspan="6" align="right">
 <%--              <p>Subtotal: $${order.subtotal}</p>--%>
 
-              <p>Shipping fee: $${order.fee}</p>
-              <p>TOTAL: $${order.totalPrice}</p>
+              <p>Phí vận chuyển: ${order.fee}đ</p>
+              <p>TỔNG TIỀN: ${order.totalPrice}đ</p>
             </td>
           </tr>
           </tbody>
