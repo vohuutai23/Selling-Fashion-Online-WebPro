@@ -104,7 +104,7 @@ public class CartDetail implements Serializable {
                 "product=" + product.getId() +
                 ", quantity=" + quantity +
                 ", totalPrice=" + totalPrice +
-                // Thêm các trường khác bạn muốn hiển thị
+
                 '}';
     }
 }

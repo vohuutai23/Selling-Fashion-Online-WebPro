@@ -92,7 +92,7 @@ public class PlaceOrderServlet extends HttpServlet {
 			System.out.println("Order confirmation email sent successfully.");
 		} catch (Exception e) {
 			e.printStackTrace();
-			// Xử lý lỗi khi gửi email
+
 		}
 	}
 }
