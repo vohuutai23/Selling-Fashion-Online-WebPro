@@ -12,13 +12,18 @@
 
         <properties>
             <property name="javax.persistence.jdbc.url"
-                      value="jdbc:mysql://localhost:3306/fashion_database2"/>
+                      value="jdbc:mysql://localhost:3306/fashion_database"/>
             <property name="javax.persistence.jdbc.driver"
                       value="com.mysql.jdbc.Driver"/>
             <property name="javax.persistence.jdbc.user" value="root"/>
-            <property name="javax.persistence.jdbc.password" value="vohuutai123@"/>
+            <property name="javax.persistence.jdbc.password" value="Trongdung0607@"/>
             <property name="javax.persistence.schema-generation.database.action"
                       value="create"/>
+            <!--<property name="javax.persistence.jdbc.url" value="jdbc:mysql://sql200.infinityfree.com:3306/ifo_35556764_fashion_database"/>
+            <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+            <property name="javax.persistence.jdbc.user" value="if0_35556764_fashion_database"/>
+            <property name="javax.persistence.jdbc.password" value="LiHMy0Fp1hYb"/>
+            <property name="javax.persistence.schema-generation.database.action" value="create"/>-->
 
             <property name="hibernate.connection.useUnicode" value="true"/>
             <property name="hibernate.connection.characterEncoding" value="UTF-8"/>

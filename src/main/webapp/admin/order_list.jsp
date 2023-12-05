@@ -51,8 +51,7 @@
     <div class="list_table">
         <div class="table-responsive">
             <div class="cardHeader">
-                <h2>List Order</h2>
-                <a href="new_customer" class="btn">Create Customer</a>
+                <h2>DANH SÁCH HÓA ĐƠN</h2>
             </div>
 
 <%--            <table id="customerTable" class="table table-striped table-bordered" style="width:100%">--%>
@@ -125,10 +124,15 @@
     });
 </script>
 <script>
-    function delete_customer(id) {
-        let customerId = id;
-        if (confirm('Are you sure you want to delete the customer with ID ' + customerId + '?')) {
-            window.location = 'delete_customer?id=' + customerId;
+    $(document).ready(function () {
+        $('#orderTable').DataTable();
+    });
+</script>
+<script>
+    function delete_order(id) {
+        let orderId = id;
+        if (confirm('Are you sure you want to delete the order with ID ' + orderId + '?')) {
+            window.location = 'delete_order?id=' + orderId;
         }
     }
 </script>
