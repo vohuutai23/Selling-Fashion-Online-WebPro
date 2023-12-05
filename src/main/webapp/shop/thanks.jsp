@@ -10,7 +10,7 @@
    <div class="container text-center mt-4">
        <h1 class="text-danger">Cảm ơn vì đã tin tưởng chúng tôi!🥰</h1>
        <h4>Xác nhận đơn hàng sẽ được gửi qua email.</h4>
-       <h4>Bạn có thể tiếp tục mua sắm bằng cách click vào nút trn hoặc nút điều hướng trang.</h4>
+       <h4>Bạn có thể tiếp tục mua sắm bằng cách click vào nút trên để về trang chủ.</h4>
    </div>
 </body>
 </html>
