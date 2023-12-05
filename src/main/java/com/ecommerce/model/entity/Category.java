@@ -7,7 +7,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "category")
+@Table(name = "Category")
 @NamedQueries({ @NamedQuery(name = "Category.findAll", query = "SELECT c FROM Category c"),
         @NamedQuery(name = "Category.listNameCategoryByGroup", query = "SELECT c.nameCategory FROM Category c WHERE c.groupCategory = :groupCategory"),
         @NamedQuery(name = "Category.findGroupCategoryByName", query = "SELECT c.groupCategory FROM Category c WHERE c.nameCategory = :nameCategory"),

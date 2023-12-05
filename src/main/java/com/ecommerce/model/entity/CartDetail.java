@@ -5,7 +5,7 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "cart_detail")
+@Table(name = "Cart_detail")
 @NamedQueries({@NamedQuery(name = "CartDetail.findAll", query = "SELECT cd FROM CartDetail cd"),
         @NamedQuery(name = "CartDetail.findByID", query = "SELECT cd FROM CartDetail cd WHERE cd.id =:cartDetailId"),
         @NamedQuery(name = "CartDetail.findByCartAndProduct",

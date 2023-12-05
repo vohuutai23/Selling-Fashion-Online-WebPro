@@ -4,7 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "order_detail")
+@Table(name = "Order_detail")
 @NamedQueries({
         @NamedQuery(name = "OrderDetail.bestSelling", query = "SELECT od.product FROM OrderDetail od GROUP BY od.product.id ORDER BY SUM(od.quantity) DESC"),
         @NamedQuery(name = "OrderDetail.bestSellingByCategory", query = "SELECT od.product FROM OrderDetail od JOIN Category c ON od.product.category.id = c.id AND c.id = :categoryId GROUP BY od.product.id ORDER BY SUM(od.quantity) DESC")})

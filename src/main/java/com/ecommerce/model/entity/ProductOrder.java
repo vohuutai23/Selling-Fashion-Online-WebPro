@@ -9,7 +9,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "product_order")
+@Table(name = "Product_order")
 @NamedQueries({
         @NamedQuery(name = "ProductOrder.findAll", query = "SELECT po FROM ProductOrder po"),
         @NamedQuery(name = "ProductOrder.countAll", query = "SELECT COUNT(*) FROM ProductOrder"),
