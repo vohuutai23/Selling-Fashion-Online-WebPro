@@ -107,6 +107,7 @@ public class OrderService {
         String paymentMethod = request.getParameter("paymentMethod");
         ProductOrder order = readOrderInfo();
         placeOrderCOD(order);
+        forwardToPage("shop/thanks.jsp", request, response);
 
     }
 
@@ -259,7 +260,7 @@ public class OrderService {
         saveOrder(order);
         /*messageForShop("Thank you. Your order has been received. Your product(s) will be delivered within a few days.",
                 request, response);*/
-        System.out.println("Thankk you");
+
     }
 
   public void listOrderByCustomer() throws ServletException, IOException {
