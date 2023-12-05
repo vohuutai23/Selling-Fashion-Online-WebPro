@@ -111,27 +111,7 @@ public class OrderService {
 
     }
 
-    /*public Integer placeOrderPayPal(Payment payment) {
-        ProductOrder order = (ProductOrder) request.getSession().getAttribute("orderForPayPal");
 
-        ItemList itemList = payment.getTransactions().get(0).getItemList();
-        ShippingAddress shippingAddress = itemList.getShippingAddress();
-        String shippingPhoneNumber = itemList.getShippingPhoneNumber();
-
-        String recipientName = shippingAddress.getRecipientName();
-        String[] names = recipientName.split(" ");
-
-        order.setRecipientFirstName(names[0]);
-        order.setRecipientLastName(names[1]);
-        order.setRecipientAddressLine1(shippingAddress.getLine1());
-        order.setRecipientAddressLine2(shippingAddress.getLine2());
-        order.setRecipientCity(shippingAddress.getCity());
-        order.setRecipientState(shippingAddress.getState());
-        order.setRecipientCountry(shippingAddress.getCountryCode());
-        order.setRecipientPhone(shippingPhoneNumber);
-
-        return saveOrder(order);
-    }*/
 
     private Integer saveOrder(ProductOrder order) {
         // Kiểm tra xem order đã tồn tại hay chưa
@@ -294,16 +274,7 @@ public class OrderService {
             return;
         }
         request.setAttribute("order", order);
-        /*HttpSession session = request.getSession();
-        Object isPendingProduct = session.getAttribute("NewProductPendingToAddToOrder");
 
-        if (isPendingProduct == null) {
-            session.setAttribute("order", order);
-        } else {
-            session.removeAttribute("NewProductPendingToAddToOrder");
-        }
-
-        generateCountryList(request);*/
 
         forwardToPage("order_form.jsp", request, response);
     }
@@ -325,7 +296,7 @@ public class OrderService {
 
         HttpSession session = request.getSession();
         ProductOrder order = orderDAO.get(orderId);
-        System.out.println("test order" + order);
+
         float subtotal = quantity * product.getPrice();
 
         OrderDetail orderDetail = new OrderDetail();

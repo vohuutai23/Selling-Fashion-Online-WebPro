@@ -47,24 +47,7 @@ public class UserService {
         forwardToPage("/admin/list_user.jsp", request, response);
     }
 
-    /*    public void createUser() throws ServletException, IOException {
-            String email = request.getParameter("email");
-            String password = request.getParameter("password");
-            String fullName = request.getParameter("fullName");
 
-            User existUser = userDAO.findByEmail(email);
-
-            if (existUser != null) {
-                System.out.println("da ton tai");
-                //messageForAdmin(String.format("Could not create new user. A user with email %s already exists.", email), request, response);
-
-            } else {
-                User newUser = new User(email, password, fullName);
-                userDAO.create(newUser);
-
-                listUser("New user created successfully.");
-            }
-        }*/
     public void createUser() throws ServletException, IOException {
         String email = request.getParameter("email");
         String password = request.getParameter("password");

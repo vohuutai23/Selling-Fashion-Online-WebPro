@@ -22,7 +22,7 @@
       </div>
     </c:if>
     <c:if test="${order != null}">
-      <div class="row">
+      <div class="row mt-5">
         <div class="col-md-6 text-center">
           <h2>Tổng quan đơn hàng</h2>
           <div align="center">
@@ -75,7 +75,7 @@
   </div>
 </section>
 <div class="divider"></div>
-<section class="cart text-center">
+<section class="cart text-center mt-5">
   <c:if test="${order != null}">
     <div class="container">
       <div class="text-center">
@@ -109,7 +109,7 @@
               </td>
               <td>${orderDetail.product.price}đ</td>
               <td>${orderDetail.quantity}</td>
-              <td>${orderDetail.toltalPrice}đ</td>
+              <td>${orderDetail.totalPrice}đ</td>
 <%--              <th><a href="write_review?product_id=${orderDetail.product.id}">Write reviews</a></th>--%>
             </tr>
           </c:forEach>
