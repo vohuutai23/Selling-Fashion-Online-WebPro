@@ -292,7 +292,7 @@ public class OrderService {
             messageForAdmin(String.format("Could not find order with ID %s.", orderId), request, response);
             return;
         }
-
+        request.setAttribute("order", order);
         /*HttpSession session = request.getSession();
         Object isPendingProduct = session.getAttribute("NewProductPendingToAddToOrder");
 
@@ -318,16 +318,17 @@ public class OrderService {
    public void addToOrder() throws ServletException, IOException {
         int productId = Integer.parseInt(request.getParameter("productId"));
         int quantity = Integer.parseInt(request.getParameter("quantity"));
-
+        int orderId = Integer.parseInt(request.getParameter("orderId"));
         ProductDAO productDAO = new ProductDAO();
         Product product = productDAO.get(productId);
 
         HttpSession session = request.getSession();
-        ProductOrder order = (ProductOrder) session.getAttribute("order");
-
+        ProductOrder order = orderDAO.get(orderId);
+        System.out.println("test order" + order);
         float subtotal = quantity * product.getPrice();
 
         OrderDetail orderDetail = new OrderDetail();
+        orderDetail.setProductOrder(order);
         orderDetail.setProduct(product);
         orderDetail.setQuantity(quantity);
         orderDetail.setTotalPrice(subtotal);
@@ -336,17 +337,18 @@ public class OrderService {
         order.setTotalPrice(newTotal);
 
         order.getOrderDetails().add(orderDetail);
-
+        orderDAO.update(order);
         request.setAttribute("product", product);
-        session.setAttribute("NewProductPendingToAddToOrder", true);
+
 
         forwardToPage("add_product_result.jsp", request, response);
     }
 
-  /*   public void removeFromOrder() throws ServletException, IOException {
+    public void removeFromOrder() throws ServletException, IOException {
         int productId = Integer.parseInt(request.getParameter("id"));
-        HttpSession session = request.getSession();
-        ProductOrder order = (ProductOrder) session.getAttribute("order");
+        int orderId = Integer.parseInt(request.getParameter("orderId"));
+        ProductOrder order = orderDAO.get(orderId);
+        // Cập nhật thông tin order
 
         Set<OrderDetail> orderDetails = order.getOrderDetails();
         Iterator<OrderDetail> iterator = orderDetails.iterator();
@@ -354,48 +356,37 @@ public class OrderService {
         while (iterator.hasNext()) {
             OrderDetail orderDetail = iterator.next();
 
-            if (orderDetail.getProduct().getProductId() == productId) {
-                float newTotal = order.getTotal() - orderDetail.getSubtotal();
-                order.setTotal(newTotal);
+            if (orderDetail.getProduct().getId() == productId) {
+                float newTotal = order.getTotalPrice() - orderDetail.getTotalPrice();
+                order.setTotalPrice(newTotal);
                 iterator.remove();
-            }
             }
         }
 
-        forwardToPage("order_form.jsp", request, response);
-    }
-*/
-   /* public void updateService() throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        ProductOrder order = (ProductOrder) session.getAttribute("order");
+        orderDAO.update(order); // Cập nhật order trong cơ sở dữ liệu
 
-        String recipientFirstName = request.getParameter("recipientFirstName");
-        String recipientLastName = request.getParameter("recipientLastName");
+        request.setAttribute("order", order); // Đặt lại order cho request
+        forwardToPage("order_form.jsp", request, response); // Chuyển tiếp trở lại trang order_form
+    }
+
+    public void updateService() throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        int orderId = Integer.parseInt(request.getParameter("orderId"));
+        ProductOrder order = orderDAO.get(orderId);
+        String recipientFullName = request.getParameter("recipientFullName");
+
         String recipientPhone = request.getParameter("recipientPhone");
-        String recipientAddressLine1 = request.getParameter("recipientAddressLine1");
-        String recipientAddressLine2 = request.getParameter("recipientAddressLine2");
-        String recipientCity = request.getParameter("recipientCity");
-        String recipientState = request.getParameter("recipientState");
-        String recipientZipCode = request.getParameter("recipientZipCode");
-        String recipientCountry = request.getParameter("recipientCountry");
+        String recipientAddress = request.getParameter("recipientAddress");
+
 
         float shippingFee = Float.parseFloat(request.getParameter("shippingFee"));
-        float tax = Float.parseFloat(request.getParameter("tax"));
 
         String paymentMethod = request.getParameter("paymentMethod");
         String orderStatus = request.getParameter("orderStatus");
-
-//        order.setRecipientFirstName(recipientFirstName);
-//        order.setRecipientLastName(recipientLastName);
-//        order.setRecipientPhone(recipientPhone);
-//        order.setRecipientAddressLine1(recipientAddressLine1);
-//        order.setRecipientAddressLine2(recipientAddressLine2);
-//        order.setRecipientCity(recipientCity);
-//        order.setRecipientState(recipientState);
-//        order.setRecipientZipCode(recipientZipCode);
-//        order.setRecipientCountry(recipientCountry);
-//        order.setShippingFee(shippingFee);
-//        order.setTax(tax);
+        order.setFullName(recipientFullName);
+        order.setPhone(recipientPhone);
+        order.setShippingAddress(recipientAddress);
+        order.setFee(shippingFee);
         order.setPaymentMethod(paymentMethod);
         order.setStatus(orderStatus);
 
@@ -422,24 +413,24 @@ public class OrderService {
             OrderDetail orderDetail = new OrderDetail();
             orderDetail.setProduct(new Product(productId));
             orderDetail.setQuantity(quantity);
-            orderDetail.setSubtotal(subtotal);
+            orderDetail.setTotalPrice(subtotal);
             orderDetail.setProductOrder(order);
 
             orderDetails.add(orderDetail);
             totalAmount += subtotal;
         }
 
-        order.setSubtotal(totalAmount);
+        order.setTotalPrice(totalAmount);
 
         totalAmount += shippingFee;
-        totalAmount += tax;
 
-        order.setTotal(totalAmount);
+
+        order.setTotalPrice(totalAmount);
 
         orderDAO.update(order);
 
-        listOrder(String.format("The order %s has been updated successfully.", order.getOrderId()));
-    }*/
+        listOrder(String.format("The order %s has been updated successfully.", order.getId()));
+    }
 
     public void deleteOrder() throws ServletException, IOException {
         Integer orderId = Integer.parseInt(request.getParameter("id"));
