@@ -53,7 +53,7 @@ public class Customer {
 
     @NotNull
     @Column(name = "active", nullable = false)
-    private Byte active;
+    private boolean active;
 
     public Integer getId() {
         return id;
@@ -119,11 +119,11 @@ public class Customer {
         this.registerDate = registerDate;
     }
 
-    public Byte getActive() {
+    public boolean getActive() {
         return active;
     }
 
-    public void setActive(Byte active) {
+    public void setActive(boolean active) {
         this.active = active;
     }
 

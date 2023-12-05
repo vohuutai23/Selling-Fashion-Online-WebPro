@@ -1,9 +1,7 @@
 package com.ecommerce.service;
-import com.ecommerce.DAO.CartDetailDAO;
-import com.ecommerce.DAO.CustomerDAO;
-import com.ecommerce.DAO.OrderDAO;
-import com.ecommerce.DAO.ReviewDAO;
+import com.ecommerce.DAO.*;
 //import com.ecommerce.utility.HashUtility;
+import com.ecommerce.model.entity.Cart;
 import com.ecommerce.model.entity.CartDetail;
 import com.ecommerce.model.entity.Customer;
 import javax.servlet.ServletException;
@@ -21,12 +19,14 @@ public class CustomerService {
     private final HttpServletResponse response;
     private final CustomerDAO customerDAO;
     private final CartDetailDAO cartDetailDAO;
+    private final CartDAO cartDAO;
 
     public CustomerService(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
         this.request = request;
         this.response = response;
         customerDAO = new CustomerDAO();
         cartDetailDAO = new CartDetailDAO();
+        cartDAO = new CartDAO();
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html; charset=UTF-8");
         response.setCharacterEncoding("UTF-8");
@@ -93,7 +93,12 @@ public class CustomerService {
             updateCustomerFields(newCustomer);
 
             customerDAO.create(newCustomer);
-
+            Cart newCart = new Cart();
+//            newCart.setId(newCustomer.getId());
+            System.out.println(newCart.getId());
+            newCart.setCustomer(newCustomer);
+            newCart.setTotalPrice(0.0f);
+            cartDAO.create(newCart);
             listCustomer("New customer has been created successfully.");
         }
     }

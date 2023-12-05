@@ -55,6 +55,7 @@
                     <label class="col-md-12">Ordered By:&nbsp;&nbsp;&nbsp;<a
                             class="form-control form-control-line">${order.customer.fullName}</a></label>
                 </div>--%>
+
                 <div class="form-group">
                     <label class="col-md-12">Order Date:&nbsp;&nbsp;&nbsp;<a
                             class="form-control form-control-line">${order.dateOrder}</a></label>
@@ -102,10 +103,11 @@
                     </div>
                 </div>
                 <h2 class="text-themecolor" style="text-align: center;">Recipient Information</h2>
+                <input type="hidden" name="orderId" value="${order.getId()}">
                 <div class="form-group">
                     <label class="col-md-12">Full Name:</label>
                     <div class="col-md-12">
-                        <input class="form-control form-control-line" type="text" name="recipientFirstName"
+                        <input class="form-control form-control-line" type="text" name="recipientFullName"
                                value="${order.fullName}" size="45" required="required"
                                maxlength="32"/>
                     </div>
@@ -123,13 +125,70 @@
                     <label class="col-md-12">Address:</label>
                     <div class="col-md-12">
                         <input class="form-control form-control-line" type="text"
-                               name="recipientAddressLine1" value="${order.shippingAddress}" size="45"
+                               name="recipientAddress" value="${order.shippingAddress}" size="45"
                                required="required" maxlength="128"/>
                     </div>
                 </div>
 
                 <h2 class="text-themecolor" style="text-align: center;">Ordered Products</h2>
                 <div class="form-group">
+                    <div class="col-md-12">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Index</th>
+                                <th>Product Name</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Subtotal</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody class="list">
+                                <c:forEach items="${order.orderDetails}" var="orderDetail"
+                                           varStatus="status">
+                                <tr>
+                                    <td>${status.index + 1}</td>
+                                    <td><img style="vertical-align: middle;"
+                                             src="data:image/jpg;base64,${orderDetail.product.base64Image}"
+                                             width="48" height="64"/>
+                                            ${orderDetail.product.nameProduct}
+                                    </td>
+                                    <td>
+                                        <input type="hidden" name="price"
+                                               value="${orderDetail.product.price}"/>$${orderDetail.product.price}
+                                    </td>
+                                    <td>
+                                        <input type="hidden" name="productId"
+                                               value="${orderDetail.product.id}"/>
+                                        <input type="number" name="quantity${status.index + 1}"
+                                               value="${orderDetail.quantity}" size="5" min="1" step="1"
+                                               required="required"/>
+                                    </td>
+
+                                    <td>$${orderDetail.totalPrice}</td>
+                                    <td><a href="remove_from_order?id=${orderDetail.product.id}&orderId=${order.getId()}">Remove</a>
+                                    </td>
+                                </tr>
+                                </c:forEach>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td colspan="5" align="right">
+                                        <p>Shipping fee: <input type="number" size="5" name="shippingFee"
+                                                                value="${order.fee}" min="0.0"
+                                                                step="0.1"/></p>
+                                        <p>TOTAL: $${order.totalPrice}</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+                <%--<div class="form-group">
                     <div class="col-md-12">
                         <div class="table-responsive">
                             <table class="table">
@@ -172,7 +231,7 @@
                                     <td></td>
                                     <td></td>
                                     <td colspan="5" align="right">
-<%--                                        <p>Subtotal: $${order.subtotal}</p>--%>
+&lt;%&ndash;                                        <p>Subtotal: $${order.subtotal}</p>&ndash;%&gt;
                                         <p>Shipping fee: <input type="number" size="5" name="shippingFee"
                                                                 value="${order.shippingFee}" min="0.0"
                                                                 step="0.1"/></p>
@@ -183,11 +242,13 @@
                             </table>
                         </div>
                     </div>
-                </div>
+                </div>--%>
                 <div class="form-group">
                     <div class="col-sm-12">
-                        <a class="btn btn-success" href="javascript:showAddProductPopup()"><b>Add
+                        <a class="btn btn-success" href="javascript:showAddProductPopup(${order.getId()})"><b>Add
                             Product</b></a>
+<%--                            <button onclick="showAddProductPopup(${order.orderId})">Add Product</button>--%>
+
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <input class="btn btn-success" type="submit" value="Save"/>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -242,13 +303,16 @@
 
 <script type="text/javascript" src="../assets/js/jquery.richtext.min.js"></script>
 <script>
-    function showAddProductPopup() {
+    <%--let orderId = ${order.getId()};--%>
+    function showAddProductPopup(orderId) {
         let width = 600;
         let height = 250;
         let left = (screen.width - width) / 2;
         let top = (screen.height - height) / 2;
 
-        window.open('add_product_form', '_blank', 'width=' + width + ', height=' + height + ', top=' + top + ', left=' + left);
+        // Thêm orderId vào URL
+        let url = 'add_product_form?orderId=' + orderId;
+        window.open(url, '_blank', 'width=' + width + ', height=' + height + ', top=' + top + ', left=' + left);
     }
 </script>
 <script src="${pageContext.request.contextPath}/admin/styles/assets/js/main.js"></script>
