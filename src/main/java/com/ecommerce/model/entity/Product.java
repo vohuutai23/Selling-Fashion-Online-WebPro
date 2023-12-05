@@ -9,7 +9,7 @@ import java.util.Date;
 
 
 @Entity
-@Table(name = "product")
+@Table(name = "Product")
 @NamedQueries({ @NamedQuery(name = "Product.findAll", query = "SELECT p FROM Product p"),
         @NamedQuery(name = "Product.findByCategory", query = "SELECT p FROM Product p WHERE p.category.id = :categoryId"),
         @NamedQuery(name = "Product.search", query = "SELECT p FROM Product p WHERE p.nameProduct LIKE '%' || :keyword || '%' OR p.description LIKE '%' || :keyword || '%'"),

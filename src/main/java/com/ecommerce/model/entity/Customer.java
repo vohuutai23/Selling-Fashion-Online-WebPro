@@ -6,7 +6,7 @@ import javax.validation.constraints.Size;
 import java.time.Instant;
 
 @Entity
-@Table(name = "customer")
+@Table(name = "Customer")
 @NamedQueries({ @NamedQuery(name = "Customer.findAll", query = "SELECT c FROM Customer c ORDER BY c.registerDate DESC"),
         @NamedQuery(name = "Customer.findByEmail", query = "SELECT c FROM Customer c WHERE c.email = :email"),
         @NamedQuery(name = "Customer.countAll", query = "SELECT COUNT(c.email) FROM Customer c"),
@@ -28,7 +28,7 @@ public class Customer {
     private String phone;
 
     @Size(max = 50)
-    @NotNull
+
     @Column(name = "address", nullable = false, length = 50)
     private String address;
 
@@ -38,7 +38,7 @@ public class Customer {
     private String email;
 
     @Size(max = 25)
-    @NotNull
+
     @Column(name = "country", nullable = false, length = 25)
     private String country;
 

@@ -48,25 +48,7 @@ public class OrderDetailDAO extends JPADao<OrderDetail> implements GenericDAO<Or
         return 0;
     }
 
-    /*public void insertOrderDetail(int idOrder, int idProduct, int quantity, float totalPrice) {
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-        entityManager.getTransaction().begin();
 
-        // Tạo đối tượng OrderDetail mới
-        OrderDetail orderDetail = new OrderDetail();
-
-        // Thiết lập các thuộc tính
-        orderDetail.setOrder(new ProductOrder(idOrder)); // Giả sử ProductOrder có constructor với ID
-        orderDetail.setProduct(new Product(idProduct)); // Giả sử Product có constructor với ID
-        orderDetail.setQuantity(quantity);
-        orderDetail.setTotalPrice(totalPrice);
-
-        // Lưu vào cơ sở dữ liệu
-        entityManager.persist(orderDetail);
-
-        entityManager.getTransaction().commit();
-        entityManager.close();
-    }*/
 
 
 }

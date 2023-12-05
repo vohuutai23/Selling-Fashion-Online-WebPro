@@ -180,9 +180,6 @@ public class CustomerService {
         } else {
             System.out.println("loi");
 
-/*            messageForAdmin(
-                    String.format("Could not find the customer with ID %s or it might have been deleted.", customerId),
-                    request, response);*/
         }
     }
 

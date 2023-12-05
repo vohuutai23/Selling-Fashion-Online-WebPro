@@ -47,14 +47,7 @@ public class ProductService {
         List<Product> listProducts = productDAO.listByCategory(categoryId);
         List<Category> listCategories = categoryDAO.listAll();
         String sort = request.getParameter("sort");
-//        List<Category> listCategories = categoryDAO.listAll();
-//        System.out.println("Number of products: " + listProducts.size()); // In số lượng sản phẩm để kiểm tra
-//        for (Product product : listProducts) {
-//            System.out.println("Product ID: " + product.getId());
-//            System.out.println("Product Name: " + product.getNameProduct());
-//            System.out.println("Product Price: " + product.getPrice());
-//            // ... In thông tin khác của sản phẩm nếu cần
-//        }
+
         if (Objects.equals(sort, "newest")) {
             listProducts = productDAO.listByNewest(categoryId);
         }
@@ -153,23 +146,12 @@ public class ProductService {
         String keyword = request.getParameter("keyword");
         List<Product> result;
 
-//        if (keyword.equals("")) {
-//            result = productDAO.listActive();
-//        } else {
-//            result = productDAO.search(keyword);
-//        }
+
         result = productDAO.search(keyword);
         if (result.size() == 0) {
             request.setAttribute("message", "Found no matching product(s).");
         }
-//        System.out.println("So luong ket qua tim kiem: " + result.size());
-//        for (Product product : result) {
-//            System.out.println("Product ID: " + product.getId());
-//            System.out.println("Product Name: " + product.getNameProduct());
-//            System.out.println("Product Price: " + product.getPrice());
-//            // ... In thông tin khác của sản phẩm nếu cần
-//        }
-//        request.setAttribute("keyword", keyword);
+
         request.setAttribute("result", result);
 
         List<CartDetail> listCartDetails = cartDetailDAO.listAll();
@@ -329,11 +311,7 @@ public class ProductService {
             forwardToPage("product_form.jsp", request, response);
         }
 
-//        } else {
-//            messageForAdmin(
-//                    String.format("Could not find the product with ID %s or it might have been deleted.", productId),
-//                    request, response);
-//        }
+
     }
 
     public void updateProduct() throws ServletException, IOException {
@@ -342,12 +320,7 @@ public class ProductService {
         String nameProduct = request.getParameter("nameProduct");
         Product existProduct = productDAO.get(productId);
         Product productByTitle = productDAO.findByTitle(nameProduct);
-        /*if (productByTitle != null && !existProduct.equals(productByTitle)) {
-            System.out.println("checkdkienif");
 
-            listProduct("Could not update product because there is another product having same title.");
-            return;
-        }*/
 
         readProductFields(existProduct);
         productDAO.update(existProduct);
@@ -360,30 +333,5 @@ public class ProductService {
         productDAO.delete(productId);
         listProduct("The product has been deleted successfully.");
 
-//        if (product == null) {
-//            messageForAdmin(
-//                    String.format("Could not find the product with ID %s or it might have been deleted.", productId),
-//                    request, response);}
-//
-////        } else {
-////            if (!product.getReviews().isEmpty()) {
-////                messageForAdmin(
-////                        String.format("Could not delete the product with ID %s because it has reviews.", productId),
-////                        request, response);
-////
-////            } else {
-////                OrderDAO orderDAO = new OrderDAO();
-////                long countByOrder = orderDAO.countOrderDetailByProduct(productId);
-////
-////                if (countByOrder > 0) {
-////                    messageForAdmin(String.format(
-////                            "Could not delete the product with ID %s because there are orders associated with it.",
-////                            productId), request, response);
-////
-////                } else {
-//            else{
-//                    productDAO.delete(productId);
-//                    listProduct("The product has been deleted successfully.");
-//            }
     }
 }

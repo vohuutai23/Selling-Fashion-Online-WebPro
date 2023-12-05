@@ -51,7 +51,7 @@ public class CartService {
         }
         cart.setTotalPrice(totalPrice);
         cartDAO.update(cart);
-        System.out.println("Tong tien" + cart.getTotalPrice());
+
         request.setAttribute("totalPriceCart", cart.getTotalPrice());
 
         forwardToPage("shop/cart.jsp", request, response);
@@ -123,7 +123,7 @@ public class CartService {
 
             }
         }
-        System.out.println("test4");
+
         // Chuyển hướng sau khi xử lý
         String cartPage = request.getContextPath().concat("/view_cart");
         response.sendRedirect(cartPage);
@@ -143,19 +143,16 @@ public class CartService {
         Cart cart = cartDAO.findByCustomer(customerId);
 
         Set<CartDetail> cartDetails = cart.getCartDetails();
-        System.out.println("check cos sn ko"+ cartDetails);
+
 
 
         // Tìm CartDetail tương ứng với productId trong giỏ hàng
         CartDetail cartDetail = cartDetailDAO.findCartDetailByCartAndProduct(cart.getId(), productId);
         if (cartDetail != null) {
-            System.out.println("check id cart"+ cartDetail.getCart().getId());
-            System.out.println("check id pro"+ cartDetail.getProduct().getId());
-            // CartDetailId cartDetailId = cartDetail.getId(); // Lấy CartDetailId
+
             cartDetailDAO.deleteByCartAndProduct(cartDetail.getCart().getId(),cartDetail.getProduct().getId()); // Sử dụng CartDetailId để xóa
         }
-        /*cart.setTotalPrice(cartDetailDAO.sumTotalPriceByCart(cart.getId()));
-        cartDAO.update(cart);*/
+
 
         // Chuyển hướng người dùng trở lại trang giỏ hàng
         String cartPage = request.getContextPath().concat("/view_cart");
@@ -171,18 +168,7 @@ public class CartService {
             // Lấy giỏ hàng của khách hàng
             Cart cart = cartDAO.findByCustomer(customer.getId());
             cartDetailDAO.deleteByCart(cart.getId());
-            /*cart.setTotalPrice(cartDetailDAO.sumTotalPriceByCart(cart.getId()));
-            cartDAO.update(cart);*/
-            /*if (cart != null) {
-                // Lấy danh sách tất cả CartDetail liên quan đến giỏ hàng
-                List<CartDetail> cartDetails = cartDetailDAO.listByCart(cart.getId());
-                System.out.println("check id cart"+ cart.getId());
-                // Xóa mỗi CartDetail
 
-                *//*for (CartDetail cartDetail : cartDetails) {
-                    cartDetailDAO.delete(cartDetail.getId());
-                }*//*
-            }*/
         }
 
         // Chuyển hướng người dùng trở lại trang giỏ hàng sau khi xóa

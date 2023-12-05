@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "cart")
+@Table(name = "Cart")
 @NamedQueries({ @NamedQuery(
         name = "Cart.findByNameAndGroup",
         query = "SELECT c FROM Cart c WHERE c.id = :idCart AND c.customer.id = :idCustomer"),
