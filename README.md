@@ -18,7 +18,7 @@ Sẽ có **2 đối tượng chính** sử dụng website: **admin** (người q
    - Xem và trả lời hỗ trợ các tin nhắn mà khách hàng nhắn tin về cho cửa hàng.
 ## 3. Lược đồ quan hệ tổng quát:
 - Trong lược đồ này gồm các đối tượng thực thể như: **User** (gồm Admin và Customer), **Product**, **Order**, **Receipt**, **Review**,...
-![image](https://github.com/trongdung721/Selling_Fashion_Online/assets/90029952/1b3ea931-147d-458d-9595-ee5b4e227ac1)
+
 
 ## 4. Technincal:
 - [**Jakarta Server Pages**](https://jakarta.ee/specifications/pages/3.0/)
@@ -31,8 +31,7 @@ Sẽ có **2 đối tượng chính** sử dụng website: **admin** (người q
 - Front-end framework:	
 	+ [**Bootstrap**](https://getbootstrap.com/docs/5.3/getting-started/introduction/)
 	+ [**JQuery**](https://releases.jquery.com/)
- 	+ [**AJAX**](https://api.jquery.com/jquery.ajax/)	
-	+ [**Sass/Scss**](https://sass-lang.com/)
+ 	
 - Database management:
 	+ [**MySql**](https://www.mysql.com/)
 	+ [**MySql Workbench**](https://dev.mysql.com/downloads/workbench/)
