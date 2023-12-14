@@ -152,8 +152,8 @@ public class CustomerService {
 
         if (customer != null) {
             ReviewDAO reviewDAO = new ReviewDAO();
-            long reviewCount = reviewDAO.countByCustomer(customerId);
-
+//            long reviewCount = reviewDAO.countByCustomer(customerId);
+            long reviewCount = 0;
             if (reviewCount > 0) {
                 System.out.println("loi");
 
@@ -210,6 +210,12 @@ public class CustomerService {
             Customer newCustomer = new Customer();
             updateCustomerFields(newCustomer);
             customerDAO.create(newCustomer);
+            Cart newCart = new Cart();
+//            newCart.setId(newCustomer.getId());
+            System.out.println(newCart.getId());
+            newCart.setCustomer(newCustomer);
+            newCart.setTotalPrice(0.0f);
+            cartDAO.create(newCart);
             request.setAttribute("message", "You have registered successfully! Thank you.");
             showLogin();
 
