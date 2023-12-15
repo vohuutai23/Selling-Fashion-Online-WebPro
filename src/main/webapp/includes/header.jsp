@@ -1,120 +1,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%--<style>--%>
-<%--    .user-container {--%>
-<%--        position: relative;--%>
-<%--    }--%>
 
-<%--    .dropdown {--%>
-<%--        display: none;--%>
-<%--        position: absolute;--%>
-<%--        top: 100%; /* Hiển thị dropdown dưới icon user */--%>
-<%--        left: 0;--%>
-<%--        background-color: #f9f9f9;--%>
-<%--        min-width: 160px;--%>
-<%--        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);--%>
-<%--        z-index: 1;--%>
-<%--    }--%>
-
-<%--    .user-container:hover .dropdown {--%>
-<%--        display: block;--%>
-<%--    }--%>
-<%--</style>--%>
-<%--<div id="header">--%>
-<%--    <div id="nav">--%>
-<%--        <nav class="navbar navbar-expand-lg p-0">--%>
-<%--            <div class="container-fluid navigation">--%>
-<%--                <a class="navbar-brand" href="#">--%>
-<%--                    <img class="ms-5" src="shop/images/logo.png" alt="Logo" width="60" height="60" >--%>
-<%--                </a>--%>
-<%--                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">--%>
-<%--                    <span class="navbar-toggler-icon"></span>--%>
-<%--                </button>--%>
-<%--                <div class="collapse navbar-collapse" id="navbarNav">--%>
-<%--                    <ul class="navbar-nav nav-element text-uppercase nav-text">--%>
-<%--                        <li class="nav-item text-white">--%>
-<%--                            <a class="nav-link" aria-current="page" href="${pageContext.request.contextPath}/">Trang chủ</a>--%>
-<%--                        </li>--%>
-<%--                        <li class="nav-item">--%>
-<%--                            <a class="nav-link" href="list_product">Sản phẩm</a>--%>
-<%--                        </li>--%>
-<%--                        <li class="nav-item">--%>
-<%--                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">--%>
-<%--                                Danh mục--%>
-<%--                            </a>--%>
-<%--                            <ul class="dropdown-menu">--%>
-<%--                                <li><a class="dropdown-item" href="view_category?id=1">Quần</a></li>--%>
-<%--                                <li><a class="dropdown-item" href="view_category?id=2">Áo</a></li>--%>
-<%--                            </ul>--%>
-<%--                        </li>--%>
-<%--                        <li class="nav-item">--%>
-<%--                            <a class="nav-link" href="#">Liên hệ</a>--%>
-<%--                        </li>--%>
-<%--&lt;%&ndash;                        <li class="nav-item">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                            <a class="nav-link" href="#"><i class="fa-solid fa-magnifying-glass fa-xl" style="color: #ffffff;"></i></a>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                        </li>&ndash;%&gt;--%>
-<%--                        <li class="nav-item">--%>
-<%--                            <form action="search" method="post">--%>
-<%--                                <div class="flexbox">--%>
-<%--                                    <div class="search">--%>
-<%--                                        <div>--%>
-<%--                                            <input class="rounded-2 border-primary-subtle pt-1" type="text" name="keyword" placeholder="Tìm kiếm">--%>
-<%--                                        </div>--%>
-<%--                                    </div>--%>
-<%--                                </div>--%>
-<%--                            </form>--%>
-<%--                        </li>--%>
-<%--                        <li class="nav-item">--%>
-<%--                            <a class="nav-link" href="view_cart"><i class="fa-solid fa-cart-shopping fa-xl" style="color: #ffffff;"></i></a>--%>
-<%--                        </li>--%>
-
-<%--                        <c:if test="${loggedCustomer == null}">--%>
-
-<%--                            <li class="nav-item">--%>
-<%--                                <a class="nav-link" href="login"><i class="fa-solid fa-user fa-xl" style="color: #ffffff;"></i></a>--%>
-<%--                            </li>--%>
-<%--                            <li class=nav-item">--%>
-<%--                                <a class="nav-link" style="text-decoration: none; color: white" href="login" >Đăng nhập</a>--%>
-<%--                            </li>--%>
-<%--                        </c:if>--%>
-
-<%--                        <c:if test="${loggedCustomer != null}">--%>
-<%--                            <li class="nav-item navigation-2">--%>
-<%--                                <div class="user-container">--%>
-<%--                                    <a class="user-icon nav-link" id="userIcon" href="view_profile">--%>
-<%--                                        <i class="fa-solid fa-user fa-xl" style="color: #ffffff;"></i>--%>
-<%--                                        <div class="dropdown" id="dropdown">--%>
-<%--                                            <a href="view_profile">Profile</a>--%>
-<%--                                            <a href="logout">LogOut</a>--%>
-<%--                                        </div>--%>
-<%--                                    </a>--%>
-<%--                                </div>--%>
-<%--                            </li>--%>
-<%--                            <li class="nav-item">--%>
-<%--                                <a class="nav-link" style="text-decoration: none; color: white" href="view_profile">Chào mừng, ${loggedCustomer.nameCustomer}</a>--%>
-<%--                            </li>--%>
-<%--                        </c:if>--%>
-
-<%--                    </ul>--%>
-<%--                </div>--%>
-<%--            </div>--%>
-<%--        </nav>--%>
-<%--    </div>--%>
-<%--</div>--%>
-<%--<script>--%>
-<%--    document.getElementById("userIcon").addEventListener("mouseenter", function() {--%>
-<%--        document.getElementById("dropdown").style.display = "block";--%>
-<%--    });--%>
-
-<%--    document.getElementById("userIcon").addEventListener("mouseleave", function() {--%>
-<%--        document.getElementById("dropdown").style.display = "none";--%>
-<%--    });--%>
-<%--</script>--%>
 <style>
     #cart-icon {
         position: relative;
         cursor: pointer;
-        margin-bottom: 20px; /* Thêm margin để tạo khoảng cách giữa biểu tượng giỏ hàng và tiêu đề "Giỏ hàng của bạn" */
+        margin-bottom: 20px;
     }
 
     #cart-count {
@@ -194,32 +85,7 @@
                         </div>
                     </form>
                 </li>
-                <%--                <li class="nav-item">--%>
-                <%--&lt;%&ndash;                    <a class="nav-link" href="view_cart"><i class="fa-solid fa-cart-shopping fa-xl" style="color: #ffffff;"></i></a>&ndash;%&gt;--%>
-                <%--&lt;%&ndash;                    <span id="cart-count">${listCartDetails.size()}</span>&ndash;%&gt;--%>
-                <%--                        <div id="cart-icon">--%>
-                <%--                            <a class="nav-link" href="view_cart"><i class="fa-solid fa-cart-shopping fa-xl" style="color: #ffffff;"></i></a>--%>
-                <%--                            <span id="cart-count">${cartDetails.size()}</span>--%>
-                <%--                        </div>--%>
-                <%--                </li>--%>
-                <%--                <c:if test="${loggedCustomer == null}">--%>
 
-                <%--                    <li class="nav-item">--%>
-                <%--                        <a class="nav-link" href="login"><i class="fa-solid fa-user fa-xl" style="color: #ffffff;"></i></a>--%>
-                <%--                    </li>--%>
-                <%--                    <li class=nav-item">--%>
-                <%--                        <a class="nav-link" style="text-decoration: none; color: white" href="login" >Đăng nhập</a>--%>
-                <%--                    </li>--%>
-                <%--                </c:if>--%>
-
-                <%--                <c:if test="${loggedCustomer != null}">--%>
-                <%--                    <li class="nav-item">--%>
-                <%--                        <a class="nav-link" href="view_profile"><i class="fa-solid fa-user fa-xl" style="color: #ffffff;"></i></a>--%>
-                <%--                    </li>--%>
-                <%--                    <li class=nav-item">--%>
-                <%--                        <a class="nav-link" style="text-decoration: none; color: white" href="view_profile" >Chào mừng, ${loggedCustomer.nameCustomer}</a>--%>
-                <%--                    </li>--%>
-                <%--                </c:if>--%>
             </ul>
             <ul class="navbar-nav ms-auto">
                 <c:if test="${loggedCustomer == null}">
@@ -235,15 +101,12 @@
                 </c:if>
 
                 <c:if test="${loggedCustomer != null}">
-                    <%--                    <li class="nav-item">--%>
-                    <%--                        <a class="nav-link" href="view_profile"><i class="fa-solid fa-user fa-xl" style="color: #ffffff;"></i></a>--%>
-                    <%--                    </li>--%>
+
                     <li class="nav-item">
-                            <%--                    <a class="nav-link" href="view_cart"><i class="fa-solid fa-cart-shopping fa-xl" style="color: #ffffff;"></i></a>--%>
-                            <%--                    <span id="cart-count">${listCartDetails.size()}</span>--%>
+
                         <div id="cart-icon">
                             <a class="nav-link" href="view_cart"><i class="fa-solid fa-cart-shopping fa-xl" style="color: #ffffff;"></i></a>
-                            <span id="cart-count">${listCartDetails.size()}</span>
+                            <span id="cart-count">${listCartDetailsByIdCustomer.size()}</span>
                         </div>
                     </li>
                     <li class="nav-item dropdown">
@@ -271,8 +134,7 @@
     </div> <!-- container-fluid.// -->
 </nav>
 <script>
-    // Đảm bảo rằng đoạn mã này được đặt sau khi phần tử #cart-count đã được tạo
-    document.getElementById("cart-count").innerText = "${listCartDetails.size()}";
+    document.getElementById("cart-count").innerText = "${listCartDetailsByIdCustomer.size()}";
 </script>
 
 

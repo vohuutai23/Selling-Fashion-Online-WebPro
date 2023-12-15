@@ -6,14 +6,17 @@ import com.ecommerce.DAO.ProductDAO;
 import com.ecommerce.DAO.CartDetailDAO;
 import com.ecommerce.model.entity.CartDetail;
 import com.ecommerce.model.entity.Category;
+import com.ecommerce.model.entity.Customer;
 import com.ecommerce.model.entity.Product;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 import java.io.InputStream;
 import java.util.Objects;
@@ -66,8 +69,18 @@ public class ProductService {
 //        request.setAttribute("category", category);
         request.setAttribute("listCategories", listCategories);
 
-        List<CartDetail> listCartDetails = cartDetailDAO.listAll();
-        request.setAttribute("listCartDetails", listCartDetails);
+        HttpSession session = request.getSession();
+        Integer idCustomer = null;
+        Customer customer = (Customer) session.getAttribute("loggedCustomer");
+        if (customer != null) {
+            idCustomer = customer.getId();
+        }
+
+        // Lấy danh sách chi tiết giỏ hàng dựa trên idCustomer
+        List<CartDetail> listCartDetailsByIdCustomer = (idCustomer != null)
+                ? cartDetailDAO.listAllByIdCustomer(idCustomer)
+                : new ArrayList<>(); // Tránh NullPointerException nếu người dùng chưa đăng nhập
+        request.setAttribute("listCartDetailsByIdCustomer", listCartDetailsByIdCustomer);
 
         forwardToPage("shop/product_by_category.jsp", request, response);
     }
@@ -121,8 +134,18 @@ public class ProductService {
         request.setAttribute("listCategories", listCategories);
 
 
-        List<CartDetail> listCartDetails = cartDetailDAO.listAll();
-        request.setAttribute("listCartDetails", listCartDetails);
+        HttpSession session = request.getSession();
+        Integer idCustomer = null;
+        Customer customer = (Customer) session.getAttribute("loggedCustomer");
+        if (customer != null) {
+            idCustomer = customer.getId();
+        }
+
+        // Lấy danh sách chi tiết giỏ hàng dựa trên idCustomer
+        List<CartDetail> listCartDetailsByIdCustomer = (idCustomer != null)
+                ? cartDetailDAO.listAllByIdCustomer(idCustomer)
+                : new ArrayList<>(); // Tránh NullPointerException nếu người dùng chưa đăng nhập
+        request.setAttribute("listCartDetailsByIdCustomer", listCartDetailsByIdCustomer);
 
         forwardToPage("shop/product_list.jsp", request, response);
     }
@@ -133,8 +156,20 @@ public class ProductService {
 
         request.setAttribute("product", product);
 
-        List<CartDetail> listCartDetails = cartDetailDAO.listAll();
-        request.setAttribute("listCartDetails", listCartDetails);
+        HttpSession session = request.getSession();
+        Integer idCustomer = null;
+        Customer customer = (Customer) session.getAttribute("loggedCustomer");
+        if (customer != null) {
+            idCustomer = customer.getId();
+        }
+
+        // Lấy danh sách chi tiết giỏ hàng dựa trên idCustomer
+        List<CartDetail> listCartDetailsByIdCustomer = (idCustomer != null)
+                ? cartDetailDAO.listAllByIdCustomer(idCustomer)
+                : new ArrayList<>(); // Tránh NullPointerException nếu người dùng chưa đăng nhập
+        request.setAttribute("listCartDetailsByIdCustomer", listCartDetailsByIdCustomer);
+        // Lấy danh sách sản phẩm bán chạy nhất
+        List<Product> listBestSellingProducts = productDAO.listBestSellingProducts();
 
         List<Category> listCategories = categoryDAO.listAll();
         request.setAttribute("listCategories", listCategories);
@@ -157,9 +192,20 @@ public class ProductService {
         List<CartDetail> listCartDetails = cartDetailDAO.listAll();
         request.setAttribute("listCartDetails", listCartDetails);
 
+        HttpSession session = request.getSession();
+        Integer idCustomer = null;
+        Customer customer = (Customer) session.getAttribute("loggedCustomer");
+        if (customer != null) {
+            idCustomer = customer.getId();
+        }
+
+        // Lấy danh sách chi tiết giỏ hàng dựa trên idCustomer
+        List<CartDetail> listCartDetailsByIdCustomer = (idCustomer != null)
+                ? cartDetailDAO.listAllByIdCustomer(idCustomer)
+                : new ArrayList<>(); // Tránh NullPointerException nếu người dùng chưa đăng nhập
+        request.setAttribute("listCartDetailsByIdCustomer", listCartDetailsByIdCustomer);
         List<Category> listCategories = categoryDAO.listAll();
         request.setAttribute("listCategories", listCategories);
-
         forwardToPage("shop/search.jsp", request, response);
     }
 
@@ -183,8 +229,18 @@ public class ProductService {
         if (message != null) {
             request.setAttribute("message", message);
         }
-        List<CartDetail> listCartDetails = cartDetailDAO.listAll();
-        request.setAttribute("listCartDetails", listCartDetails);
+        HttpSession session = request.getSession();
+        Integer idCustomer = null;
+        Customer customer = (Customer) session.getAttribute("loggedCustomer");
+        if (customer != null) {
+            idCustomer = customer.getId();
+        }
+
+        // Lấy danh sách chi tiết giỏ hàng dựa trên idCustomer
+        List<CartDetail> listCartDetailsByIdCustomer = (idCustomer != null)
+                ? cartDetailDAO.listAllByIdCustomer(idCustomer)
+                : new ArrayList<>(); // Tránh NullPointerException nếu người dùng chưa đăng nhập
+        request.setAttribute("listCartDetailsByIdCustomer", listCartDetailsByIdCustomer);
 
         forwardToPage("product_list.jsp", message, request, response);
     }

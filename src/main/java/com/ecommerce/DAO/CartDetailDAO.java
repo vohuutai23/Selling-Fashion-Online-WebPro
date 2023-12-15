@@ -42,6 +42,7 @@ public class CartDetailDAO extends JPADao<CartDetail> implements GenericDAO<Cart
     }
 
 
+
     @Override
     public long count() {
         return 0;
@@ -74,6 +75,9 @@ public class CartDetailDAO extends JPADao<CartDetail> implements GenericDAO<Cart
         return super.findWithNamedQuery("CartDetail.findByCart", "idCart", cartId);
     }
 
+    public List<CartDetail> listAllByIdCustomer( Integer idCustomer){
+        return findWithNamedQuery("CartDetail.findAllByIdCustomer","idCustomer", idCustomer);
+    }
     public CartDetail findByID(CartDetailId cartDetailId) {
         List<CartDetail> result = super.findWithNamedQuery("CartDetail.findByID", "cartDetailId", cartDetailId);
 

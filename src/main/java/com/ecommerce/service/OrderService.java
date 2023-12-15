@@ -250,6 +250,17 @@ public class OrderService {
 
         request.setAttribute("listOrder", listOrder);
 
+      Integer idCustomer = null;
+      if (customer != null) {
+          idCustomer = customer.getId();
+      }
+
+      // Lấy danh sách chi tiết giỏ hàng dựa trên idCustomer
+      List<CartDetail> listCartDetailsByIdCustomer = (idCustomer != null)
+              ? cartDetailDAO.listAllByIdCustomer(idCustomer)
+              : new ArrayList<>(); // Tránh NullPointerException nếu người dùng chưa đăng nhập
+      request.setAttribute("listCartDetailsByIdCustomer", listCartDetailsByIdCustomer);
+
         forwardToPage("shop/order_list.jsp", request, response);
     }
 
@@ -261,6 +272,17 @@ public class OrderService {
 
         ProductOrder order = orderDAO.get(orderId, customer.getId());
         request.setAttribute("order", order);
+
+        Integer idCustomer = null;
+        if (customer != null) {
+            idCustomer = customer.getId();
+        }
+
+        // Lấy danh sách chi tiết giỏ hàng dựa trên idCustomer
+        List<CartDetail> listCartDetailsByIdCustomer = (idCustomer != null)
+                ? cartDetailDAO.listAllByIdCustomer(idCustomer)
+                : new ArrayList<>(); // Tránh NullPointerException nếu người dùng chưa đăng nhập
+        request.setAttribute("listCartDetailsByIdCustomer", listCartDetailsByIdCustomer);
 
         forwardToPage("shop/order_detail.jsp", request, response);
     }
