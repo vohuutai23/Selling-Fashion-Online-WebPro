@@ -62,8 +62,8 @@ public class PlaceOrderServlet extends HttpServlet {
 	private void sendOrderConfirmationEmail(HttpServletRequest request) {
 //		HttpSession session1 = request.getSession();
 //		Customer customer = (Customer) session1.getAttribute("loggedCustomer");
-		final String username = "21110309@student.hcmute.edu.vn";
-		final String password = "thinh178";
+		final String username = "21110294@student.hcmute.edu.vn";
+		final String password = "Vohuutai123@";
 
 		Properties prop = new Properties();
 		prop.put("mail.smtp.host", "smtp.gmail.com");
