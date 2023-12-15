@@ -4,16 +4,11 @@
         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
-        <property name="connection.url">jdbc:mysql://database-1.ckaoeoj0ibgo.ap-southeast-2.rds.amazonaws.com:3306/fashion_database</property>
+
+        <property name="connection.url">jdbc:mysql://database-1.ckaoeoj0ibgo.ap-southeast-2.rds.amazonaws.com:3306/fashion_database2</property>
         <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
         <property name="connection.username">admin</property>
         <property name="connection.password">12345678</property>
-
-
-        <!--<property name="connection.url">jdbc:mysql://sql200.infinityfree.com:3306/ifo_35556764_fashion_database</property>
-        <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
-        <property name="connection.username">if0_35556764_fashion_database</property>
-        <property name="connection.password">LiHMy0Fp1hYb</property>-->
 
         <mapping class="com.ecommerce.model.entity.User"/>
         <mapping class="com.ecommerce.model.entity.Customer"/>

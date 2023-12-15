@@ -16,6 +16,10 @@ import java.io.Serializable;
         @NamedQuery(
                 name = "CartDetail.sumTotalPriceByCart",
                 query = "SELECT SUM(cd.totalPrice) FROM CartDetail cd WHERE cd.cart.id = :idCart"
+        ),
+        @NamedQuery(
+                name = "CartDetail.findAllByIdCustomer",
+                query = "SELECT cd FROM CartDetail cd WHERE cd.cart.customer.id = :idCustomer"
         )
 })
 public class CartDetail implements Serializable {
