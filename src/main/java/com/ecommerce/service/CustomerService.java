@@ -3,6 +3,7 @@ import com.ecommerce.DAO.*;
 //import com.ecommerce.utility.HashUtility;
 import com.ecommerce.model.entity.Cart;
 import com.ecommerce.model.entity.CartDetail;
+import com.ecommerce.model.entity.Category;
 import com.ecommerce.model.entity.Customer;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -20,12 +22,14 @@ public class CustomerService {
     private final CustomerDAO customerDAO;
     private final CartDetailDAO cartDetailDAO;
     private final CartDAO cartDAO;
+    private final CategoryDAO categoryDAO;
 
     public CustomerService(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
         this.request = request;
         this.response = response;
         customerDAO = new CustomerDAO();
         cartDetailDAO = new CartDetailDAO();
+        categoryDAO = new CategoryDAO();
         cartDAO = new CartDAO();
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html; charset=UTF-8");
@@ -262,14 +266,42 @@ public class CustomerService {
     }
 
     public void showCustomerProfile() throws ServletException, IOException {
-        List<CartDetail> listCartDetails = cartDetailDAO.listAll();
-        request.setAttribute("listCartDetails", listCartDetails);
+        HttpSession session = request.getSession();
+        Integer idCustomer = null;
+        Customer customer = (Customer) session.getAttribute("loggedCustomer");
+        if (customer != null) {
+            idCustomer = customer.getId();
+        }
+
+        // Lấy danh sách chi tiết giỏ hàng dựa trên idCustomer
+        List<CartDetail> listCartDetailsByIdCustomer = (idCustomer != null)
+                ? cartDetailDAO.listAllByIdCustomer(idCustomer)
+                : new ArrayList<>(); // Tránh NullPointerException nếu người dùng chưa đăng nhập
+        request.setAttribute("listCartDetailsByIdCustomer", listCartDetailsByIdCustomer);
+        List<Category> listCategories = categoryDAO.listAll();
+        request.setAttribute("listCategories", listCategories);
+
+
         forwardToPage("shop/customer_profile.jsp", request, response);
     }
 
     public void showCustomerProfileEditForm() throws ServletException, IOException {
-        List<CartDetail> listCartDetails = cartDetailDAO.listAll();
-        request.setAttribute("listCartDetails", listCartDetails);
+        HttpSession session = request.getSession();
+        Integer idCustomer = null;
+        Customer customer = (Customer) session.getAttribute("loggedCustomer");
+        if (customer != null) {
+            idCustomer = customer.getId();
+        }
+
+        // Lấy danh sách chi tiết giỏ hàng dựa trên idCustomer
+        List<CartDetail> listCartDetailsByIdCustomer = (idCustomer != null)
+                ? cartDetailDAO.listAllByIdCustomer(idCustomer)
+                : new ArrayList<>(); // Tránh NullPointerException nếu người dùng chưa đăng nhập
+        request.setAttribute("listCartDetailsByIdCustomer", listCartDetailsByIdCustomer);
+
+        List<Category> listCategories = categoryDAO.listAll();
+        request.setAttribute("listCategories", listCategories);
+
         generateCountryList(request);
         forwardToPage("shop/edit_profile.jsp", request, response);
     }
