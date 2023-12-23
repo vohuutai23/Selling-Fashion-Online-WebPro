@@ -26,10 +26,7 @@
                         <li><a class="dropdown-item" href="view_category?id=${category.id}&sort=${'best_selling'}">Bán chạy</a></li>
                         <li><a class="dropdown-item" href="view_category?id=${category.id}&sort=${'price_inc'}">Giá từ thấp đến cao</a></li>
                         <li><a class="dropdown-item" href="view_category?id=${category.id}&sort=${'price_dec'}">Giá từ cao đến thấp</a></li>
-                        <%--                        <li><a class="dropdown-item" href="#">Another action</a></li>--%>
-                        <%--                        <li><a class="dropdown-item" href="#">Something else here</a></li>--%>
-                        <%--                        <li><hr class="dropdown-divider"></li>--%>
-                        <%--                        <li><a class="dropdown-item" href="#">Separated link</a></li>--%>
+
                     </ul>
                 </div>
             </div>

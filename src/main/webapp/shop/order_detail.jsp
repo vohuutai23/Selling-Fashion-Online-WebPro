@@ -23,54 +23,60 @@
     </c:if>
     <c:if test="${order != null}">
       <div class="row mt-5">
-        <div class="col-md-6 text-center">
+        <div class="col-md-6">
           <h2>Tổng quan đơn hàng</h2>
-          <div align="center">
-            <table>
-              <%--<tr>
-                <td><b>Ordered By: </b></td>
-                <td>${order.customer.nameCustomer}</td>
-              </tr>--%>
-              <tr>
-                <td><b>Trạng thái đơn hàng: </b></td>
-                <td>${order.status}</td>
-              </tr>
-              <tr>
-                <td><b>Ngày đặt hàng: </b></td>
-                <td>${order.dateOrder}</td>
-              </tr>
-              <tr>
-                <td><b>Phương thức thanh toán: </b></td>
-                <td>${order.paymentMethod}</td>
-              </tr>
-
-              <tr>
-                <td><b>Tổng tiền: </b></td>
-                <td>$${order.totalPrice}</td>
-              </tr>
-            </table>
+          <div>
+            <div class="form-group row">
+              <label for="orderStatus" class="col-sm-6 col-form-label"><b>Trạng thái đơn hàng:</b></label>
+              <div class="col-sm-3">
+                <label id="orderStatus">${order.status}</label>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="orderDate" class="col-sm-6 col-form-label"><b>Ngày đặt hàng:</b></label>
+              <div class="col-sm-3">
+                <label id="orderDate">${order.dateOrder}</label>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="paymentMethod" class="col-sm-6 col-form-label"><b>Phương thức thanh toán:</b></label>
+              <div class="col-sm-3">
+                <label id="paymentMethod">${order.paymentMethod}</label>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="totalPrice" class="col-sm-6 col-form-label"><b>Tổng tiền:</b></label>
+              <div class="col-sm-3">
+                <label id="totalPrice">$${order.totalPrice}</label>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="col-md-6 text-center">
+        <div class="col-md-6">
           <h2>Thông tin hoá đơn</h2>
-          <div align="center">
-            <table>
-              <tr>
-                <td><b>Tên: </b></td>
-                <td>${order.fullName}</td>
-              </tr>
-              <tr>
-                <td><b>Số điện thoại: </b></td>
-                <td>${order.phone}</td>
-              </tr>
-              <tr>
-                <td><b>Địa chỉ: </b></td>
-                <td>${order.shippingAddress}</td>
-              </tr>
-            </table>
+          <div>
+            <div class="form-group row">
+              <label for="fullName" class="col-sm-6 col-form-label"><b>Tên:</b></label>
+              <div class="col-sm-3">
+                <label id="fullName">${order.fullName}</label>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="phone" class="col-sm-6 col-form-label"><b>Số điện thoại:</b></label>
+              <div class="col-sm-3">
+                <label id="phone">${order.phone}</label>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="shippingAddress" class="col-sm-6 col-form-label"><b>Địa chỉ:</b></label>
+              <div class="col-sm-3">
+                <label id="shippingAddress">${order.shippingAddress}</label>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+
     </c:if>
   </div>
 </section>

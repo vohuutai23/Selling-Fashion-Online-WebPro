@@ -51,7 +51,7 @@
         <c:if test="${numberOfCartDetails > 0}">
             <div class="row">
                 <div class="col-12 text-center">
-                    <h2 class="mt-5 mb-2">Kiểm tra đơn hàng </h2>
+                    <h2 class="mt-5 mb-2 fw-bolder mb-3">Kiểm tra đơn hàng </h2>
                     <table class="table table-condensed">
                         <tr>
                             <th style="width: 5%">STT</th>
@@ -82,10 +82,7 @@
                                     <input type="hidden" name="productId" value="${item.product.getId()}"/>
 
                                     <input type="number" name="quantity_${item.product.getId()}" value="${item.quantity}" class="form-control text-center" required="required"/>
-<%--                                    <input type="number" name="quantity_${item.product.getId()}" value="${item.quantity}" class="form-control text-center" required="required"/>--%>
-                                      <%--  ${item.quantity}--%>
-                                    <!-- Gửi số lượng dưới dạng trường ẩn -->
-                                    <%--<input type="hidden" name="quantities" value="${item.quantity}">--%>
+
 
                                 </td>
 
@@ -104,120 +101,56 @@
                     <h5>Tạm tính: ${totalPriceCart}đ</h5>
 
                     <h5>Phí vận chuyển: ${shippingFee}đ</h5>
-                    <h4>Tổng cộng: ${total}đ</h4>
+                    <h4 class="fw-bold">Tổng cộng: ${total}đ</h4>
                 </div>
             </div>
 
 
-<%--            <form action="place_order" method="post">--%>
-<%--                <div class="row">--%>
-<%--                    <div class="col-12 text-center">--%>
-<%--                        <h2 class="mt-5 mb-2">Thông tin vận chuyển</h2>--%>
-<%--                        <div class="text-left">--%>
 
-<%--                            <table align="center ">--%>
-<%--                                <tr>--%>
-<%--                                    <td>Họ tên:</td>--%>
-<%--                                    <td><input type="text" name="recipientFullName" value="${loggedCustomer.nameCustomer}"--%>
-<%--                                               required="required" maxlength="32"/>--%>
-<%--                                    </td>--%>
-<%--                                </tr>--%>
-<%--                                <tr>--%>
-<%--                                    <td>Số điện thoại:</td>--%>
-<%--                                    <td><input type="text" name="recipientPhone" value="${loggedCustomer.phone}"--%>
-<%--                                               required="required" maxlength="16"/>--%>
-<%--                                    </td>--%>
-<%--                                </tr>--%>
-<%--                                <tr>--%>
-<%--                                    <td>Email:</td>--%>
-<%--                                    <td><input type="text" name="email"--%>
-<%--                                               value="${loggedCustomer.email}"--%>
-<%--                                               required="required" maxlength="128"/>--%>
-<%--                                    </td>--%>
-<%--                                </tr>--%>
-<%--                                <tr>--%>
-<%--                                    <td>Địa chỉ:</td>--%>
-<%--                                    <td><input type="text" name="recipientAddress"--%>
-<%--                                               value="${loggedCustomer.address}"--%>
-<%--                                               required="required" maxlength="128"/>--%>
-<%--                                    </td>--%>
-<%--                                </tr>--%>
-
-<%--                                <tr>--%>
-<%--                                    <td>Phương thức thanh toán:--%>
-<%--                                    </td>--%>
-<%--                                    <td>--%>
-<%--                                        <select name="paymentMethod" class="btn btn-lg btn-white dropdown-toggle">--%>
-<%--                                            <option value="Cash On Delivery">Ship COD</option>--%>
-<%--                                            <option value="PayPal">Thanh toán qua ngân hàng</option>--%>
-<%--                                        </select>--%>
-<%--                                    </td>--%>
-<%--                                </tr>--%>
-<%--                                <tr>--%>
-<%--                                    <td>--%>
-<%--                                        <c:forEach items="${cartDetails}" var="item" varStatus="status">--%>
-<%--                                            <!-- Các thông tin về sản phẩm -->--%>
-<%--                                            <!-- Trường ẩn cho ID sản phẩm -->--%>
-<%--                                            <input type="hidden" name="productIds" value="${item.product.getId()}">--%>
-<%--                                            <!-- Trường cho số lượng sản phẩm -->--%>
-<%--                                            <input type="hidden" name="quantity_${item.product.getId()}" value="${item.quantity}" class="form-control text-center" required="required"/>--%>
-<%--                                        </c:forEach>--%>
-<%--                                    </td>--%>
-<%--                                </tr>--%>
-<%--                            </table>--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
-
-<%--                    <div class="products text-center container">--%>
-<%--                        <button class="btn btn-lg btn-outline-primary" type="submit">Xác nhận</button> &nbsp;&nbsp;--%>
-<%--                        <a class="btn btn-lg btn-outline-primary" href="${pageContext.request.contextPath}/">Tiếp tục mua sắm</a>--%>
-<%--                    </div>--%>
-<%--                </div>--%>
-<%--            </form>--%>
             <form action="place_order" method="post">
-                <div class="row">
-                    <div class="col-12 text-center">
-                        <h2 class="mt-5 mb-2">Thông tin vận chuyển</h2>
-                        <div class="text-left">
-                            <table align="center" style="width: 50%; margin: 0 auto;">
-                                <!-- Các hàng khác giữ nguyên, chỉ thêm text-align: center; -->
-                                <tr class="m-2">
-                                    <td style="text-align: center;">Họ tên:</td>
-                                    <td><input type="text" name="recipientFullName" value="${loggedCustomer.nameCustomer}" required="required" maxlength="32"/></td>
-                                </tr>
-                                <tr class="m-2">
-                                    <td style="text-align: center;">Số điện thoại:</td>
-                                    <td><input type="text" name="recipientPhone" value="${loggedCustomer.phone}" required="required" maxlength="16"/></td>
-                                </tr>
-                                <tr class="m-2">
-                                    <td style="text-align: center;">Email:</td>
-                                    <td><input type="text" name="email" value="${loggedCustomer.email}" required="required" maxlength="128"/></td>
-                                </tr>
-                                <tr class="m-2">
-                                    <td style="text-align: center;">Địa chỉ:</td>
-                                    <td><input type="text" name="recipientAddress" value="${loggedCustomer.address}" required="required" maxlength="128"/></td>
-                                </tr>
-                                <tr class="m-2">
-                                    <td style="text-align: center;">Phương thức thanh toán:</td>
-                                    <td>
-                                        <select name="paymentMethod" class="btn btn-lg btn-white dropdown-toggle">
-                                            <option value="Cash On Delivery">Ship COD</option>
-                                            <option value="PayPal">Thanh toán qua ngân hàng</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2">
-                                        <c:forEach items="${cartDetails}" var="item" varStatus="status">
-                                            <!-- Các thông tin về sản phẩm -->
-                                            <!-- Trường ẩn cho ID sản phẩm -->
-                                            <input type="hidden" name="productIds" value="${item.product.getId()}">
-                                            <!-- Trường cho số lượng sản phẩm -->
-                                            <input type="hidden" name="quantity_${item.product.getId()}" value="${item.quantity}" class="form-control text-center" required="required"/>
-                                        </c:forEach>
-                                    </td>
-                                </tr>
-                            </table>
+                <div class="row mb-5 border-top border-info-subtle mt-5">
+                    <div class="col-12">
+                        <h2 class="mt-5 mb-2 fw-bolder mb-5">Thông tin vận chuyển</h2>
+                        <div style="width: 50%; margin: 0 auto;">
+                            <div class="form-group row m-3">
+                                <label for="recipientFullName" class="col-sm-4 col-form-label">Họ tên:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" id="recipientFullName" name="recipientFullName" value="${loggedCustomer.nameCustomer}" required maxlength="32"/>
+                                </div>
+                            </div>
+                            <div class="form-group row m-3">
+                                <label for="recipientPhone" class="col-sm-4 col-form-label">Số điện thoại:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" id="recipientPhone" name="recipientPhone" value="${loggedCustomer.phone}" required maxlength="16"/>
+                                </div>
+                            </div>
+                            <div class="form-group row m-3">
+                                <label for="email" class="col-sm-4 col-form-label">Email:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" id="email" name="email" value="${loggedCustomer.email}" required maxlength="128"/>
+                                </div>
+                            </div>
+                            <div class="form-group row m-3">
+                                <label for="recipientAddress" class="col-sm-4 col-form-label">Địa chỉ:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" id="recipientAddress" name="recipientAddress" value="${loggedCustomer.address}" required maxlength="128"/>
+                                </div>
+                            </div>
+                            <div class="form-group row m-3">
+                                <label for="paymentMethod" class="col-sm-4 col-form-label">Phương thức thanh toán:</label>
+                                <div class="col-sm-8">
+                                    <select name="paymentMethod" class="form-control btn btn-lg btn-white" id="paymentMethod">
+                                        <option value="Cash On Delivery">Ship COD</option>
+                                        <option value="PayPal">Thanh toán qua ngân hàng</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group m-3">
+                                <c:forEach items="${cartDetails}" var="item" varStatus="status">
+                                    <input type="hidden" name="productIds" value="${item.product.getId()}">
+                                    <input type="hidden" name="quantity_${item.product.getId()}" value="${item.quantity}" class="form-control" required/>
+                                </c:forEach>
+                            </div>
                         </div>
                     </div>
                     <div class="products text-center container mt-5">
@@ -225,6 +158,7 @@
                         <a class="btn btn-lg btn-outline-primary" href="${pageContext.request.contextPath}/">Tiếp tục mua sắm</a>
                     </div>
                 </div>
+
             </form>
         </c:if>
     </div>
