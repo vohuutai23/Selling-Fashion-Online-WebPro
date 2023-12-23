@@ -38,16 +38,27 @@
             </div>
         </div>
 
-        <!-- ======================= Cards ================== -->
-        <div class="cardBox">
 
-        </div>
 
         <!-- ================ Order Details List ================= -->
         <!-- ================ Charts ================= -->
         <div class="container text-center">
             <h1 style="margin-left: 40%">Welcome to Cover You Shop</h1>
         </div>
+        <!-- ======================= Cards ================== -->
+        <div class="cardBox">
+            <div class="card">
+                <div>
+                    <div class="numbers">${totalUsers}</div>
+                    <div class="cardName">Total Users</div>
+                </div>
+
+                <div class="iconBx">
+                    <%--                    <ion-icon name="eye-outline"></ion-icon>--%>
+                    <i class="fa fa-users"></i>
+                </div>
+
+            </div>
     </div>
 </div>
 
