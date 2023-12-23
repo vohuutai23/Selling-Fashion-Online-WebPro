@@ -52,6 +52,17 @@ public class CartService {
         cart.setTotalPrice(totalPrice);
         cartDAO.update(cart);
 
+        Integer idCustomer = null;
+
+        if (customer != null) {
+            idCustomer = customer.getId();
+        }
+
+        // Lấy danh sách chi tiết giỏ hàng dựa trên idCustomer
+        List<CartDetail> listCartDetailsByIdCustomer = (idCustomer != null)
+                ? cartDetailDAO.listAllByIdCustomer(idCustomer)
+                : new ArrayList<>(); // Tránh NullPointerException nếu người dùng chưa đăng nhập
+        request.setAttribute("listCartDetailsByIdCustomer", listCartDetailsByIdCustomer);
         request.setAttribute("totalPriceCart", cart.getTotalPrice());
 
         forwardToPage("shop/cart.jsp", request, response);
@@ -89,6 +100,7 @@ public class CartService {
 
             cartDAO.update(cart);
         }
+
 
         String cartPage = request.getContextPath().concat("/view_cart");
         response.sendRedirect(cartPage);

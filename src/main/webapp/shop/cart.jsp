@@ -35,7 +35,7 @@
 <body>
 <%@ include file="/includes/header.jsp" %>
 <div class="row mt-4">
-    <div class="col-sm-6 mb-3 mb-m-1 text-md-left">
+    <div class=" ms-3 col-sm-6 mb-3 mb-m-1 text-md-left">
         <a class="btn btn-outline-success" href="${pageContext.request.contextPath}/"><i class="fa-solid fa-arrow-left"></i> Tiếp tục mua sắm</a>
     </div>
 </div>
