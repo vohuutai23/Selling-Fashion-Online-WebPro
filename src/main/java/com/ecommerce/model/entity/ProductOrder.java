@@ -13,6 +13,7 @@ import java.util.Set;
 @NamedQueries({
         @NamedQuery(name = "ProductOrder.findAll", query = "SELECT po FROM ProductOrder po"),
         @NamedQuery(name = "ProductOrder.countAll", query = "SELECT COUNT(*) FROM ProductOrder"),
+        @NamedQuery(name = "ProductOrder.sumTotalPrice", query = "SELECT SUM(po.totalPrice) FROM ProductOrder po"),
         @NamedQuery(name = "ProductOrder.countByCustomer", query = "SELECT COUNT(po.orderId) FROM ProductOrder po WHERE po.customer.id = :customerId"),
         @NamedQuery(name = "ProductOrder.findByCustomer", query = "SELECT po FROM ProductOrder po WHERE po.customer.id = :customerId"),
         @NamedQuery(name = "ProductOrder.findByIdAndCustomer", query = "SELECT po FROM ProductOrder po WHERE po.orderId = :orderId AND po.customer.id = :customerId") })

@@ -4,6 +4,10 @@ import com.ecommerce.DAO.GenericDAO;
 import com.ecommerce.DAO.JPADao;
 import com.ecommerce.model.entity.ProductOrder;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -71,5 +75,19 @@ public class OrderDAO extends JPADao<ProductOrder> implements GenericDAO<Product
     public List<ProductOrder> listMostRecentSales() {
         return super.findWithNamedQuery("ProductOrder.findAll", 0, 3);
     }
+    private static final EntityManagerFactory entityManagerFactory;
 
+    static {
+        entityManagerFactory = Persistence.createEntityManagerFactory("onlineShop");
+    }
+    public Float sumTotalPrice() {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        try {
+            Query query = entityManager.createNamedQuery("ProductOrder.sumTotalPrice");
+            Double sumDouble = (Double) query.getSingleResult();
+            return sumDouble != null ? sumDouble.floatValue() : 0.0f; // Return 0.0f if the result is null
+        } finally {
+            entityManager.close();
+        }
+    }
 }

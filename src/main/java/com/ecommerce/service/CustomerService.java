@@ -5,6 +5,13 @@ import com.ecommerce.model.entity.Cart;
 import com.ecommerce.model.entity.CartDetail;
 import com.ecommerce.model.entity.Category;
 import com.ecommerce.model.entity.Customer;
+
+import javax.mail.Message;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +21,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Properties;
 
 import static com.ecommerce.util.CommonUtil.*;
 public class CustomerService {
@@ -229,6 +237,8 @@ public class CustomerService {
     }
 
     public void showLogin() throws ServletException, IOException {
+        boolean registerFailed = false;
+        request.setAttribute("registerFailed", registerFailed);
         forwardToPage("shop/login.jsp", request, response);
     }
 
@@ -311,5 +321,56 @@ public class CustomerService {
         updateCustomerFields(customer);
         customerDAO.update(customer);
         showCustomerProfile();
+    }
+
+    public void sendEmailPassword(HttpServletRequest request) throws IOException {
+        String email = request.getParameter("email");
+        Customer existCustomer = customerDAO.findByEmail(email);
+        System.out.println("checkmail ton tai: " + existCustomer);
+        if (existCustomer == null) {
+            if (existCustomer == null) {
+                response.getWriter().write("Email không tồn tại");
+            } else {
+                // send email logic
+                response.getWriter().write("Một liên kết đặt lại mật khẩu đã được gửi tới email của bạn.");
+            }
+
+
+        } else {
+//		HttpSession session1 = request.getSession();
+//		Customer customer = (Customer) session1.getAttribute("loggedCustomer");
+            final String username = "21110157@student.hcmute.edu.vn";
+            final String password = "Trongdung0607@";
+
+            Properties prop = new Properties();
+            prop.put("mail.smtp.host", "smtp.gmail.com");
+            prop.put("mail.smtp.port", "587");
+            prop.put("mail.smtp.auth", "true");
+            prop.put("mail.smtp.starttls.enable", "true");
+
+            Session session = Session.getInstance(prop, new javax.mail.Authenticator() {
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication(username, password);
+                }
+            });
+            String passwordCustomer = existCustomer.getPassword();
+            String emailTo = request.getParameter("email");
+//		String emailTo = request.getParameter(customer.getEmail());
+            String emailSubject = "Reset Password";
+            String emailContent = "Your password: "+ passwordCustomer;
+            System.out.println("email to: " + emailTo);
+            try {
+                Message message = new MimeMessage(session);
+                message.setFrom(new InternetAddress(username));
+                message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emailTo));
+                message.setSubject(emailSubject);
+                message.setText(emailContent);
+                Transport.send(message);
+//                System.out.println("Order confirmation email sent successfully.");
+            } catch (Exception e) {
+                e.printStackTrace();
+
+            }
+        }
     }
 }

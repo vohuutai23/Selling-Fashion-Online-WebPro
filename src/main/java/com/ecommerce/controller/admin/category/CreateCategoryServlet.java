@@ -20,7 +20,7 @@ public class CreateCategoryServlet extends HttpServlet {
 			throws ServletException, IOException {
 		CategoryService categoryService = new CategoryService(request, response);
 		categoryService.createCategory();
-		/*haha*/
+
 	}
 
 }

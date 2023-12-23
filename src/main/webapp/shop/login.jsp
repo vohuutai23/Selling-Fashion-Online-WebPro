@@ -3,6 +3,7 @@
 <html lang="en">
 
 <head>
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=in, initial-scale=1.0">
   <title>Document</title>
   <link rel="stylesheet" href="shop/css/login.css">
@@ -49,10 +50,14 @@
         <h1>Đăng nhập</h1>
         <input type="email" name="email" placeholder="Email" id="emailSignIn" />
         <input type="password" name="password"  placeholder="Mật khẩu" id="passSignIn" />
-        <a href="#">Quên mật khẩu</a>
+        <a href="#" id="forgotPasswordBtn">Quên mật khẩu</a>
         <button>Đăng nhập</button>
       </form>
     </div>
+    <form action="${pageContext.request.contextPath}/reset_pass" method="post" id="resetPasswordForm" style="display:none;">
+      <input type="email" name="email" placeholder="Enter your email" required />
+      <button type="submit">Send Reset Link</button>
+    </form>
     <div class="overlay-container">
       <div class="overlay">
         <div class="overlay-panel overlay-left">
@@ -104,6 +109,41 @@
       showRegisterForm(); // Giả sử showRegisterForm là hàm của bạn để hiển thị form đăng ký
     }
   };
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const forgotPasswordBtn = document.getElementById('forgotPasswordBtn');
+    const emailInput = document.getElementById('emailSignIn');
+
+    forgotPasswordBtn.addEventListener('click', function() {
+      const email = emailInput.value;
+      if (email) {
+        // Gửi email đến địa chỉ đã nhập
+        resetPassword(email);
+      } else {
+        alert('Vui lòng nhập địa chỉ email của bạn.');
+      }
+    });
+  });
+
+  function resetPassword(email) {
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", "${pageContext.request.contextPath}/reset_pass", true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.onreadystatechange = function() {
+      if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+        // Giả sử rằng phản hồi là một chuỗi văn bản
+        var responseText = this.responseText;
+        if (responseText === "Email không tồn tại") {
+          alert('Email không tồn tại trong hệ thống của chúng tôi.');
+        } else {
+          alert('Một liên kết đặt lại mật khẩu đã được gửi tới email của bạn.');
+        }
+      }
+    }
+    xhr.send('email=' + encodeURIComponent(email));
+  }
+
 </script>
 
 <%--<script>
