@@ -3,7 +3,7 @@
 <div class="navigation">
     <ul>
         <li>
-            <a href="#">
+            <a href="login">
                         <span class="icon">
 
                         </span>
@@ -12,7 +12,7 @@
         </li>
 
         <li>
-            <a href="#">
+            <a href="login">
                         <span class="icon">
                             <ion-icon name="home-outline"></ion-icon>
                         </span>

@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/admin/styles/assets/css/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/admin/styles/assets/css/home_admin2.css">
 
     <!-- ======= Styles ====== -->
 <%--    <link rel="stylesheet" href="admin/styles/assets/css/style.css">--%>
@@ -43,14 +43,14 @@
         <!-- ================ Order Details List ================= -->
         <!-- ================ Charts ================= -->
         <div class="container text-center">
-            <h1 style="margin-left: 40%">Welcome to Cover You Shop</h1>
+            <h1 style="margin-left: 33%">Welcome to Cover You Shop</h1>
         </div>
         <!-- ======================= Cards ================== -->
         <div class="cardBox">
             <div class="card">
                 <div>
                     <div class="numbers">${totalUsers}</div>
-                    <div class="cardName">Total Users</div>
+                    <div class="cardName">Total User</div>
                 </div>
 
                 <div class="iconBx">
@@ -59,6 +59,48 @@
                 </div>
 
             </div>
+            <div class="card">
+                <div>
+                    <div class="numbers">${totalCustomers}</div>
+                    <div class="cardName">Total Customer</div>
+                </div>
+
+                <div class="iconBx">
+                    <%--                    <ion-icon name="eye-outline"></ion-icon>--%>
+                    <i class="fa fa-shopping-cart"></i>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="cardBox">
+            <div class="card">
+                <div>
+                    <div class="numbers">${totalProducts}</div>
+                    <div class="cardName">Total Product</div>
+                </div>
+
+                <div class="iconBx">
+                    <%--                    <ion-icon name="eye-outline"></ion-icon>--%>
+                    <i class="fa fa-code-fork"></i>
+                </div>
+
+            </div>
+            <div class="card">
+                <div>
+                    <div class="numbers">${totalOrders}</div>
+                    <div class="cardName">Total Order</div>
+                </div>
+
+                <div class="iconBx">
+                    <%--                    <ion-icon name="eye-outline"></ion-icon>--%>
+                    <i class="fa fa-ticket"></i>
+                </div>
+
+            </div>
+        </div>
+
     </div>
 </div>
 

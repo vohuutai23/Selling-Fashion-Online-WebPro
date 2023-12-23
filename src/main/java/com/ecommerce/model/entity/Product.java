@@ -16,7 +16,7 @@ import java.util.Date;
         @NamedQuery(name = "Product.findByTitle", query = "SELECT p FROM Product p WHERE p.nameProduct = :nameProduct"),
         @NamedQuery(name = "Product.countByCategory", query = "SELECT COUNT(p) FROM Product p WHERE p.category.id = :categoryId"),
         @NamedQuery(name = "Product.findNew", query = "SELECT p FROM Product p ORDER BY p.postDate DESC"),
-
+        @NamedQuery(name = "Product.countAll", query = "SELECT COUNT(p) FROM Product p"),
         @NamedQuery(name = "Product.findByProductAndNewest", query = "SELECT p FROM Product p ORDER BY p.postDate DESC "),
         @NamedQuery(name = "Product.findByProductAndPriceDec", query = "SELECT p FROM Product p ORDER BY p.price DESC"),
         @NamedQuery(name = "Product.findByProductAndPriceInc", query = "SELECT p FROM Product p ORDER BY p.price ASC"),
