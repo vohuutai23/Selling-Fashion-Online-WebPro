@@ -100,7 +100,20 @@
 
             </div>
         </div>
+        <div class="cardBox">
+            <div class="card">
+                <div>
+                    <div class="numbers">${totalPrice} VND</div>
+                    <div class="cardName">Aggregate income</div>
+                </div>
 
+                <div class="iconBx">
+                    <%--                    <ion-icon name="eye-outline"></ion-icon>--%>
+                    <i class="fa fa-code-fork"></i>
+                </div>
+
+            </div>
+        </div>
     </div>
 </div>
 

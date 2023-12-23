@@ -2,6 +2,10 @@ package com.ecommerce.DAO;
 
 import com.ecommerce.model.entity.Product;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
 import java.util.List;
 
 public class ProductDAO extends JPADao<Product> implements GenericDAO<Product> {
@@ -80,5 +84,7 @@ public class ProductDAO extends JPADao<Product> implements GenericDAO<Product> {
     public long countByCategory(int idCategory) {
         return super.countWithNamedQuery("Product.countByCategory", "categoryId", idCategory);
     }
+
+
 
 }

@@ -29,12 +29,15 @@ public class AdminHomeServlet extends HttpServlet {
         long totalCustomers = customerDAO.count();
 //        long totalReviews = reviewDAO.count();
         long totalOrders = orderDAO.count();
+        float totalPrice = orderDAO.sumTotalPrice();
 
         request.setAttribute("totalUsers", totalUsers);
         request.setAttribute("totalProducts", totalProducts);
         request.setAttribute("totalCustomers", totalCustomers);
 //        request.setAttribute("totalReviews", totalReviews);
         request.setAttribute("totalOrders", totalOrders);
+
+        request.setAttribute("totalPrice", totalPrice);
         forwardToPage("index.jsp", request, response);
     }
 
