@@ -163,8 +163,7 @@ public class CustomerService {
         Customer customer = customerDAO.get(customerId);
 
         if (customer != null) {
-            ReviewDAO reviewDAO = new ReviewDAO();
-//            long reviewCount = reviewDAO.countByCustomer(customerId);
+
             long reviewCount = 0;
             if (reviewCount > 0) {
                 System.out.println("loi");

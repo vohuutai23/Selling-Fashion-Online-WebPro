@@ -19,7 +19,7 @@ public class AdminHomeServlet extends HttpServlet {
             throws ServletException, IOException {
         UserDAO userDAO = new UserDAO();
         OrderDAO orderDAO = new OrderDAO();
-        ReviewDAO reviewDAO = new ReviewDAO();
+
         ProductDAO productDAO = new ProductDAO();
         CustomerDAO customerDAO = new CustomerDAO();
 
